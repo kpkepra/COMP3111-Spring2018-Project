@@ -1,4 +1,10 @@
 # HKUST COMP3111 Software Engineering (Spring 2018)
+Team Name: CORGI3111
+
+Team Members:
+- PRATAMA, Kevin (kpratama@connect.ust.hk), Team Leader
+- SUSANTO, Adrian Prawira (apsusanto@connect.ust.hk)
+- WU, Yun Ju (wyubv@connect.ust.hk)
 
 Quick reference links:
 
