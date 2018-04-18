@@ -1,9 +1,8 @@
 package testing.comp3111;
 
-import org.junit.jupiter.api.Test;
-
 import core.comp3111.DataColumn;
 import core.comp3111.DataType;
+import org.junit.jupiter.api.Test;
 
 /**
  * A sample DataColumn test case written using JUnit. It achieves 100% test
