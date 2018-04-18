@@ -3,16 +3,38 @@ package core.comp3111;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Scanner;
 
 public class CSVReader {
     File inputFile;
+    Scanner sc;
+
     public CSVReader(String fileName){
         inputFile = new File(fileName);
+
+        try{
+            sc = new Scanner(inputFile);
+        }
+        catch (FileNotFoundException e){
+            e.printStackTrace();
+        }
+        finally {
+            sc.close();
+        }
     }
 
     public ArrayList<String> readRow(){
-        return null;
+        if(sc.hasNextLine()){
+            String line = sc.nextLine();
+            String [] rowData = line.split(",");
+            return new ArrayList(Arrays.asList(rowData));
+        }
+        else{
+            System.out.print("Error: There's no more line");
+            return null;
+        }
+
     }
 
 
@@ -22,29 +44,18 @@ public class CSVReader {
 
     public ArrayList<String> readALL(){
         ArrayList<String> rowData = new ArrayList<>();
-        try (Scanner scanner = new Scanner(inputFile)) {
-            scanner.useDelimiter(",");
-            while (scanner.hasNext()) {
-                String current = scanner.next();
-                rowData.add(current);
-            }
+        sc.useDelimiter(",|\r\n");
+        while (sc.hasNext()) {
+            String current = sc.next();
+            rowData.add(current);
         }
-        catch (FileNotFoundException e){
-            e.printStackTrace();
-        }
-
         return rowData;
     }
 
-    public static void printData(ArrayList<String> datas){
-        for(String data:datas){
-            System.out.print(data+" ");
-        }
-    }
 
     public static void main(String[] args){
         CSVReader ch = new CSVReader("csvTest1.csv");
         ArrayList<String> datas = ch.readALL();
-        CSVReader.printData(datas);
+        System.out.print(datas);
     }
 }
