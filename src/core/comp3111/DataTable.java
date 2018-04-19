@@ -1,7 +1,10 @@
 package core.comp3111;
 
+import java.text.NumberFormat;
+import java.text.ParseException;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
 /**
  * 2D array of data values with the following requirements: (1) There are 0 to
@@ -123,6 +126,54 @@ public class DataTable {
 		// assumption: For DataTable, all columns should have the same size
 		Map.Entry<String, DataColumn> entry = dc.entrySet().iterator().next();
 		return dc.get(entry.getKey()).getSize();
+	}
+
+	public String[] getColNames() {
+		return dc.keySet().toArray(new String[0]);
+	}
+
+	public void filterData(String op) throws DataTableException {
+		String[] operation = op.split("\\s+");
+
+		Number op_val;
+
+		if (operation.length != 2) throw new DataTableException("Operation does not have two words");
+
+		if (!Objects.equals(operation[0], "<") &&
+				!Objects.equals(operation[0], "<=") &&
+				!Objects.equals(operation[0], ">=") &&
+				!Objects.equals(operation[0], ">") &&
+				!Objects.equals(operation[0], "==") &&
+				!Objects.equals(operation[0], "!=") &&
+				)
+			throw new DataTableException("Comparison operator is invalid!");
+
+		try {
+			op_val = NumberFormat.getInstance().parse(operation[1]);
+		}
+		catch(NumberFormatException | ParseException e) {
+			throw new DataTableException("Failure in parsing number. Please try again!");
+		}
+
+		Map<String, DataColumn> temp = new HashMap<String, DataColumn>();
+
+		for (String colName : dc.keySet()) {
+			DataColumn column = dc.get(colName);
+
+			if (Objects.equals(column.getTypeName(), DataType.TYPE_NUMBER)) {
+				Number[] values = (Number[]) column.getData();
+
+				for (int i = 0; i < values.length; ++i) {
+					values[i] = filter(operation[0], values[i]);
+				}
+
+				column.set(DataType.TYPE_NUMBER, values);
+			}
+
+			temp.put(colName, column);
+		}
+
+		dc = temp;
 	}
 
 	// attribute: A java.util.Map interface

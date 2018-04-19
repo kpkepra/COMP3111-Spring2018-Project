@@ -57,11 +57,11 @@ public class CSVReader {
     }
 
 
-    public static void main(String[] args){
-        CSVReader ch = new CSVReader("csvTest1.csv");
-        ArrayList<String> datas = ch.readALL();
-        ArrayList<String> rowData = ch.readRow();
-        System.out.print(datas);
-        System.out.print(rowData);
-    }
+//    public static void main(String[] args){
+//        CSVReader ch = new CSVReader("csvTest1.csv");
+//        ArrayList<String> datas = ch.readALL();
+//        ArrayList<String> rowData = ch.readRow();
+//        System.out.print(datas);
+//        System.out.print(rowData);
+//    }
 }
