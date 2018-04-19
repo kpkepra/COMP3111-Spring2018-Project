@@ -2,11 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="b533ac8f-72f7-402e-994a-d2710518399e" name="Default" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/.name" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/COMP3111Chart.iml" beforeDir="false" afterPath="$PROJECT_DIR$/COMP3111Chart.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/core/comp3111/CSVReader.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/core/comp3111/CSVReader.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/core/comp3111/DataTable.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/core/comp3111/DataTable.java" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/bin/" />
@@ -18,89 +14,16 @@
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
   <component name="FileEditorManager">
-    <leaf SIDE_TABS_SIZE_LIMIT_KEY="450">
-      <file leaf-file-name="Chart.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/core/comp3111/Chart.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1767">
-              <caret line="57" selection-start-line="57" selection-end-line="57" />
-              <folding>
-                <element signature="imports" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
+    <leaf>
       <file leaf-file-name="DataTable.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/core/comp3111/DataTable.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="691">
-              <caret line="164" lean-forward="true" selection-start-line="164" selection-end-line="164" />
-              <folding>
-                <element signature="e#3480#3481#0" expanded="true" />
-                <element signature="e#3528#3529#0" expanded="true" />
-                <element signature="e#4426#4446#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="DataTableException.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/core/comp3111/DataTableException.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="496">
-              <caret line="16" column="4" selection-start-line="16" selection-end-line="19" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="CSVReader.java" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/src/core/comp3111/CSVReader.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="2744">
-              <caret line="98" column="44" lean-forward="true" selection-start-line="98" selection-start-column="44" selection-end-line="98" selection-end-column="44" />
+            <state relative-caret-position="753">
+              <caret line="181" column="74" selection-start-line="181" selection-start-column="74" selection-end-line="181" selection-end-column="74" />
               <folding>
                 <element signature="imports" expanded="true" />
+                <element signature="e#5012#5020#0" expanded="true" />
               </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="ArrayList.java" pinned="false" current-in-tab="false">
-        <entry file="jar://C:/Program Files/Java/jdk1.8.0_151/src.zip!/java/util/ArrayList.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="248">
-              <caret line="8" column="13" selection-start-line="8" selection-start-column="13" selection-end-line="8" selection-end-column="13" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="ChartException.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/core/comp3111/ChartException.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="124">
-              <caret line="4" column="13" selection-start-line="4" selection-start-column="13" selection-end-line="4" selection-end-column="13" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="CSVReader.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/core/comp3111/CSVReader.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1249">
-              <caret line="65" column="7" lean-forward="true" selection-start-line="65" selection-start-column="7" selection-end-line="65" selection-end-column="7" />
-              <folding>
-                <element signature="imports" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="Main.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/ui/comp3111/Main.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-1643">
-              <caret line="63" column="22" selection-start-line="63" selection-start-column="22" selection-end-line="63" selection-end-column="22" />
             </state>
           </provider>
         </entry>
@@ -145,11 +68,7 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="AndroidView" />
-      <pane id="Scope" />
       <pane id="PackagesPane" />
-      <pane id="Scope" />
-      <pane id="Scratches" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -160,57 +79,7 @@
             <path>
               <item name="COMP3111-Spring2018-Project" type="b2602c69:ProjectViewProjectNode" />
               <item name="COMP3111-Spring2018-Project" type="462c0819:PsiDirectoryNode" />
-              <item name="bin" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="COMP3111-Spring2018-Project" type="b2602c69:ProjectViewProjectNode" />
-              <item name="COMP3111-Spring2018-Project" type="462c0819:PsiDirectoryNode" />
-              <item name="bin" type="462c0819:PsiDirectoryNode" />
-              <item name="core" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="COMP3111-Spring2018-Project" type="b2602c69:ProjectViewProjectNode" />
-              <item name="COMP3111-Spring2018-Project" type="462c0819:PsiDirectoryNode" />
-              <item name="bin" type="462c0819:PsiDirectoryNode" />
-              <item name="core" type="462c0819:PsiDirectoryNode" />
-              <item name="comp3111" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="COMP3111-Spring2018-Project" type="b2602c69:ProjectViewProjectNode" />
-              <item name="COMP3111-Spring2018-Project" type="462c0819:PsiDirectoryNode" />
-              <item name="bin" type="462c0819:PsiDirectoryNode" />
-              <item name="testing" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="COMP3111-Spring2018-Project" type="b2602c69:ProjectViewProjectNode" />
-              <item name="COMP3111-Spring2018-Project" type="462c0819:PsiDirectoryNode" />
-              <item name="bin" type="462c0819:PsiDirectoryNode" />
-              <item name="testing" type="462c0819:PsiDirectoryNode" />
-              <item name="comp3111" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="COMP3111-Spring2018-Project" type="b2602c69:ProjectViewProjectNode" />
-              <item name="COMP3111-Spring2018-Project" type="462c0819:PsiDirectoryNode" />
-              <item name="bin" type="462c0819:PsiDirectoryNode" />
-              <item name="ui" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="COMP3111-Spring2018-Project" type="b2602c69:ProjectViewProjectNode" />
-              <item name="COMP3111-Spring2018-Project" type="462c0819:PsiDirectoryNode" />
-              <item name="bin" type="462c0819:PsiDirectoryNode" />
-              <item name="ui" type="462c0819:PsiDirectoryNode" />
-              <item name="comp3111" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="COMP3111-Spring2018-Project" type="b2602c69:ProjectViewProjectNode" />
-              <item name="COMP3111-Spring2018-Project" type="462c0819:PsiDirectoryNode" />
               <item name="src" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="COMP3111-Spring2018-Project" type="b2602c69:ProjectViewProjectNode" />
-              <item name="COMP3111-Spring2018-Project" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="comp3111" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="COMP3111-Spring2018-Project" type="b2602c69:ProjectViewProjectNode" />
@@ -222,6 +91,8 @@
           <select />
         </subPane>
       </pane>
+      <pane id="Scope" />
+      <pane id="AndroidView" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -297,6 +168,7 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="102" y="-2" width="3098" height="1802" extended-state="6" />
+    <editor active="true" />
     <layout>
       <window_info anchor="right" id="Palette" order="3" />
       <window_info anchor="bottom" id="TODO" order="6" />
@@ -329,16 +201,7 @@
     <option name="myLimit" value="2678400000" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/src/core/comp3111/Chart.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2077">
-          <caret line="67" column="38" selection-start-line="67" selection-start-column="38" selection-end-line="67" selection-end-column="38" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
+    <entry file="file://$PROJECT_DIR$/src/core/comp3111/Chart.java" />
     <entry file="file://$PROJECT_DIR$/src/ui/comp3111/Main.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="6231">
@@ -346,16 +209,7 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/core/comp3111/Chart.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="465">
-          <caret line="25" selection-start-line="25" selection-end-line="25" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
+    <entry file="file://$PROJECT_DIR$/src/core/comp3111/Chart.java" />
     <entry file="file://$PROJECT_DIR$/faq.md">
       <provider selected="true" editor-type-id="text-editor">
         <state>
@@ -374,9 +228,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1674">
           <caret line="60" column="8" selection-start-line="60" selection-start-column="8" selection-end-line="60" selection-end-column="8" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -401,16 +252,7 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/core/comp3111/Chart.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="176">
-          <caret line="16" selection-start-line="16" selection-end-line="16" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
+    <entry file="file://$PROJECT_DIR$/src/core/comp3111/Chart.java" />
     <entry file="file://$PROJECT_DIR$/bin/core/comp3111/SampleDataGenerator.class">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-279">
@@ -467,20 +309,11 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/core/comp3111/ChartException.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="124">
-          <caret line="4" column="13" selection-start-line="4" selection-start-column="13" selection-end-line="4" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
+    <entry file="file://$PROJECT_DIR$/src/core/comp3111/ChartException.java" />
     <entry file="file://$PROJECT_DIR$/src/core/comp3111/CSVReader.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1249">
           <caret line="65" column="7" lean-forward="true" selection-start-line="65" selection-start-column="7" selection-end-line="65" selection-end-column="7" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -505,16 +338,7 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/core/comp3111/Chart.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1767">
-          <caret line="57" selection-start-line="57" selection-end-line="57" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
+    <entry file="file://$PROJECT_DIR$/src/core/comp3111/Chart.java" />
     <entry file="file://$PROJECT_DIR$/bin/core/comp3111/DataColumn.class">
       <provider selected="true" editor-type-id="text-editor">
         <state>
@@ -524,12 +348,11 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/core/comp3111/DataTable.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="691">
-          <caret line="164" lean-forward="true" selection-start-line="164" selection-end-line="164" />
+        <state relative-caret-position="753">
+          <caret line="181" column="74" selection-start-line="181" selection-start-column="74" selection-end-line="181" selection-end-column="74" />
           <folding>
-            <element signature="e#3480#3481#0" expanded="true" />
-            <element signature="e#3528#3529#0" expanded="true" />
-            <element signature="e#4426#4446#0" expanded="true" />
+            <element signature="imports" expanded="true" />
+            <element signature="e#5012#5020#0" expanded="true" />
           </folding>
         </state>
       </provider>
