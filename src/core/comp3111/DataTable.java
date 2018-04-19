@@ -2,6 +2,7 @@ package core.comp3111;
 
 import java.text.NumberFormat;
 import java.text.ParseException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
@@ -127,11 +128,21 @@ public class DataTable {
 		Map.Entry<String, DataColumn> entry = dc.entrySet().iterator().next();
 		return dc.get(entry.getKey()).getSize();
 	}
-
+	/**
+	 * Return the column names of the data table
+	 * 
+	 * @return the column names of the data table
+	 */
 	public String[] getColNames() {
 		return dc.keySet().toArray(new String[0]);
 	}
 
+	/**
+	 * Filter the data table according to the input given from UI.
+	 * 
+	 * @param op
+	 * 			- the filter operation that will be used to filter the data table. Example: "< 5".
+	 */
 	public void filterData(String op) throws DataTableException {
 		String[] operation = op.split("\\s+");
 
@@ -144,7 +155,7 @@ public class DataTable {
 				!Objects.equals(operation[0], ">=") &&
 				!Objects.equals(operation[0], ">") &&
 				!Objects.equals(operation[0], "==") &&
-				!Objects.equals(operation[0], "!=") &&
+				!Objects.equals(operation[0], "!=")
 				)
 			throw new DataTableException("Comparison operator is invalid!");
 
@@ -162,12 +173,13 @@ public class DataTable {
 
 			if (Objects.equals(column.getTypeName(), DataType.TYPE_NUMBER)) {
 				Number[] values = (Number[]) column.getData();
+				ArrayList<Number> filtered_values = new ArrayList<Number>();
 
-				for (int i = 0; i < values.length; ++i) {
-					values[i] = filter(operation[0], values[i]);
+				for (Number val : values) {
+					if (filter(operation[0], op_val, val)) filtered_values.add(val);
 				}
 
-				column.set(DataType.TYPE_NUMBER, values);
+				column.set(DataType.TYPE_NUMBER, filtered_values.toArray());
 			}
 
 			temp.put(colName, column);
@@ -176,6 +188,32 @@ public class DataTable {
 		dc = temp;
 	}
 
+	/**
+	 * Check if the number pass the filter
+	 * 
+	 * @param operator
+	 * 			- the string containing filter operator that will be used to filter the data table. Example: "<"
+	 * @param op_val
+	 * 			- the number that will be used for filter
+	 * @param number
+	 * 			- the number that will be checked against
+	 */
+	private boolean filter(String operator, Number op_val, Number number) {
+		switch (operator) {
+			case "<": return number.floatValue() < op_val.floatValue();
+				break;
+			case "<=": return number.floatValue() <= op_val.floatValue();
+				break;
+			case ">": return number.floatValue() > op_val.floatValue();
+				break;
+			case ">=": return number.floatValue() >= op_val.floatValue();
+			break;
+			case "==": return number.floatValue() == op_val.floatValue();
+				break;
+			case "!=": return number.floatValue() != op_val.floatValue();
+				break;
+		}
+	}
 	// attribute: A java.util.Map interface
 	// KeyType: String
 	// ValueType: DataColumn
