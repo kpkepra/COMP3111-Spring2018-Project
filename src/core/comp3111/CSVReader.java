@@ -20,6 +20,10 @@ public class CSVReader {
         fields = new ArrayList<>();
     }
 
+    public int getNumCol() {
+        return numCol;
+    }
+
     public ArrayList<String> readRow(){
         ArrayList<String> row = new ArrayList<>();
         try{
@@ -45,10 +49,6 @@ public class CSVReader {
         return row;
     }
 
-
-//    public ArrayList<String> readCol(){
-//        return null;
-//    }
 
     public void readALL(){
         try {
@@ -156,5 +156,8 @@ public class CSVReader {
         ArrayList<String> rowData = ch.readRow();
         System.out.print(ch.data);
         System.out.print(rowData);
+        CSVWriter writer = new CSVWriter("output.csv");
+        writer.writeArray(ch.data,ch.getNumCol());
+        writer.close();
     }
 }
