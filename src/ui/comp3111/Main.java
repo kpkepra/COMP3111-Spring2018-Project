@@ -3,9 +3,11 @@ package ui.comp3111;
 import core.comp3111.DataColumn;
 import core.comp3111.DataTable;
 import core.comp3111.DataType;
+import core.comp3111.Line;
 import core.comp3111.SampleDataGenerator;
 import javafx.application.Application;
 import javafx.geometry.Pos;
+import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.chart.LineChart;
 import javafx.scene.chart.NumberAxis;
@@ -13,10 +15,7 @@ import javafx.scene.chart.XYChart;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.Separator;
-import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.Pane;
-import javafx.scene.layout.VBox;
+import javafx.scene.layout.*;
 import javafx.stage.Stage;
 
 /**
@@ -274,6 +273,21 @@ public class Main extends Application {
 
             e.printStackTrace(); // exception handling: print the error message on the console
         }
+//        try {
+//            stage = primaryStage;
+//            Line lineChart = new Line(SampleDataGenerator.generateSampleLineData());
+//            BorderPane chartNode = lineChart.display();
+//
+//            Scene scene  = new Scene(chartNode, 400, 500);
+//
+//            stage.setScene(scene);
+//            stage.setResizable(true);
+//            stage.show();
+//
+//
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
     }
 
     /**
