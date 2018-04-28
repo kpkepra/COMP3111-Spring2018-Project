@@ -1,11 +1,5 @@
 package core.comp3111;
-
-import java.awt.Desktop;
 import java.io.File;
-import java.io.IOException;
-import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -24,17 +18,13 @@ import javafx.stage.Stage;
 * */
 
 public class MyFileChooser extends Application {
-
-    private Desktop desktop = Desktop.getDesktop();
-
+    Button openButton;
     @Override
     public void start(final Stage stage) {
+
         stage.setTitle("Choose a File");
-
         FileChooser fileChooser = new FileChooser();
-
-        Button openButton = new Button("Open From File");
-
+        openButton = new Button("Open From File");
         openButton.setOnAction(
                 new EventHandler<ActionEvent>() {
                     @Override
@@ -67,8 +57,6 @@ public class MyFileChooser extends Application {
         Application.launch(args);
     }
 
-
-
     private void openFile(File file) {
 
             String extension;
@@ -82,7 +70,7 @@ public class MyFileChooser extends Application {
                     readerCSV.openCSV();
                 } else if (extension.equals("corgi")) {
                     MyFileExtenstion mf = new MyFileExtenstion();
-                    if(!mf.openCorgi(fileName)){
+                    if(!mf.loadCorgi(fileName)){
                         System.out.println("fail to open an Corgi Object");
                     }
                 } else {
