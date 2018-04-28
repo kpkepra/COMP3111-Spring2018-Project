@@ -4,7 +4,7 @@ import java.io.*;
 public class MyFileExtenstion {
     private CorgiObj c = new CorgiObj();
 
-    public boolean openCorgi( String fileName){
+    public boolean loadCorgi( String fileName){
         try {
             FileInputStream fileIn = new FileInputStream(fileName);
             ObjectInputStream in = new ObjectInputStream(fileIn);
@@ -26,6 +26,11 @@ public class MyFileExtenstion {
         }
         return true;
 
+    }
+
+    public boolean saveCorgi(){
+        //TODO
+        return true;
     }
 
     /*for testing only*/
