@@ -13,7 +13,7 @@ import javafx.scene.layout.GridPane;
 import java.util.ArrayList;
 import java.util.Objects;
 
-public class Pie implements Chart {
+public class Pie extends Chart {
     private DataTable data;
     private ArrayList<String> textCols;
     private ArrayList<String> numCols;
@@ -31,7 +31,7 @@ public class Pie implements Chart {
         num = numCols.get(0);
     }
 
-    private boolean isLegal() {
+    protected boolean isLegal() {
         for (String colName : data.getColNames()) {
             String colType = data.getCol(colName).getTypeName();
 
