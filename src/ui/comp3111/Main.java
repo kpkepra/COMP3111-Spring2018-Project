@@ -14,6 +14,8 @@ import javafx.scene.control.Separator;
 import javafx.scene.layout.*;
 import javafx.stage.Stage;
 
+import java.util.Objects;
+
 /**
  * The Main class of this GUI application
  *
@@ -258,67 +260,33 @@ public class Main extends Application {
      */
     @Override
     public void start(Stage primaryStage) {
+        try {
+
+            stage = primaryStage; // keep a stage reference as an attribute
+            initScenes(); // initialize the scenes
+            initEventHandlers(); // link up the event handlers
+            putSceneOnStage(SCENE_MAIN_SCREEN); // show the main screen
+
+        } catch (Exception e) {
+
+            e.printStackTrace(); // exception handling: print the error message on the console
+        }
+
+//        -------------------------------- TEST CHARTS --------------------------------
 //        try {
+//            stage = primaryStage;
+//            Pie lineChart = new Pie(SampleDataGenerator.generateSampleLineData());
+//            BorderPane chartNode = lineChart.display();
 //
-//            stage = primaryStage; // keep a stage reference as an attribute
-//            initScenes(); // initialize the scenes
-//            initEventHandlers(); // link up the event handlers
-//            putSceneOnStage(SCENE_MAIN_SCREEN); // show the main screen
+//            Scene scene  = new Scene(chartNode, 400, 500);
 //
+//            stage.setScene(scene);
+//            stage.setResizable(true);
+//            stage.show();
 //        } catch (Exception e) {
-//
-//            e.printStackTrace(); // exception handling: print the error message on the console
+//            e.printStackTrace();
 //        }
-        try {
-            stage = primaryStage;
-            Pie lineChart = new Pie(SampleDataGenerator.generateSampleLineData());
-            BorderPane chartNode = lineChart.display();
-
-            Scene scene  = new Scene(chartNode, 400, 500);
-
-            stage.setScene(scene);
-            stage.setResizable(true);
-            stage.show();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
-    private DataTable generateLineTestData() {
-        DataTable data = new DataTable();
-
-        Number[] num1 = new Integer[] { 100, 67, 36 };
-        DataColumn numCol1 = new DataColumn(DataType.TYPE_NUMBER, num1);
-
-        Number[] num2 = new Integer[] { 123, 33, 72 };
-        DataColumn numCol2 = new DataColumn(DataType.TYPE_NUMBER, num2);
-
-        try {
-            data.addCol("Num1", numCol1);
-            data.addCol("Num2", numCol2);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return data;
-    }
-
-    private DataTable generatePieTestData() {
-        DataTable data = new DataTable();
-
-        Number[] num = new Integer[] { 213, 67, 36 };
-        DataColumn numCol = new DataColumn(DataType.TYPE_NUMBER, num);
-
-        String[] text = new String[] { "Desktop", "Phone", "Tablet" };
-        DataColumn textCol = new DataColumn(DataType.TYPE_STRING, text);
-
-        try {
-            data.addCol("Text", textCol);
-            data.addCol("Num", numCol);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-        return data;
+//        -----------------------------------------------------------------------------
     }
 
     /**
@@ -328,5 +296,38 @@ public class Main extends Application {
      */
     public static void main(String[] args) {
         launch(args);
+//        testSplit();
+    }
+
+    public static void testSplit() {
+//   - ------------------------- TEST SPLIT ---------------------------
+        DataTable data = SampleDataGenerator.generateSampleLineData();
+        printTable(data);
+
+        DataTable[] newdata = new DataTable[2];
+        try {
+            newdata = data.randomSplit(new int[]{30, 70});
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        System.out.println("Table 0 size: " + newdata[0].getNumRow());
+        printTable(newdata[0]);
+        System.out.println("Table 1 size: " + newdata[1].getNumRow());
+        printTable(newdata[1]);
+//    ------------------------------------------------------------------
+
+    }
+    /**
+     * Debugging method - prints DataTable
+     *
+     * @param args
+     */
+    private static void printTable(DataTable dt) {
+        for (String colName : dt.getColNames()) {
+            System.out.println("Column " + colName);
+            DataColumn column  = dt.getCol(colName);
+            for (int i = 0; i < dt.getNumRow(); ++i) System.out.println(column.getData()[i]);
+        }
     }
 }
