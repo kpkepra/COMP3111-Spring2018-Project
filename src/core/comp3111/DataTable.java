@@ -199,21 +199,32 @@ public class DataTable {
      * @param number
      * 			- the number that will be checked against
      */
-    private boolean filter(String operator, Number op_val, Number number) {
+    private boolean filter(String operator, Number op_val, Number number) throws DataTableException {
+        boolean ret_val;
         switch (operator) {
-            case "<": return number.floatValue() < op_val.floatValue();
-            break;
-            case "<=": return number.floatValue() <= op_val.floatValue();
-            break;
-            case ">": return number.floatValue() > op_val.floatValue();
-            break;
-            case ">=": return number.floatValue() >= op_val.floatValue();
-            break;
-            case "==": return number.floatValue() == op_val.floatValue();
-            break;
-            case "!=": return number.floatValue() != op_val.floatValue();
-            break;
+            case "<":
+                ret_val = number.floatValue() < op_val.floatValue();
+                break;
+            case "<=":
+                ret_val = number.floatValue() <= op_val.floatValue();
+                break;
+            case ">":
+                ret_val = number.floatValue() > op_val.floatValue();
+                break;
+            case ">=":
+                ret_val = number.floatValue() >= op_val.floatValue();
+                break;
+            case "==":
+                ret_val = number.floatValue() == op_val.floatValue();
+                break;
+            case "!=":
+                ret_val = number.floatValue() != op_val.floatValue();
+                break;
+            default:
+                throw new DataTableException("Operator string does not match any available operator!");
         }
+
+        return ret_val;
     }
 
     // attribute: A java.util.Map interface
