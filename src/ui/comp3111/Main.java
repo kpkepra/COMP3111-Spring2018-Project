@@ -1,10 +1,6 @@
 package ui.comp3111;
 
-import core.comp3111.DataColumn;
-import core.comp3111.DataTable;
-import core.comp3111.DataType;
-import core.comp3111.Line;
-import core.comp3111.SampleDataGenerator;
+import core.comp3111.*;
 import javafx.application.Application;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
@@ -262,32 +258,67 @@ public class Main extends Application {
      */
     @Override
     public void start(Stage primaryStage) {
-        try {
-
-            stage = primaryStage; // keep a stage reference as an attribute
-            initScenes(); // initialize the scenes
-            initEventHandlers(); // link up the event handlers
-            putSceneOnStage(SCENE_MAIN_SCREEN); // show the main screen
-
-        } catch (Exception e) {
-
-            e.printStackTrace(); // exception handling: print the error message on the console
-        }
 //        try {
-//            stage = primaryStage;
-//            Line lineChart = new Line(SampleDataGenerator.generateSampleLineData());
-//            BorderPane chartNode = lineChart.display();
 //
-//            Scene scene  = new Scene(chartNode, 400, 500);
-//
-//            stage.setScene(scene);
-//            stage.setResizable(true);
-//            stage.show();
-//
+//            stage = primaryStage; // keep a stage reference as an attribute
+//            initScenes(); // initialize the scenes
+//            initEventHandlers(); // link up the event handlers
+//            putSceneOnStage(SCENE_MAIN_SCREEN); // show the main screen
 //
 //        } catch (Exception e) {
-//            e.printStackTrace();
+//
+//            e.printStackTrace(); // exception handling: print the error message on the console
 //        }
+        try {
+            stage = primaryStage;
+            Pie lineChart = new Pie(SampleDataGenerator.generateSampleLineData());
+            BorderPane chartNode = lineChart.display();
+
+            Scene scene  = new Scene(chartNode, 400, 500);
+
+            stage.setScene(scene);
+            stage.setResizable(true);
+            stage.show();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    private DataTable generateLineTestData() {
+        DataTable data = new DataTable();
+
+        Number[] num1 = new Integer[] { 100, 67, 36 };
+        DataColumn numCol1 = new DataColumn(DataType.TYPE_NUMBER, num1);
+
+        Number[] num2 = new Integer[] { 123, 33, 72 };
+        DataColumn numCol2 = new DataColumn(DataType.TYPE_NUMBER, num2);
+
+        try {
+            data.addCol("Num1", numCol1);
+            data.addCol("Num2", numCol2);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return data;
+    }
+
+    private DataTable generatePieTestData() {
+        DataTable data = new DataTable();
+
+        Number[] num = new Integer[] { 213, 67, 36 };
+        DataColumn numCol = new DataColumn(DataType.TYPE_NUMBER, num);
+
+        String[] text = new String[] { "Desktop", "Phone", "Tablet" };
+        DataColumn textCol = new DataColumn(DataType.TYPE_STRING, text);
+
+        try {
+            data.addCol("Text", textCol);
+            data.addCol("Num", numCol);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return data;
     }
 
     /**
