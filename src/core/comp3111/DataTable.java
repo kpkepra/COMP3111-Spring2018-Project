@@ -280,4 +280,14 @@ public class DataTable {
     // ValueType: DataColumn
     private Map<String, DataColumn> dc;
 
+    public void printTable(){
+        for (String name: dc.keySet()){
+
+            String key =name.toString();
+            String value = dc.get(name).toString();
+            System.out.print(key + " ");
+            dc.get(name).printCol();
+        }
+    }
+
 }
