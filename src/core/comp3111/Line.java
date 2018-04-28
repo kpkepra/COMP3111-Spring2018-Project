@@ -3,8 +3,6 @@ package core.comp3111;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.geometry.HPos;
-import javafx.geometry.Insets;
-import javafx.scene.Node;
 import javafx.scene.chart.LineChart;
 import javafx.scene.chart.NumberAxis;
 import javafx.scene.chart.XYChart;
