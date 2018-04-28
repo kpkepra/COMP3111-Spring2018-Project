@@ -1,5 +1,7 @@
 package core.comp3111;
 
+import java.util.Arrays;
+
 /**
  * DataColumn - A column of data. This class will be used by DataTable. It
  * stores the data values (data) and the its type (typeName). String constants
@@ -77,5 +79,8 @@ public class DataColumn {
 	// attributes
 	private Object[] data;
 	private String typeName;
+	 public void printCol(){
+	 	System.out.println(Arrays.asList(data));
+	 }
 
 }
