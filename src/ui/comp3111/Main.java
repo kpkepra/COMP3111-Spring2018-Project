@@ -275,7 +275,7 @@ public class Main extends Application {
 //        -------------------------------- TEST CHARTS --------------------------------
 //        try {
 //            stage = primaryStage;
-//            Pie lineChart = new Pie(SampleDataGenerator.generateSampleLineData());
+//            Line lineChart = new Line(SampleDataGenerator.generateSampleLineData());
 //            BorderPane chartNode = lineChart.display();
 //
 //            Scene scene  = new Scene(chartNode, 400, 500);

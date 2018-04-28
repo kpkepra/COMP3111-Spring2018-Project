@@ -15,7 +15,7 @@ import javafx.scene.layout.*;
 import java.util.ArrayList;
 import java.util.Objects;
 
-public class Line implements Chart {
+public class Line extends Chart {
     private DataTable data;
     private ArrayList<String> numCols;
     private String x;
@@ -31,7 +31,7 @@ public class Line implements Chart {
         y = numCols.get(1);
     }
 
-    private boolean isLegal() {
+    protected boolean isLegal() {
         int numCol = 0;
 
         for (String colName : data.getColNames()) {
