@@ -1,8 +1,34 @@
 package core.comp3111;
-import org.junit.jupiter.api.Test;
 
 import java.io.*;
-public class myFileExtenstion {
+public class MyFileExtenstion {
+    private CorgiObj c = new CorgiObj();
+
+    public boolean openCorgi( String fileName){
+        try {
+            FileInputStream fileIn = new FileInputStream(fileName);
+            ObjectInputStream in = new ObjectInputStream(fileIn);
+            c = (CorgiObj) in.readObject();
+            in.close();
+            fileIn.close();
+        }
+        catch (FileNotFoundException e) {
+            e.printStackTrace();
+            return false;
+        } catch (IOException i) {
+            i.printStackTrace();
+            return false;
+        }
+        catch (ClassNotFoundException c) {
+            System.out.println("class not found!");
+            c.printStackTrace();
+            return false;
+        }
+        return true;
+
+    }
+
+    /*for testing only*/
     static  TestObj t = new TestObj();
     public static void main(String args[]) {
         try {
@@ -46,4 +72,8 @@ class TestObj implements Serializable{
     public void f(){
         System.out.print(privateNum);
     }
+}
+
+class CorgiObj implements Serializable{
+
 }
