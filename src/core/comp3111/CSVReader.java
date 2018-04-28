@@ -1,5 +1,15 @@
 package core.comp3111;
 
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
+import javafx.geometry.Insets;
+import javafx.scene.Scene;
+import javafx.scene.control.Button;
+import javafx.scene.layout.GridPane;
+import javafx.scene.layout.Pane;
+import javafx.scene.layout.VBox;
+import javafx.stage.Stage;
+
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
@@ -8,11 +18,11 @@ import java.util.Collections;
 import java.util.Scanner;
 
 public class CSVReader {
-    File inputFile;
-    ArrayList<String> data;
-    ArrayList<String> fields;
-    int numCol;
-    int numRow;
+    private File inputFile;
+    private ArrayList<String> data;
+    private ArrayList<String> fields;
+    private int numCol;
+    private int numRow;
 
     public CSVReader(String fileName){
         inputFile = new File(fileName);
@@ -22,6 +32,10 @@ public class CSVReader {
 
     public int getNumCol() {
         return numCol;
+    }
+
+    public ArrayList<String> getData(){
+        return data;
     }
 
     public ArrayList<String> readRow(){
@@ -50,7 +64,7 @@ public class CSVReader {
     }
 
 
-    public void readALL(){
+    public void readALL(int command){
         try {
             Scanner sc = new Scanner(inputFile);
             sc.useDelimiter(",|\r\n");
@@ -68,13 +82,18 @@ public class CSVReader {
                     System.out.println("colNum" + colNum);
                     System.out.println("dataSize" + data.size());
                     // this will fail if there's only fields without data
-                    missingDataHandler(isNumericRow(data.get(colNum + numCol)), i);
+                    missingDataHandler(isNumericRow(data.get(colNum + numCol)), i,command);
+
                 }
             }
         }
         catch(FileNotFoundException e){
             e.printStackTrace();
         }
+//        System.out.println("@@@@@@@@");
+//        System.out.println(data);
+//        System.out.println(getData());
+
     }
     private  static boolean isNumericRow(String data){
         try
@@ -88,25 +107,23 @@ public class CSVReader {
         return true;
     }
 
-    private void missingDataHandler(boolean isNumeric,int index){
+    private void missingDataHandler(boolean isNumeric,int index,int command){
         if(isNumeric){
             System.out.println("Encounter empty data, " +
-                    "please enter [1-3] to choose a fill-in method");
-            System.out.println("[1]: Fill with 0 \n" +
-                    "[2]: Fill with mean \n" +
-                    "[3]: Fill with median");
-            Scanner scSysIn = new Scanner(System.in);
-            int command = scSysIn.nextInt();
+                    "please enter [0-2] to choose a fill-in method");
+            System.out.println("[0]: Fill with 0 \n" +
+                    "[1]: Fill with mean \n" +
+                    "[2]: Fill with median");
             switch (command){
-                case 1:
+                case 0:
                     System.out.println("replace with 0");
                     data.set(index,"0");
                     break;
-                case 2:
+                case 1:
                     System.out.println("replace with mean");
                     data.set(index,String.valueOf(getMean(getCol(index))));
                     break;
-                case 3:
+                case 2:
                     System.out.println("replace with median");
                     data.set(index,String.valueOf(getMedian(getCol(index))));
                     break;
@@ -115,6 +132,62 @@ public class CSVReader {
             }
 
         }
+    }
+
+    public void openCSV(){
+        Stage stage = new Stage();
+        Button btFillWithZero = new Button("Fill Empty Data With 0");
+        btFillWithZero.setOnAction(
+                new EventHandler<ActionEvent>() {
+                    @Override
+                    public void handle(final ActionEvent e) {
+                        readALL(0);
+                        System.out.println("fill with 0");
+                        stage.close();
+                        System.out.println(data);
+                    }
+                });
+        Button btFillWithMean =  new Button("Fill Empty Data With mean");
+        btFillWithMean.setOnAction(
+                new EventHandler<ActionEvent>() {
+                    @Override
+                    public void handle(final ActionEvent e) {
+                        readALL(1);
+                        System.out.println("fill with mean");
+                        stage.close();
+                        System.out.println(data);
+                    }
+                });
+        Button btFillWithMedian =  new Button("Fill Empty Data With median");
+        btFillWithMedian.setOnAction(
+                new EventHandler<ActionEvent>() {
+                    @Override
+                    public void handle(final ActionEvent e) {
+                        readALL(2);
+                        System.out.println("fill with median");
+                        stage.close();
+                        System.out.println(data);
+                    }
+                });
+
+        /*open a new window with 3 buttons to choose how to fill in missing data*/
+        stage.setTitle("Choose to Fill in Missing Data");
+
+        GridPane inputGridPane = new GridPane();
+
+        GridPane.setConstraints(btFillWithZero, 0, 0);
+        GridPane.setConstraints(btFillWithMean, 1, 0);
+        GridPane.setConstraints(btFillWithMedian, 2, 0);
+        inputGridPane.setHgap(6);
+        inputGridPane.setVgap(6);
+        inputGridPane.getChildren().addAll(btFillWithZero,btFillWithMean,btFillWithMedian);
+
+        Pane rootGroup = new VBox(12);
+        rootGroup.getChildren().addAll(inputGridPane);
+        rootGroup.setPadding(new Insets(12, 12, 12, 12));
+
+        stage.setScene(new Scene(rootGroup));
+        stage.show();
     }
 
     private ArrayList<String> getCol(int index){
@@ -152,7 +225,10 @@ public class CSVReader {
 
     public static void main(String[] args){
         CSVReader ch = new CSVReader("csvTest1.csv");
-        ch.readALL();
+        System.out.print("enter a command[0-2]");
+        Scanner scSysIn = new Scanner(System.in);
+        int command = scSysIn.nextInt();
+        ch.readALL(command);
         ArrayList<String> rowData = ch.readRow();
         System.out.print(ch.data);
         System.out.print(rowData);
