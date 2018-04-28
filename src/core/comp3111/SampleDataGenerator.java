@@ -80,4 +80,41 @@ public class SampleDataGenerator {
 
         return t;
     }
+
+    private DataTable generatePieTestData() {
+        DataTable data = new DataTable();
+
+        Number[] num = new Integer[] { 213, 67, 36 };
+        DataColumn numCol = new DataColumn(DataType.TYPE_NUMBER, num);
+
+        String[] text = new String[] { "Desktop", "Phone", "Tablet" };
+        DataColumn textCol = new DataColumn(DataType.TYPE_STRING, text);
+
+        try {
+            data.addCol("Text", textCol);
+            data.addCol("Num", numCol);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return data;
+    }
+
+    private DataTable generateLineTestData() {
+        DataTable data = new DataTable();
+
+        Number[] num1 = new Integer[] { 100, 67, 36 };
+        DataColumn numCol1 = new DataColumn(DataType.TYPE_NUMBER, num1);
+
+        Number[] num2 = new Integer[] { 123, 33, 72 };
+        DataColumn numCol2 = new DataColumn(DataType.TYPE_NUMBER, num2);
+
+        try {
+            data.addCol("Num1", numCol1);
+            data.addCol("Num2", numCol2);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return data;
+    }
 }
