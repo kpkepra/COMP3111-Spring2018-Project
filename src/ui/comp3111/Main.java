@@ -3,7 +3,6 @@ package ui.comp3111;
 import core.comp3111.*;
 import javafx.application.Application;
 import javafx.geometry.Pos;
-import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.chart.LineChart;
 import javafx.scene.chart.NumberAxis;
@@ -13,8 +12,6 @@ import javafx.scene.control.Label;
 import javafx.scene.control.Separator;
 import javafx.scene.layout.*;
 import javafx.stage.Stage;
-
-import java.util.Objects;
 
 /**
  * The Main class of this GUI application
