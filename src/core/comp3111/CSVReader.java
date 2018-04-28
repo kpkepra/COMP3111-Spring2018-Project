@@ -38,7 +38,13 @@ public class CSVReader {
         return data;
     }
 
-    public ArrayList<String> readRow(){
+    public ArrayList<String> getFields(){
+        return fields;
+    }
+
+
+
+    public void readField(){
         ArrayList<String> row = new ArrayList<>();
         try{
             Scanner sc = new Scanner(inputFile);
@@ -59,8 +65,7 @@ public class CSVReader {
         catch (FileNotFoundException e){
             e.printStackTrace();
         }
-
-        return row;
+        fields = row;
     }
 
 
@@ -69,30 +74,39 @@ public class CSVReader {
             Scanner sc = new Scanner(inputFile);
             sc.useDelimiter(",|\r\n");
             //read the first line in file and construct the data fields
-            fields = readRow();
+            readField();
+            int count = 0;
             while (sc.hasNext()) {
                 String current = sc.next();
+                //Skip the fields get only data
+                if(count++ < numCol){
+                    continue;
+                }
                 data.add(current);
             }
 
             for(int i = 0; i < data.size();i++) {
                 if (data.get(i).equals("")) {
                     System.out.println("NumCol" + numCol);
-                    int colNum = i % numCol;
+                    int colNum = (i % numCol);
                     System.out.println("colNum" + colNum);
                     System.out.println("dataSize" + data.size());
                     // this will fail if there's only fields without data
-                    missingDataHandler(isNumericRow(data.get(colNum + numCol)), i,command);
-
+                    int nextNum = colNum;
+                    try {
+                        while (data.get(nextNum).equals("")) {
+                            nextNum += numCol;
+                        }
+                    }catch (IndexOutOfBoundsException e){
+                        System.out.println("This column is empty");
+                    }
+                    missingDataHandler(isNumericRow(data.get(nextNum)), i,command);
                 }
             }
         }
         catch(FileNotFoundException e){
             e.printStackTrace();
         }
-//        System.out.println("@@@@@@@@");
-//        System.out.println(data);
-//        System.out.println(getData());
 
     }
     private  static boolean isNumericRow(String data){
@@ -121,11 +135,11 @@ public class CSVReader {
                     break;
                 case 1:
                     System.out.println("replace with mean");
-                    data.set(index,String.valueOf(getMean(getCol(index))));
+                    data.set(index,String.valueOf(getMean(getColWithoutIndex(index))));
                     break;
                 case 2:
                     System.out.println("replace with median");
-                    data.set(index,String.valueOf(getMedian(getCol(index))));
+                    data.set(index,String.valueOf(getMedian(getColWithoutIndex(index))));
                     break;
                 default:
                     System.out.println("Invalid Input");
@@ -190,15 +204,26 @@ public class CSVReader {
         stage.show();
     }
 
-    private ArrayList<String> getCol(int index){
+    private ArrayList<String> getColWithoutIndex(int index){
        ArrayList<String> curCol = new ArrayList<>();
-       for(int i = numCol; i < data.size();i++){
+       for(int i = 0; i < data.size();i++){
            if(i%numCol == index %numCol && i != index){
                curCol.add(data.get(i));
            }
        }
        return curCol;
     }
+
+    public ArrayList<String> getCol(int colNum){
+        ArrayList<String> curCol = new ArrayList<>();
+        for(int i = 0; i < data.size();i++){
+            if(i%numCol == colNum){
+                curCol.add(data.get(i));
+            }
+        }
+        return curCol;
+    }
+
 
     private static double getMean(ArrayList<String> col){
         double sum = 0.0;
@@ -229,9 +254,14 @@ public class CSVReader {
         Scanner scSysIn = new Scanner(System.in);
         int command = scSysIn.nextInt();
         ch.readALL(command);
-        ArrayList<String> rowData = ch.readRow();
-        System.out.print(ch.data);
-        System.out.print(rowData);
+        ch.readField();
+        System.out.println(ch.data);
+        System.out.println(ch.fields);
+        DataTable dt  = DataTableTransformer.transform(ch);
+        //TODO buggy getCol
+        dt.printTable();
+//        System.out.println(Arrays.asList(dt.getColNames()));
+//        System.out.println(dt.getCol("Name"));
         CSVWriter writer = new CSVWriter("output.csv");
         writer.writeArray(ch.data,ch.getNumCol());
         writer.close();
