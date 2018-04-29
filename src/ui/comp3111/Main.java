@@ -322,20 +322,20 @@ public class Main extends Application {
 
     public static void testSplit() {
 //   - ------------------------- TEST SPLIT ---------------------------
-        DataTable data = SampleDataGenerator.generateSampleLineData();
-        printTable(data);
-
-        DataTable[] newdata = new DataTable[2];
-        try {
-            newdata = data.randomSplit(new int[]{30, 70});
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-        System.out.println("Table 0 size: " + newdata[0].getNumRow());
-        printTable(newdata[0]);
-        System.out.println("Table 1 size: " + newdata[1].getNumRow());
-        printTable(newdata[1]);
+//        DataTable data = SampleDataGenerator.generateSampleLineData();
+//        printTable(data);
+//
+//        DataTable[] newdata = new DataTable[2];
+//        try {
+//            newdata = data.randomSplit(new int[]{30, 70});
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
+//
+//        System.out.println("Table 0 size: " + newdata[0].getNumRow());
+//        printTable(newdata[0]);
+//        System.out.println("Table 1 size: " + newdata[1].getNumRow());
+//        printTable(newdata[1]);
 //    ------------------------------------------------------------------
 
     }
