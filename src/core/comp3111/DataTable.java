@@ -423,6 +423,15 @@ public class DataTable {
         }
     }
 
+    /**
+     * Get the DataColumn map
+     *
+     * @returns Map<String, DataColumn> of the DataTable
+     */
+    public Map<String, DataColumn> getDc(){
+        return dc;
+    }
+
     // attribute: A java.util.Map interface
     // KeyType: String
     // ValueType: DataColumn
