@@ -24,6 +24,8 @@ public class CSVReader {
     private int numCol;
     private int numRow;
 
+    public CSVReader(){}
+
     public CSVReader(String fileName){
         inputFile = new File(fileName);
         data = new ArrayList<>();
@@ -100,7 +102,7 @@ public class CSVReader {
                     }catch (IndexOutOfBoundsException e){
                         System.out.println("This column is empty");
                     }
-                    missingDataHandler(isNumericRow(data.get(nextNum)), i,command);
+                    missingDataHandler(isNumericCol(data.get(nextNum)), i,command);
                 }
             }
         }
@@ -109,7 +111,7 @@ public class CSVReader {
         }
 
     }
-    private  static boolean isNumericRow(String data){
+    private  static boolean isNumericCol(String data){
         try
         {
             Double.parseDouble(data);
