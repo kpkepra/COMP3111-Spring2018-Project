@@ -1,7 +1,8 @@
 package core.comp3111;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.text.NumberFormat;
+import java.text.ParseException;
+import java.util.*;
 
 /**
  * 2D array of data values with the following requirements: (1) There are 0 to
@@ -125,9 +126,172 @@ public class DataTable {
         return dc.get(entry.getKey()).getSize();
     }
 
+    /**
+     * Return the column names of the data table
+     *
+     * @return the column names of the data table
+     */
+    public String[] getColNames() {
+        return dc.keySet().toArray(new String[0]);
+    }
+
+    /**
+     * Filter the data table according to the input given from UI.
+     *
+     * @param op
+     * 			- the filter operation that will be used to filter the data table. Example: "< 5".
+     */
+    public void filterData(String op) throws DataTableException {
+        String[] operation = op.split("\\s+");
+
+        Number op_val;
+
+        if (operation.length != 2) throw new DataTableException("Operation does not have two words");
+
+        if (!Objects.equals(operation[0], "<") &&
+                !Objects.equals(operation[0], "<=") &&
+                !Objects.equals(operation[0], ">=") &&
+                !Objects.equals(operation[0], ">") &&
+                !Objects.equals(operation[0], "==") &&
+                !Objects.equals(operation[0], "!=")
+                )
+            throw new DataTableException("Comparison operator is invalid!");
+
+        try {
+            op_val = NumberFormat.getInstance().parse(operation[1]);
+        }
+        catch(NumberFormatException | ParseException e) {
+            throw new DataTableException("Failure in parsing number. Please try again!");
+        }
+
+        Map<String, DataColumn> temp = new HashMap<String, DataColumn>();
+
+        for (String colName : dc.keySet()) {
+            DataColumn column = dc.get(colName);
+
+            if (Objects.equals(column.getTypeName(), DataType.TYPE_NUMBER)) {
+                Number[] values = (Number[]) column.getData();
+                ArrayList<Number> filtered_values = new ArrayList<Number>();
+
+                for (Number val : values) {
+                    if (filter(operation[0], op_val, val)) filtered_values.add(val);
+                }
+
+                column.set(DataType.TYPE_NUMBER, filtered_values.toArray());
+            }
+
+            temp.put(colName, column);
+        }
+
+        dc = temp;
+    }
+
+    /**
+     * Check if the number pass the filter
+     *
+     * @param operator
+     * 			- the string containing filter operator that will be used to filter the data table. Example: "<"
+     * @param op_val
+     * 			- the number that will be used for filter
+     * @param number
+     * 			- the number that will be checked against
+     *
+     * @return whether the data pass the filter
+     */
+    private boolean filter(String operator, Number op_val, Number number) throws DataTableException {
+        boolean ret_val;
+        switch (operator) {
+            case "<":
+                ret_val = number.floatValue() < op_val.floatValue();
+                break;
+            case "<=":
+                ret_val = number.floatValue() <= op_val.floatValue();
+                break;
+            case ">":
+                ret_val = number.floatValue() > op_val.floatValue();
+                break;
+            case ">=":
+                ret_val = number.floatValue() >= op_val.floatValue();
+                break;
+            case "==":
+                ret_val = number.floatValue() == op_val.floatValue();
+                break;
+            case "!=":
+                ret_val = number.floatValue() != op_val.floatValue();
+                break;
+            default:
+                throw new DataTableException("Operator string does not match any available operator!");
+        }
+
+        return ret_val;
+    }
+
+    /**
+     * Split two num
+     *
+     * @param percent
+     * 			- array containing each percentage of split, must total to 100.
+     *
+     * @return array containing two DataTable, each holding number of data according to the ratio.
+     */
+    public DataTable[] randomSplit(int[] percent) throws DataTableException{
+        if (percent.length != 2) throw new DataTableException("Percent array length is not 2!");
+        else if ((percent[0] + percent[1]) != 100.0) throw new DataTableException("Total number of percentage is not equal to 100!");
+
+        Random rand = new Random();
+
+        HashMap<String, ArrayList<Object>> table0 = new HashMap<String, ArrayList<Object>>();
+        HashMap<String, ArrayList<Object>> table1 = new HashMap<String, ArrayList<Object>>();
+
+        for (String colName : getColNames()) {
+            table0.put(colName, new ArrayList<Object>());
+            table1.put(colName, new ArrayList<Object>());
+        }
+
+        for (int i = 0; i < getNumRow(); ++i) {
+            int tableSelect = rand.nextInt(100) + 1;
+
+            for (String colName : getColNames()) {
+                Object data = getCol(colName).getData()[i];
+
+                if (tableSelect < percent[0]) table0.get(colName).add(data);
+                else table1.get(colName).add(data);
+            }
+        }
+
+        DataTable[] newTables = { new DataTable(), new DataTable() };
+
+        for (String colName : getColNames()) {
+            String type = getCol(colName).getTypeName();
+            Object[] colData0 = table0.get(colName).toArray();
+            Object[] colData1 = table1.get(colName).toArray();
+
+            DataColumn column0 = new DataColumn(type, colData0);
+            DataColumn column1 = new DataColumn(type, colData1);
+            newTables[0].addCol(colName, column0);
+            newTables[1].addCol(colName, column1);
+        }
+
+        return newTables;
+    }
+
     // attribute: A java.util.Map interface
     // KeyType: String
     // ValueType: DataColumn
     private Map<String, DataColumn> dc;
+
+    public void printTable(){
+        for (String name: dc.keySet()){
+
+            String key =name.toString();
+            String value = dc.get(name).toString();
+            System.out.print(key + " ");
+            dc.get(name).printCol();
+        }
+    }
+
+    public Map<String, DataColumn> getDc(){
+        return dc;
+    }
 
 }
