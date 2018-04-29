@@ -205,7 +205,7 @@ public class DataTable {
                 if (!new_val.matches("\\d*")) {
                     numberField.setText(new_val.replaceAll("[^\\d]", ""));
                 }
-                numberFilter = new_val;
+                if (new_val != null) numberFilter = new_val;
             }
         });
 
@@ -322,7 +322,6 @@ public class DataTable {
     /**
      * Ask the user whether to save the new dataset or replace old one instead
      */
-
     private void askSaveReplace() {
         GridPane saveReplace = new GridPane();
         saveReplace.setHgap(10);
@@ -363,17 +362,79 @@ public class DataTable {
         stage.show();
     }
 
+    public GridPane splitDisplay() {
+        percentSplit = new float[2];
+        GridPane root = new GridPane();
+        root.setHgap(10);
+        root.setVgap(4);
+        ColumnConstraints column1 = new ColumnConstraints();
+        column1.setPercentWidth(50);
+        column1.setHalignment(HPos.CENTER);
+        ColumnConstraints column2 = new ColumnConstraints();
+        column2.setHalignment(HPos.CENTER);
+        column2.setPercentWidth(50);
+        root.getColumnConstraints().addAll(column1, column2);
+
+        root.add(new Label("Input percentage of split:"), 0, 0, 2, 1);
+        root.add(new Label("Dataset 1"), 0, 1);
+        root.add(new Label("Dataset 2"), 1, 1);
+
+        TextField numberField1 = new TextField();
+        numberField1.textProperty().addListener(new ChangeListener<String>() {
+            @Override
+            public void changed(ObservableValue observableValue, String old_val, String new_val) {
+                if (!new_val.matches("\\d*")) {
+                    numberField1.setText(new_val.replaceAll("[^\\d]", ""));
+                }
+                if (new_val != null) percentSplit[0] = (Float.valueOf(new_val)).floatValue();
+            }
+        });
+
+        TextField numberField2 = new TextField();
+        numberField2.textProperty().addListener(new ChangeListener<String>() {
+            @Override
+            public void changed(ObservableValue observableValue, String old_val, String new_val) {
+                if (!new_val.matches("\\d*")) {
+                    numberField2.setText(new_val.replaceAll("[^\\d]", ""));
+                }
+                if (new_val != null) percentSplit[1] = (Float.valueOf(new_val)).floatValue();
+            }
+        });
+
+        root.add(numberField1, 0, 2);
+        root.add(numberField2, 1, 2);
+
+        Button splitButton = new Button("Split");
+        splitButton.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent e) {
+                try {
+                    DataTable[] newTables = randomSplit();
+
+                    newTables[0].printTable();
+                    System.out.println("AAAAAAAAAAAAAAAAAAAAAA");
+                    newTables[1].printTable();
+                    //TODO: Save Data Table
+                }
+                catch (Exception ex) {
+                    ex.printStackTrace();
+                }
+            }
+        });
+
+        root.add(splitButton, 0, 3, 2, 1);
+
+        return root;
+    }
+
     /**
      * Split two num
      *
-     * @param percent
-     * 			- array containing each percentage of split, must total to 100.
-     *
      * @return array containing two DataTable, each holding number of data according to the ratio.
      */
-    public DataTable[] randomSplit(int[] percent) throws DataTableException{
-        if (percent.length != 2) throw new DataTableException("Percent array length is not 2!");
-        else if ((percent[0] + percent[1]) != 100.0) throw new DataTableException("Total number of percentage is not equal to 100!");
+    private DataTable[] randomSplit() throws DataTableException{
+        if (percentSplit.length != 2) throw new DataTableException("Percent array length is not 2!");
+        else if ((percentSplit[0] + percentSplit[1]) != 100.0) throw new DataTableException("Total number of percentage is not equal to 100!");
 
         Random rand = new Random();
 
@@ -391,7 +452,7 @@ public class DataTable {
             for (String colName : getColNames()) {
                 Object data = getCol(colName).getData()[i];
 
-                if (tableSelect < percent[0]) table0.get(colName).add(data);
+                if (tableSelect < percentSplit[0]) table0.get(colName).add(data);
                 else table1.get(colName).add(data);
             }
         }
@@ -443,4 +504,7 @@ public class DataTable {
     String columnFilter;
     String operatorFilter;
     String numberFilter;
+
+    // Split Variable
+    float[] percentSplit;
 }
