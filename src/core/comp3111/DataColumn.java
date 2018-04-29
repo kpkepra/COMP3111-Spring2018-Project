@@ -1,5 +1,7 @@
 package core.comp3111;
 
+import javafx.beans.binding.ObjectExpression;
+
 import java.util.Arrays;
 
 /**
@@ -79,8 +81,44 @@ public class DataColumn {
 	// attributes
 	private Object[] data;
 	private String typeName;
-	 public void printCol(){
+	public void printCol(){
 	 	System.out.println(Arrays.asList(data));
-	 }
+	}
+
+	public boolean isNumericCol(){
+		try{
+			Integer.parseInt((String)data[0]);
+		}
+		catch(NumberFormatException e1){
+			try
+			{
+				Double.parseDouble((String)data[0]);
+			}
+			catch(NumberFormatException e2)
+			{
+				return false;
+			}
+			typeName = "double";
+			return true;
+		}
+		typeName = "int";
+		return true;
+	}
+
+	public void stringToNumericType(){
+		if(typeName.equals("int")){
+			for(int i =0; i < data.length; i++){
+				data[i] = Integer.valueOf((String)data[i]);
+			}
+		}
+		else{
+			for(int i =0; i < data.length; i++){
+				data[i] = Double.valueOf((String)data[i]);
+			}
+		}
+	}
+
+
+
 
 }

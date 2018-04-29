@@ -70,9 +70,7 @@ public class MyFileChooser extends Application {
                     readerCSV.openCSV();
                 } else if (extension.equals("corgi")) {
                     MyFileExtenstion mf = new MyFileExtenstion();
-                    if(!mf.loadCorgi(fileName)){
-                        System.out.println("fail to open an Corgi Object");
-                    }
+                    mf.loadCorgi(fileName);
                 } else {
                     System.out.println("unknown file type!!!!");
                 }

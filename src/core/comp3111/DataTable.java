@@ -290,4 +290,8 @@ public class DataTable {
         }
     }
 
+    public Map<String, DataColumn> getDc(){
+        return dc;
+    }
+
 }
