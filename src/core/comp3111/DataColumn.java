@@ -116,6 +116,7 @@ public class DataColumn {
 				data[i] = Double.valueOf((String)data[i]);
 			}
 		}
+		typeName = DataType.TYPE_NUMBER;
 	}
 
 
