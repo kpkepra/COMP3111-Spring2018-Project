@@ -2,6 +2,7 @@ package ui.comp3111;
 
 import core.comp3111.*;
 import javafx.application.Application;
+import javafx.event.EventHandler;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.chart.LineChart;
@@ -12,6 +13,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.Separator;
 import javafx.scene.layout.*;
 import javafx.stage.Stage;
+import javafx.stage.WindowEvent;
 
 /**
  * The Main class of this GUI application
@@ -257,17 +259,17 @@ public class Main extends Application {
      */
     @Override
     public void start(Stage primaryStage) {
-        try {
-
-            stage = primaryStage; // keep a stage reference as an attribute
-            initScenes(); // initialize the scenes
-            initEventHandlers(); // link up the event handlers
-            putSceneOnStage(SCENE_MAIN_SCREEN); // show the main screen
-
-        } catch (Exception e) {
-
-            e.printStackTrace(); // exception handling: print the error message on the console
-        }
+//        try {
+//
+//            stage = primaryStage; // keep a stage reference as an attribute
+//            initScenes(); // initialize the scenes
+//            initEventHandlers(); // link up the event handlers
+//            putSceneOnStage(SCENE_MAIN_SCREEN); // show the main screen
+//
+//        } catch (Exception e) {
+//
+//            e.printStackTrace(); // exception handling: print the error message on the console
+//        }
 
 //        -------------------------------- TEST CHARTS --------------------------------
 //        try {
@@ -284,6 +286,27 @@ public class Main extends Application {
 //            e.printStackTrace();
 //        }
 //        -----------------------------------------------------------------------------
+        try {
+            DataTable data = SampleDataGenerator.generateSampleLineData();
+            printTable(data);
+
+            stage = primaryStage;
+
+            GridPane node = data.filterDisplay();
+            Scene scene  = new Scene(node, 1280, 720);
+
+            stage.setScene(scene);
+            stage.setResizable(true);
+            stage.show();
+            stage.setOnCloseRequest(new EventHandler<WindowEvent>() {
+                                        public void handle(WindowEvent we) {
+                                            System.out.println("AFTER FILTER");
+                                            printTable(data);
+                                        }
+                                    });
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     /**
@@ -294,6 +317,7 @@ public class Main extends Application {
     public static void main(String[] args) {
         launch(args);
 //        testSplit();
+//        testFilter();
     }
 
     public static void testSplit() {
@@ -315,6 +339,11 @@ public class Main extends Application {
 //    ------------------------------------------------------------------
 
     }
+
+    public static void testFilter() {
+
+    }
+
     /**
      * Debugging method - prints DataTable
      *
