@@ -116,7 +116,6 @@ public class Pie extends Chart {
             PieChart.Data slice = new PieChart.Data(textData[i], numData[i].floatValue());
             pieChart.getData().add(slice);
         }
-
         return pieChart;
     }
 }
