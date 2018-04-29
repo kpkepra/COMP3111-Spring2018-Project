@@ -10,7 +10,7 @@ public class DataTableTransformer {
         DataTable dt = new DataTable();
         ArrayList<String> fields = csv.getFields();
         for(int i = 0; i < csv.getNumCol();i++) {
-            DataColumn col = new DataColumn("String",csv.getCol(i).toArray());
+            DataColumn col = new DataColumn(DataType.TYPE_STRING,csv.getCol(i).toArray());
             try {
                 dt.addCol(fields.get(i), col);
             }catch (DataTableException dte){
