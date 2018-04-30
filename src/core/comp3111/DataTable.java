@@ -454,7 +454,7 @@ public class DataTable implements Serializable {
                     stage.setOnHiding(new EventHandler<WindowEvent>() {
                         public void handle(WindowEvent we) {
                             if (save) {
-                                //TODO: Save Data Table
+                                //TODO: Save Data Tables
                             }
                             else {
                                 GridPane chooseReplace = new GridPane();
@@ -469,7 +469,6 @@ public class DataTable implements Serializable {
                                 chooseReplace.getColumnConstraints().addAll(column1, column2);
                                 chooseReplace.add(new Label("Which dataset to overwrite with?"), 0, 0, 2, 1);
                                 chooseReplace.setStyle("-fx-font: 16 arial;");
-
 
                                 Button button1 = new Button("Dataset 1");
                                 button1.setOnAction(new EventHandler<ActionEvent>() {
@@ -492,6 +491,7 @@ public class DataTable implements Serializable {
                                 chooseReplace.add(button1, 0, 1);
                                 chooseReplace.add(button2, 1, 1);
                                 Scene scene = new Scene(chooseReplace);
+                                stage = new Stage();
                                 stage.setScene(scene);
                                 stage.show();
                             }
@@ -576,8 +576,6 @@ public class DataTable implements Serializable {
                     }
 
                     askSaveReplace();
-
-
                 }
                 catch (Exception ex) {
                     ex.printStackTrace();
@@ -586,8 +584,6 @@ public class DataTable implements Serializable {
         });
 
         root.add(splitButton, 0, 3, 2, 1);
-
-
 
         return root;
     }
