@@ -304,6 +304,7 @@ public class Main extends Application {
                                             printTable(data);
                                         }
                                     });
+
         } catch (Exception e) {
             e.printStackTrace();
         }
