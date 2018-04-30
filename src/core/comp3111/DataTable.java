@@ -1,15 +1,14 @@
 package core.comp3111;
 
+import javafx.beans.property.ReadOnlyFloatWrapper;
+import javafx.beans.property.ReadOnlyStringWrapper;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.HPos;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
@@ -167,6 +166,9 @@ public class DataTable implements Serializable {
         column3.setPercentWidth(25);
         selectFilter.getColumnConstraints().addAll(column1, column2, column3);
 
+        TableView datasetTable = displayTable();
+        selectFilter.add(datasetTable, 0, 0, 3, 1);
+
         ComboBox columnCombo = new ComboBox();
         for (String colName : getColNames()) {
             String colType = getCol(colName).getTypeName();
@@ -180,8 +182,8 @@ public class DataTable implements Serializable {
             }
         });
 
-        selectFilter.add(new Label("Select column as filter base: "), 0, 0);
-        selectFilter.add(columnCombo, 0, 1);
+        selectFilter.add(new Label("Select column as filter base: "), 0, 1);
+        selectFilter.add(columnCombo, 0, 2);
 
         String[] operators = {"<", "<=", ">", ">=", "==", "!="};
         ComboBox operatorCombo = new ComboBox();
@@ -196,8 +198,8 @@ public class DataTable implements Serializable {
             }
         });
 
-        selectFilter.add(new Label("Select operator to filter with: "), 1, 0);
-        selectFilter.add(operatorCombo, 1, 1);
+        selectFilter.add(new Label("Select operator to filter with: "), 1, 1);
+        selectFilter.add(operatorCombo, 1, 2);
 
         TextField numberField = new TextField();
         numberField.textProperty().addListener(new ChangeListener<String>() {
@@ -210,8 +212,8 @@ public class DataTable implements Serializable {
             }
         });
 
-        selectFilter.add(new Label("Input number to check against: "), 2, 0);
-        selectFilter.add(numberField, 2, 1);
+        selectFilter.add(new Label("Input number to check against: "), 2, 1);
+        selectFilter.add(numberField, 2, 2);
         selectFilter.setStyle("-fx-font: 16 arial;");
 
         Button filterButton = new Button("Filter");
@@ -220,6 +222,14 @@ public class DataTable implements Serializable {
             public void handle(ActionEvent e) {
                 try {
                     HashMap<String, DataColumn> tempTable = filterData();
+
+                    selectFilter.getChildren().remove(datasetTable);
+
+                    DataTable temp = new DataTable();
+                    temp.dc = tempTable;
+
+                    TableView datasetTable = temp.displayTable();
+                    selectFilter.add(datasetTable, 0, 0, 3, 1);
 
                     stage = new Stage();
                     stage.setOnHiding(new EventHandler<WindowEvent>() {
@@ -243,7 +253,7 @@ public class DataTable implements Serializable {
             }
         });
 
-        selectFilter.add(filterButton, 0, 2, 3, 1);
+        selectFilter.add(filterButton, 0, 3, 3, 1);
 
         return selectFilter;
     }
@@ -384,10 +394,9 @@ public class DataTable implements Serializable {
         numberField1.textProperty().addListener(new ChangeListener<String>() {
             @Override
             public void changed(ObservableValue observableValue, String old_val, String new_val) {
-                if (!new_val.matches("\\d*")) {
-                    numberField1.setText(new_val.replaceAll("[^\\d]", ""));
+                if (!new_val.matches("[\\d,\\.]*")) {
+                    numberField1.setText(new_val.replaceAll("[^\\d, ^\\.]", ""));
                 }
-                if (new_val != null) percentSplit[0] = (Float.valueOf(new_val)).floatValue();
             }
         });
 
@@ -395,8 +404,8 @@ public class DataTable implements Serializable {
         numberField2.textProperty().addListener(new ChangeListener<String>() {
             @Override
             public void changed(ObservableValue observableValue, String old_val, String new_val) {
-                if (!new_val.matches("\\d*")) {
-                    numberField2.setText(new_val.replaceAll("[^\\d]", ""));
+                if (!new_val.matches("[\\d,\\.]*")) {
+                    numberField2.setText(new_val.replaceAll("[^\\d, ^\\.]", ""));
                 }
                 if (new_val != null) percentSplit[1] = (Float.valueOf(new_val)).floatValue();
             }
@@ -405,17 +414,145 @@ public class DataTable implements Serializable {
         root.add(numberField1, 0, 2);
         root.add(numberField2, 1, 2);
 
+        TableView<Integer> datasetTable = displayTable();
+
+        root.add(datasetTable, 0, 4, 2, 1);
+
         Button splitButton = new Button("Split");
         splitButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent e) {
                 try {
+                    percentSplit[0] = (Float.valueOf(numberField1.getText())).floatValue();
+                    percentSplit[1] = (Float.valueOf(numberField2.getText())).floatValue();
                     DataTable[] newTables = randomSplit();
 
-                    newTables[0].printTable();
-                    System.out.println("AAAAAAAAAAAAAAAAAAAAAA");
-                    newTables[1].printTable();
-                    //TODO: Save Data Table
+                    stage = new Stage();
+                    stage.setOnHiding(new EventHandler<WindowEvent>() {
+                        public void handle(WindowEvent we) {
+                            if (save) {
+                                //TODO: Save Data Tables
+                            }
+                            else {
+                                GridPane chooseReplace = new GridPane();
+                                chooseReplace.setHgap(10);
+                                chooseReplace.setVgap(10);
+                                ColumnConstraints column1 = new ColumnConstraints();
+                                column1.setHalignment(HPos.CENTER);
+                                column1.setPercentWidth(50);
+                                ColumnConstraints column2 = new ColumnConstraints();
+                                column2.setHalignment(HPos.CENTER);
+                                column2.setPercentWidth(50);
+                                chooseReplace.getColumnConstraints().addAll(column1, column2);
+                                chooseReplace.add(new Label("Which dataset to overwrite with?"), 0, 0, 2, 1);
+                                chooseReplace.setStyle("-fx-font: 16 arial;");
+
+                                Button button1 = new Button("Dataset 1");
+                                button1.setOnAction(new EventHandler<ActionEvent>() {
+                                    @Override
+                                    public void handle(ActionEvent e) {
+                                        dc = newTables[0].dc;
+                                        stage.hide();
+                                    }
+                                });
+
+                                Button button2 = new Button("Dataset2");
+                                button2.setOnAction(new EventHandler<ActionEvent>() {
+                                    @Override
+                                    public void handle(ActionEvent e) {
+                                        dc = newTables[1].dc;
+                                        stage.hide();
+                                    }
+                                });
+
+                                chooseReplace.add(button1, 0, 1);
+                                chooseReplace.add(button2, 1, 1);
+                                Scene scene = new Scene(chooseReplace);
+                                stage = new Stage();
+                                stage.setScene(scene);
+                                stage.show();
+                            }
+                        }
+                    });
+
+                    root.getChildren().remove(datasetTable);
+
+                    TableView<Integer> datasetTable = new TableView();
+                    datasetTable.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
+                    root.add(datasetTable, 0, 4, 2, 1);
+
+                    for (int i = 0; i < getNumRow(); i++) {
+                        datasetTable.getItems().add(i);
+                    }
+
+                    TableColumn dataset1 = new TableColumn("Dataset 1");
+                    TableColumn dataset2 = new TableColumn("Dataset 2");
+
+                    datasetTable.getColumns().addAll(dataset1, dataset2);
+
+                    for (String colName : newTables[0].getColNames()) {
+                        DataColumn dataColumn = newTables[0].getCol(colName);
+
+                        if (Objects.equals(dataColumn.getTypeName(), DataType.TYPE_STRING)) {
+                            TableColumn<Integer, String> column = new TableColumn<>(colName);
+                            Object[] data = dataColumn.getData();
+
+                            column.setCellValueFactory(cellData -> {
+                                Integer rowIndex = cellData.getValue();
+
+                                if (rowIndex < newTables[0].getNumRow()) return new ReadOnlyStringWrapper((String) data[rowIndex]);
+                                else return null;
+                            });
+                            column.prefWidthProperty().bind(dataset1.widthProperty().divide(newTables[0].getNumCol()));
+                            dataset1.getColumns().add(column);
+                        }
+                        if (Objects.equals(dataColumn.getTypeName(), DataType.TYPE_NUMBER)) {
+                            TableColumn<Integer, Number> column = new TableColumn<>(colName);
+                            Object[] data = dataColumn.getData();
+
+                            column.setCellValueFactory(cellData -> {
+                                Integer rowIndex = cellData.getValue();
+
+                                if (rowIndex < newTables[0].getNumRow()) return new ReadOnlyFloatWrapper(((Number)data[rowIndex]).floatValue());
+                                else return null;
+                            });
+                            column.prefWidthProperty().bind(dataset1.widthProperty().divide(newTables[0].getNumCol()));
+                            dataset1.getColumns().add(column);
+                        }
+                    }
+
+                    for (String colName : newTables[1].getColNames()) {
+                        DataColumn dataColumn = newTables[1].getCol(colName);
+
+                        if (Objects.equals(dataColumn.getTypeName(), DataType.TYPE_STRING)) {
+                            TableColumn<Integer, String> column = new TableColumn<>(colName);
+                            Object[] data = dataColumn.getData();
+
+                            column.setCellValueFactory(cellData -> {
+                                Integer rowIndex = cellData.getValue();
+
+                                if (rowIndex < newTables[1].getNumRow()) return new ReadOnlyStringWrapper((String) data[rowIndex]);
+                                else return null;
+                            });
+                            column.prefWidthProperty().bind(dataset2.widthProperty().divide(newTables[1].getNumCol()));
+                            dataset2.getColumns().add(column);
+                        }
+                        if (Objects.equals(dataColumn.getTypeName(), DataType.TYPE_NUMBER)) {
+                            TableColumn<Integer, Number> column = new TableColumn<>(colName);
+                            Object[] data = dataColumn.getData();
+
+                            column.setCellValueFactory(cellData -> {
+                                Integer rowIndex = cellData.getValue();
+
+                                if (rowIndex < newTables[1].getNumRow()) return new ReadOnlyFloatWrapper(((Number)data[rowIndex]).floatValue());
+                                else return null;
+                            });
+                            column.prefWidthProperty().bind(dataset2.widthProperty().divide(newTables[1].getNumCol()));
+                            dataset2.getColumns().add(column);
+                        }
+                    }
+
+                    askSaveReplace();
                 }
                 catch (Exception ex) {
                     ex.printStackTrace();
@@ -492,6 +629,46 @@ public class DataTable implements Serializable {
      */
     public Map<String, DataColumn> getDc(){
         return dc;
+    }
+
+    public TableView displayTable() {
+        TableView<Integer> datasetTable = new TableView();
+        datasetTable.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
+
+        for (int i = 0; i < getNumRow(); i++) {
+            datasetTable.getItems().add(i);
+        }
+
+        for (String colName : getColNames()) {
+            DataColumn dataColumn = getCol(colName);
+            Object[] data = dataColumn.getData();
+
+            if (Objects.equals(dataColumn.getTypeName(), DataType.TYPE_STRING)) {
+                TableColumn<Integer, String> column = new TableColumn<>(colName);
+
+                column.setCellValueFactory(cellData -> {
+                    Integer rowIndex = cellData.getValue();
+
+                    return new ReadOnlyStringWrapper((String) data[rowIndex]);
+
+                });
+                column.prefWidthProperty().bind(datasetTable.widthProperty().divide(getNumCol()));
+                datasetTable.getColumns().add(column);
+            }
+            if (Objects.equals(dataColumn.getTypeName(), DataType.TYPE_NUMBER)) {
+                TableColumn<Integer, Number> column = new TableColumn<>(colName);
+
+                column.setCellValueFactory(cellData -> {
+                    Integer rowIndex = cellData.getValue();
+
+                    return new ReadOnlyFloatWrapper(((Number)data[rowIndex]).floatValue());
+                });
+                column.prefWidthProperty().bind(datasetTable.widthProperty().divide(getNumCol()));
+                datasetTable.getColumns().add(column);
+            }
+        }
+
+        return datasetTable;
     }
 
     // attribute: A java.util.Map interface
