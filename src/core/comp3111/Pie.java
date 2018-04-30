@@ -10,10 +10,11 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Objects;
 
-public class Pie extends Chart {
+public class Pie extends Chart implements Serializable{
     private DataTable data;
     private ArrayList<String> textCols;
     private ArrayList<String> numCols;
