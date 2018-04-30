@@ -292,7 +292,7 @@ public class Main extends Application {
 
             stage = primaryStage;
 
-            GridPane node = data.splitDisplay();
+            GridPane node = data.filterDisplay();
             Scene scene  = new Scene(node, 1280, 720);
 
             stage.setScene(scene);
