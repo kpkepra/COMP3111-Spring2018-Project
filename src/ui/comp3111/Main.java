@@ -292,7 +292,7 @@ public class Main extends Application {
 
             stage = primaryStage;
 
-            GridPane node = data.filterDisplay();
+            GridPane node = data.splitDisplay();
             Scene scene  = new Scene(node, 1280, 720);
 
             stage.setScene(scene);
@@ -304,6 +304,7 @@ public class Main extends Application {
                                             printTable(data);
                                         }
                                     });
+
         } catch (Exception e) {
             e.printStackTrace();
         }
