@@ -2,6 +2,7 @@ package core.comp3111;
 
 import javafx.beans.binding.ObjectExpression;
 
+import java.io.Serializable;
 import java.util.Arrays;
 
 /**
@@ -12,7 +13,7 @@ import java.util.Arrays;
  * @author cspeter
  *
  */
-public class DataColumn {
+public class DataColumn implements Serializable {
 
 	/**
 	 * Constructor. Create an empty data column
@@ -107,13 +108,16 @@ public class DataColumn {
 
 	public void stringToNumericType(){
 		if(typeName.equals("int")){
+			Integer[] newData = new Integer[data.length];
 			for(int i =0; i < data.length; i++){
-				data[i] = Integer.valueOf((String)data[i]);
+				newData[i] = Integer.valueOf((String)data[i]);
 			}
+			data = newData;
 		}
 		else{
+			Double[] newData = new Double[data.length];
 			for(int i =0; i < data.length; i++){
-				data[i] = Double.valueOf((String)data[i]);
+				newData[i] = Double.valueOf((String)data[i]);
 			}
 		}
 		typeName = DataType.TYPE_NUMBER;
