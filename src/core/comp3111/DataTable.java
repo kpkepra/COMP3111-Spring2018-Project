@@ -14,6 +14,7 @@ import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
 
+import java.io.Serializable;
 import java.util.*;
 
 /**
@@ -26,7 +27,7 @@ import java.util.*;
  * @author cspeter
  *
  */
-public class DataTable {
+public class DataTable implements Serializable {
 
     /**
      * Construct - Create an empty DataTable
