@@ -1,8 +1,21 @@
 package core.comp3111;
 
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
+import javafx.geometry.HPos;
+import javafx.scene.Scene;
+import javafx.scene.control.Button;
+import javafx.scene.control.ComboBox;
+import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
+import javafx.scene.layout.ColumnConstraints;
+import javafx.scene.layout.GridPane;
+import javafx.stage.Stage;
+import javafx.stage.WindowEvent;
+
 import java.io.Serializable;
-import java.text.NumberFormat;
-import java.text.ParseException;
 import java.util.*;
 
 /**
@@ -137,54 +150,136 @@ public class DataTable implements Serializable {
     }
 
     /**
-     * Filter the data table according to the input given from UI.
-     *
-     * @param op
-     * 			- the filter operation that will be used to filter the data table. Example: "< 5".
+     * Display UI for filtering data
      */
-    public void filterData(String op) throws DataTableException {
-        String[] operation = op.split("\\s+");
+    public GridPane filterDisplay() throws DataTableException {
+        GridPane selectFilter = new GridPane();
+        selectFilter.setHgap(10);
+        selectFilter.setVgap(4);
+        ColumnConstraints column1 = new ColumnConstraints();
+        column1.setPercentWidth(50);
+        column1.setHalignment(HPos.CENTER);
+        ColumnConstraints column2 = new ColumnConstraints();
+        column2.setHalignment(HPos.CENTER);
+        column2.setPercentWidth(25);
+        ColumnConstraints column3 = new ColumnConstraints();
+        column3.setHalignment(HPos.CENTER);
+        column3.setPercentWidth(25);
+        selectFilter.getColumnConstraints().addAll(column1, column2, column3);
 
-        Number op_val;
-
-        if (operation.length != 2) throw new DataTableException("Operation does not have two words");
-
-        if (!Objects.equals(operation[0], "<") &&
-                !Objects.equals(operation[0], "<=") &&
-                !Objects.equals(operation[0], ">=") &&
-                !Objects.equals(operation[0], ">") &&
-                !Objects.equals(operation[0], "==") &&
-                !Objects.equals(operation[0], "!=")
-                )
-            throw new DataTableException("Comparison operator is invalid!");
-
-        try {
-            op_val = NumberFormat.getInstance().parse(operation[1]);
-        }
-        catch(NumberFormatException | ParseException e) {
-            throw new DataTableException("Failure in parsing number. Please try again!");
+        ComboBox columnCombo = new ComboBox();
+        for (String colName : getColNames()) {
+            String colType = getCol(colName).getTypeName();
+            if (Objects.equals(colType, DataType.TYPE_NUMBER)) columnCombo.getItems().add(colName);
         }
 
-        Map<String, DataColumn> temp = new HashMap<String, DataColumn>();
-
-        for (String colName : dc.keySet()) {
-            DataColumn column = dc.get(colName);
-
-            if (Objects.equals(column.getTypeName(), DataType.TYPE_NUMBER)) {
-                Number[] values = (Number[]) column.getData();
-                ArrayList<Number> filtered_values = new ArrayList<Number>();
-
-                for (Number val : values) {
-                    if (filter(operation[0], op_val, val)) filtered_values.add(val);
-                }
-
-                column.set(DataType.TYPE_NUMBER, filtered_values.toArray());
+        columnCombo.valueProperty().addListener(new ChangeListener<String>() {
+            @Override
+            public void changed(ObservableValue observableValue, String old_val, String new_val) {
+                columnFilter = new_val;
             }
+        });
 
-            temp.put(colName, column);
+        selectFilter.add(new Label("Select column as filter base: "), 0, 0);
+        selectFilter.add(columnCombo, 0, 1);
+
+        String[] operators = {"<", "<=", ">", ">=", "==", "!="};
+        ComboBox operatorCombo = new ComboBox();
+        for (String operator : operators) {
+            operatorCombo.getItems().add(operator);
         }
 
-        dc = temp;
+        operatorCombo.valueProperty().addListener(new ChangeListener<String>() {
+            @Override
+            public void changed(ObservableValue observableValue, String old_val, String new_val) {
+                operatorFilter = new_val;
+            }
+        });
+
+        selectFilter.add(new Label("Select operator to filter with: "), 1, 0);
+        selectFilter.add(operatorCombo, 1, 1);
+
+        TextField numberField = new TextField();
+        numberField.textProperty().addListener(new ChangeListener<String>() {
+            @Override
+            public void changed(ObservableValue observableValue, String old_val, String new_val) {
+                if (!new_val.matches("\\d*")) {
+                    numberField.setText(new_val.replaceAll("[^\\d]", ""));
+                }
+                if (new_val != null) numberFilter = new_val;
+            }
+        });
+
+        selectFilter.add(new Label("Input number to check against: "), 2, 0);
+        selectFilter.add(numberField, 2, 1);
+        selectFilter.setStyle("-fx-font: 16 arial;");
+
+        Button filterButton = new Button("Filter");
+        filterButton.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent e) {
+                try {
+                    HashMap<String, DataColumn> tempTable = filterData();
+
+                    stage = new Stage();
+                    stage.setOnHiding(new EventHandler<WindowEvent>() {
+                        public void handle(WindowEvent we) {
+                            if (save) {
+                                dc = tempTable;
+                            }
+                            else {
+                                DataTable newTable = new DataTable();
+                                newTable.dc = tempTable;
+                                // TODO: SAVE DATATABLE TO NEW DATASET
+                            }
+                        }
+                    });
+
+                    askSaveReplace();
+                }
+                catch (Exception ex) {
+                    ex.printStackTrace();
+                }
+            }
+        });
+
+        selectFilter.add(filterButton, 0, 2, 3, 1);
+
+        return selectFilter;
+    }
+
+    /**
+     * Filter data according to input from user interface
+     */
+    private HashMap<String, DataColumn> filterData() throws DataTableException {
+        if (operatorFilter == null || columnFilter == null || numberFilter == null) throw new DataTableException("Filter parameters are not filled");
+
+        HashMap<String, ArrayList<Object>> temp = new HashMap<String, ArrayList<Object>>();
+
+        for (String colName : getColNames()) {
+            temp.put(colName, new ArrayList<Object>());
+        }
+
+        Number[] data = (Number[]) getCol(columnFilter).getData();
+        Number op_filter = (Float.valueOf(numberFilter)).floatValue();
+
+        for (int i = 0; i < getNumRow(); ++i) {
+            if (filter(operatorFilter, op_filter, data[i])) {
+                for (String colName : getColNames()) {
+                    Object filteredCell = getCol(colName).getData()[i];
+                    temp.get(colName).add(filteredCell);
+                }
+            }
+        }
+
+        HashMap<String, DataColumn> tempMap = new HashMap<String, DataColumn>();
+        for (String colName : getColNames()) {
+            String type = getCol(colName).getTypeName();
+            DataColumn filteredCol = new DataColumn(type, temp.get(colName).toArray());
+            tempMap.put(colName, filteredCol);
+        }
+
+        return tempMap;
     }
 
     /**
@@ -199,8 +294,8 @@ public class DataTable implements Serializable {
      *
      * @return whether the data pass the filter
      */
-    private boolean filter(String operator, Number op_val, Number number) throws DataTableException {
-        boolean ret_val;
+    private boolean filter(String operator, Number op_val, Number number) {
+        boolean ret_val = false;
         switch (operator) {
             case "<":
                 ret_val = number.floatValue() < op_val.floatValue();
@@ -220,24 +315,127 @@ public class DataTable implements Serializable {
             case "!=":
                 ret_val = number.floatValue() != op_val.floatValue();
                 break;
-            default:
-                throw new DataTableException("Operator string does not match any available operator!");
         }
 
         return ret_val;
     }
 
     /**
+     * Ask the user whether to save the new dataset or replace old one instead
+     */
+    private void askSaveReplace() {
+        GridPane saveReplace = new GridPane();
+        saveReplace.setHgap(10);
+        saveReplace.setVgap(10);
+        ColumnConstraints column1 = new ColumnConstraints();
+        column1.setHalignment(HPos.CENTER);
+        column1.setPercentWidth(50);
+        ColumnConstraints column2 = new ColumnConstraints();
+        column2.setHalignment(HPos.CENTER);
+        column2.setPercentWidth(50);
+        saveReplace.getColumnConstraints().addAll(column1, column2);
+        saveReplace.add(new Label("What do you want to do with the filtered dataset?"), 0, 0, 2, 1);
+        saveReplace.setStyle("-fx-font: 16 arial;");
+
+
+        Button saveButton = new Button("Save");
+        saveButton.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent e) {
+                save = true;
+                stage.hide();
+            }
+        });
+
+        Button replaceButton = new Button("Replace");
+        replaceButton.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent e) {
+                save = false;
+                stage.hide();
+            }
+        });
+
+        saveReplace.add(saveButton, 0, 1);
+        saveReplace.add(replaceButton, 1, 1);
+        Scene scene = new Scene(saveReplace);
+        stage.setScene(scene);
+        stage.show();
+    }
+
+    public GridPane splitDisplay() {
+        percentSplit = new float[2];
+        GridPane root = new GridPane();
+        root.setHgap(10);
+        root.setVgap(4);
+        ColumnConstraints column1 = new ColumnConstraints();
+        column1.setPercentWidth(50);
+        column1.setHalignment(HPos.CENTER);
+        ColumnConstraints column2 = new ColumnConstraints();
+        column2.setHalignment(HPos.CENTER);
+        column2.setPercentWidth(50);
+        root.getColumnConstraints().addAll(column1, column2);
+
+        root.add(new Label("Input percentage of split:"), 0, 0, 2, 1);
+        root.add(new Label("Dataset 1"), 0, 1);
+        root.add(new Label("Dataset 2"), 1, 1);
+
+        TextField numberField1 = new TextField();
+        numberField1.textProperty().addListener(new ChangeListener<String>() {
+            @Override
+            public void changed(ObservableValue observableValue, String old_val, String new_val) {
+                if (!new_val.matches("\\d*")) {
+                    numberField1.setText(new_val.replaceAll("[^\\d]", ""));
+                }
+                if (new_val != null) percentSplit[0] = (Float.valueOf(new_val)).floatValue();
+            }
+        });
+
+        TextField numberField2 = new TextField();
+        numberField2.textProperty().addListener(new ChangeListener<String>() {
+            @Override
+            public void changed(ObservableValue observableValue, String old_val, String new_val) {
+                if (!new_val.matches("\\d*")) {
+                    numberField2.setText(new_val.replaceAll("[^\\d]", ""));
+                }
+                if (new_val != null) percentSplit[1] = (Float.valueOf(new_val)).floatValue();
+            }
+        });
+
+        root.add(numberField1, 0, 2);
+        root.add(numberField2, 1, 2);
+
+        Button splitButton = new Button("Split");
+        splitButton.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent e) {
+                try {
+                    DataTable[] newTables = randomSplit();
+
+                    newTables[0].printTable();
+                    System.out.println("AAAAAAAAAAAAAAAAAAAAAA");
+                    newTables[1].printTable();
+                    //TODO: Save Data Table
+                }
+                catch (Exception ex) {
+                    ex.printStackTrace();
+                }
+            }
+        });
+
+        root.add(splitButton, 0, 3, 2, 1);
+
+        return root;
+    }
+
+    /**
      * Split two num
-     *
-     * @param percent
-     * 			- array containing each percentage of split, must total to 100.
      *
      * @return array containing two DataTable, each holding number of data according to the ratio.
      */
-    public DataTable[] randomSplit(int[] percent) throws DataTableException{
-        if (percent.length != 2) throw new DataTableException("Percent array length is not 2!");
-        else if ((percent[0] + percent[1]) != 100.0) throw new DataTableException("Total number of percentage is not equal to 100!");
+    private DataTable[] randomSplit() throws DataTableException{
+        if (percentSplit.length != 2) throw new DataTableException("Percent array length is not 2!");
+        else if ((percentSplit[0] + percentSplit[1]) != 100.0) throw new DataTableException("Total number of percentage is not equal to 100!");
 
         Random rand = new Random();
 
@@ -255,7 +453,7 @@ public class DataTable implements Serializable {
             for (String colName : getColNames()) {
                 Object data = getCol(colName).getData()[i];
 
-                if (tableSelect < percent[0]) table0.get(colName).add(data);
+                if (tableSelect < percentSplit[0]) table0.get(colName).add(data);
                 else table1.get(colName).add(data);
             }
         }
@@ -276,23 +474,38 @@ public class DataTable implements Serializable {
         return newTables;
     }
 
+    /**
+     * Debugging method - prints DataTable
+     */
+    public void printTable() {
+        for (String colName : getColNames()) {
+            System.out.println("Column " + colName);
+            DataColumn column  = getCol(colName);
+            for (int i = 0; i < getNumRow(); ++i) System.out.println(column.getData()[i]);
+        }
+    }
+
+    /**
+     * Get the DataColumn map
+     *
+     * @returns Map<String, DataColumn> of the DataTable
+     */
+    public Map<String, DataColumn> getDc(){
+        return dc;
+    }
+
     // attribute: A java.util.Map interface
     // KeyType: String
     // ValueType: DataColumn
     private Map<String, DataColumn> dc;
 
-    public void printTable(){
-        for (String name: dc.keySet()){
+    // Filtering Variables
+    boolean save;
+    Stage stage;
+    String columnFilter;
+    String operatorFilter;
+    String numberFilter;
 
-            String key =name.toString();
-            String value = dc.get(name).toString();
-            System.out.print(key + " ");
-            dc.get(name).printCol();
-        }
-    }
-
-    public Map<String, DataColumn> getDc(){
-        return dc;
-    }
-
+    // Split Variable
+    float[] percentSplit;
 }
