@@ -3,6 +3,8 @@ package core.comp3111;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.geometry.HPos;
+import javafx.geometry.Insets;
+import javafx.scene.chart.LineChart;
 import javafx.scene.chart.PieChart;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
@@ -59,7 +61,9 @@ public class Pie extends Chart implements Serializable{
 
     public BorderPane display() {
         BorderPane root = new BorderPane();
-        root.setCenter(getChart(text, num));
+        PieChart chart = getChart(text, num);
+        root.setCenter(chart);
+        root.setMargin(chart, new Insets(12,12,12,12));
 
         ComboBox textCombo = new ComboBox();
         for (String colName : textCols) textCombo.getItems().add(colName);
@@ -67,9 +71,11 @@ public class Pie extends Chart implements Serializable{
         textCombo.valueProperty().addListener(new ChangeListener<String>() {
             @Override
             public void changed(ObservableValue observableValue, String old_val, String new_val) {
-                root.getChildren().remove(root.lookup(".chart"));
+                root.getChildren().remove(chart);
                 text = new_val;
-                root.setCenter(getChart(text, num));
+                PieChart chart = getChart(text, num);
+                root.setCenter(chart);
+                root.setMargin(chart, new Insets(12,12,12,12));
             }
         });
 
@@ -79,9 +85,11 @@ public class Pie extends Chart implements Serializable{
         numCombo.valueProperty().addListener(new ChangeListener<String>() {
             @Override
             public void changed(ObservableValue observableValue, String old_val, String new_val) {
-                root.getChildren().remove(root.lookup(".chart"));
+                root.getChildren().remove(chart);
                 num = new_val;
-                root.setCenter(getChart(text, num));
+                PieChart chart = getChart(text, num);
+                root.setCenter(chart);
+                root.setMargin(chart, new Insets(12,12,12,12));
             }
         });
 
