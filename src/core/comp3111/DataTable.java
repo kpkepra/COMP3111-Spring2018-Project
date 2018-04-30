@@ -1,5 +1,6 @@
 package core.comp3111;
 
+import java.io.Serializable;
 import java.text.NumberFormat;
 import java.text.ParseException;
 import java.util.*;
@@ -14,7 +15,7 @@ import java.util.*;
  * @author cspeter
  *
  */
-public class DataTable {
+public class DataTable implements Serializable {
 
     /**
      * Construct - Create an empty DataTable
