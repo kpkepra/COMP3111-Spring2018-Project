@@ -8,14 +8,9 @@ import java.util.ArrayList;
 public class CSVWriter{
     PrintWriter pw;
     StringBuilder sb;
-    public CSVWriter(String fileName) {
-        try{
+    public CSVWriter(String fileName) throws FileNotFoundException {
             pw = new PrintWriter(new File(fileName));
             sb = new StringBuilder();
-        }
-        catch (FileNotFoundException e){
-            e.printStackTrace();
-        }
     }
 
     public void writeArray(ArrayList<String> words,int colNum){
