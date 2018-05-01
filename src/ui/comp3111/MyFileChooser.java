@@ -21,20 +21,54 @@ import javafx.stage.Stage;
 * https://docs.oracle.com/javafx/2/ui_controls/file-chooser.htm
 * */
 
-public class MyFileChooser extends Application {
-    private Button openButton;
+public class MyFileChooser extends Main {
+    private static Button openButton;
+    
+    private static FileChooser fileChooser;
+    
+    private static Pane pane;
+    private static GridPane inputGridPane;
+    
 
     public Button getOpenButton() {
         return openButton;
+    }
+    
+    public static Pane pane() {
+    	
+    	// FileChooser
+    	fileChooser = new FileChooser();
+    	openButton = new Button("Open From File");
+    	
+    	initHandlers();
+    	
+    	
+    	// GridPane
+    	inputGridPane = new GridPane();
+    	GridPane.setConstraints(openButton, 0, 0);
+    	inputGridPane.setHgap(6);
+    	inputGridPane.setVgap(6);
+    	inputGridPane.getChildren().addAll(openButton);
+    	
+    	// Pane
+    	pane = new VBox(12);
+    	pane.getChildren().addAll(inputGridPane);
+    	pane.setPadding(new Insets(12, 12, 12, 12));
+    	return pane;
     }
     @Override
     public void start(final Stage stage) {
 
         stage.setTitle("Choose a File");
-        FileChooser fileChooser = new FileChooser();
+        fileChooser = new FileChooser();
+        
         openButton = new Button("Open From File");
+
+    }
+
+    static void initHandlers() {
         openButton.setOnAction(
-                new EventHandler<ActionEvent>() {
+        		new EventHandler<ActionEvent>() {
                     @Override
                     public void handle(final ActionEvent e) {
                         File file = fileChooser.showOpenDialog(stage);
@@ -44,28 +78,9 @@ public class MyFileChooser extends Application {
                         }
                     }
                 });
-
-        //UNNECESSARY LATER
-        GridPane inputGridPane = new GridPane();
-
-        GridPane.setConstraints(openButton, 0, 0);
-        inputGridPane.setHgap(6);
-        inputGridPane.setVgap(6);
-        inputGridPane.getChildren().addAll(openButton);
-
-        Pane rootGroup = new VBox(12);
-        rootGroup.getChildren().addAll(inputGridPane);
-        rootGroup.setPadding(new Insets(12, 12, 12, 12));
-
-        stage.setScene(new Scene(rootGroup));
-        stage.show();
     }
-
-    public static void main(String[] args) {
-        Application.launch(args);
-    }
-
-    private void openFile(File file) {
+    
+    static void openFile(File file) {
 
             String extension;
             String fileName = file.getName();
