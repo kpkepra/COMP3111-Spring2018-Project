@@ -272,8 +272,12 @@ public class CSVReader {
         dt.printTable();
 //        System.out.println(Arrays.asList(dt.getColNames()));
 //        System.out.println(dt.getCol("Name"));
-        CSVWriter writer = new CSVWriter("output.csv");
-        writer.writeArray(ch.data,ch.getNumCol());
-        writer.close();
+        try {
+            CSVWriter writer = new CSVWriter("output.csv");
+            writer.writeArray(ch.data, ch.getNumCol());
+            writer.close();
+        }catch (FileNotFoundException fe){
+            fe.printStackTrace();
+        }
     }
 }
