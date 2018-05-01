@@ -88,7 +88,7 @@ public class MyFileChooser extends Main {
                 if (extension.equals("csv")) {
                     System.out.println("-----"+fileName);
                     CSVReader readerCSV = new CSVReader(fileName);
-                    readerCSV.openCSV();
+                    OpenCSV.openCSV(readerCSV);
                 } else if (extension.equals("corgi")) {
                     MyFileExtenstion mf = new MyFileExtenstion();
                     mf.loadCorgi(fileName);

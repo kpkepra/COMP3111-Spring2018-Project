@@ -1,11 +1,16 @@
 package ui.comp3111;
 
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
+import javafx.geometry.Insets;
+import javafx.scene.chart.LineChart;
 import javafx.scene.control.Label;
 import javafx.scene.control.RadioButton;
+import javafx.scene.control.Toggle;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.layout.*;
 
-public class ChartType {
+public class ChartType extends Main {
 	private static Label lb_title;
 	private static BorderPane pane;
 	
@@ -31,5 +36,23 @@ public class ChartType {
 		pane.setCenter(radioBox);
 		
 		return pane;
+	}
+	
+	static void initHandlers() {
+		tg.selectedToggleProperty().addListener(new ChangeListener<Toggle>() {
+			public void changed(ObservableValue<? extends Toggle> arg0, Toggle oldT, Toggle newT) {
+				if (tg.getSelectedToggle() != null) {
+					if (tg.getSelectedToggle().getUserData().toString() == "Line") {
+						LineScreen.linePie = true;
+					    LineScreen.changeType();
+						
+					} else {
+						LineScreen.linePie = false;
+						LineScreen.changeType();
+					}
+					MainScreen.pane.setCenter(MainScreen.chartc);
+				}
+			}
+		});
 	}
 }
