@@ -42,9 +42,17 @@ public class MainScreen extends Main {
 	     hc.setAlignment(Pos.CENTER);
 	     hc.getChildren().addAll(lbMainScreenTitle);
 	     
-	     Pane leftc = MyFileChooser.pane();
-	     leftc.setMinWidth(240);
-	     leftc.setMaxWidth(240);
+	     Pane impexp = MyFileChooser.pane();
+	     impexp.setMinWidth(240);
+	     impexp.setMaxWidth(240);
+	     
+	     Pane listView = Listbox.pane();
+	     listView.setMinWidth(240);
+	     listView.setMaxWidth(240);
+	     
+	     VBox leftc = new VBox(20);
+	     leftc.setAlignment(Pos.CENTER);
+	     leftc.getChildren().addAll(impexp, listView);
 	     leftc.setStyle("-fx-background-color: blue");
 	     
 	     Pane typePane = ChartType.pane();
