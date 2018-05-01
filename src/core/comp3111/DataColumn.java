@@ -87,10 +87,6 @@ public class DataColumn implements Serializable {
 	}
 
 	public boolean isNumericCol(){
-		try{
-			Integer.parseInt((String)data[0]);
-		}
-		catch(NumberFormatException e1){
 			try
 			{
 				Double.parseDouble((String)data[0]);
@@ -99,31 +95,15 @@ public class DataColumn implements Serializable {
 			{
 				return false;
 			}
-			typeName = "double";
 			return true;
-		}
-		typeName = "int";
-		return true;
 	}
 
 	public void stringToNumericType(){
-		if(typeName.equals("int")){
-			Integer[] newData = new Integer[data.length];
-			for(int i =0; i < data.length; i++){
-				newData[i] = Integer.valueOf((String)data[i]);
-			}
-			data = newData;
+		Number[] newData = new Number[data.length];
+		for(int i =0; i < data.length; i++){
+			newData[i] = Double.valueOf((String)data[i]);
 		}
-		else{
-			Double[] newData = new Double[data.length];
-			for(int i =0; i < data.length; i++){
-				newData[i] = Double.valueOf((String)data[i]);
-			}
-		}
+
 		typeName = DataType.TYPE_NUMBER;
 	}
-
-
-
-
 }
