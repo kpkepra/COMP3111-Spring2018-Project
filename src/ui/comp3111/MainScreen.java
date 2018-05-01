@@ -16,7 +16,6 @@ public class MainScreen extends Main {
 	private static Button bt_SampleLineChart;
 	
 	private static Button 
-	
 		bt_Transform;
 	
 	
@@ -33,7 +32,6 @@ public class MainScreen extends Main {
 	     bt_SampleLine2 = new Button("Sample 2");
 	     bt_SampleLine = new Button("Sample 1");
 	     lb_Left = new Label("Dataset");
-	     lb_Right = new Label("Type");
 	     lb_Chart = new Label("Chart");
 	     lb_Table = new Label("Table");
 	     
@@ -44,21 +42,15 @@ public class MainScreen extends Main {
 	     hc.setAlignment(Pos.CENTER);
 	     hc.getChildren().addAll(lbMainScreenTitle);
 	     
-	     VBox leftc = new VBox(20);
-	     leftc.setAlignment(Pos.CENTER);
-	     leftc.getChildren().addAll(lb_Left);
+	     Pane leftc = MyFileChooser.pane();
 	     
-	     VBox rightc = new VBox(20);
-	     rightc.setAlignment(Pos.CENTER);
-	     rightc.getChildren().addAll(lb_Right);
+	     Pane rightc = ChartType.pane();
 	     
 	     HBox tablec = new HBox(20);
 	     tablec.setAlignment(Pos.CENTER);
 	     tablec.getChildren().addAll(lb_Table);
 
-	     HBox chartc = new HBox(20);
-	     tablec.setAlignment(Pos.CENTER);
-	     tablec.getChildren().addAll(lb_Chart);
+	     Pane chartc = LineScreen.pane();
 	     
 	     HBox centerc = new HBox(2);
 	     centerc.setAlignment(Pos.CENTER);
