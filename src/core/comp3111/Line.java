@@ -3,6 +3,7 @@ package core.comp3111;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.geometry.HPos;
+import javafx.geometry.Insets;
 import javafx.scene.chart.LineChart;
 import javafx.scene.chart.NumberAxis;
 import javafx.scene.chart.XYChart;
@@ -38,24 +39,27 @@ public class Line extends Chart {
                 ++numCol;
                 numCols.add(colName);
             }
-
-            if (numCol >= 2) return true;
         }
 
+        if (numCol >= 2) return true;
         return false;
     }
 
     public BorderPane display() {
         BorderPane root = new BorderPane();
-        root.setCenter(getChart(x, y));
+        LineChart chart = getChart(x, y);
+        root.setCenter(chart);
+        root.setMargin(chart, new Insets(12,12,12,12));
 
         ComboBox xcombo = comboAxis();
         xcombo.valueProperty().addListener(new ChangeListener<String>() {
             @Override
             public void changed(ObservableValue observableValue, String old_val, String new_val) {
-                root.getChildren().remove(root.lookup(".chart"));
+                root.getChildren().remove(chart);
                 x = new_val;
-                root.setCenter(getChart(x, y));
+                LineChart chart = getChart(x, y);
+                root.setCenter(chart);
+                root.setMargin(chart, new Insets(12,12,12,12));
             }
         });
 
@@ -63,9 +67,11 @@ public class Line extends Chart {
         ycombo.valueProperty().addListener(new ChangeListener<String>() {
             @Override
             public void changed(ObservableValue observableValue, String old_val, String new_val) {
-                root.getChildren().remove(root.lookup(".chart"));
+                root.getChildren().remove(chart);
                 y = new_val;
-                root.setCenter(getChart(x, y));
+                LineChart chart = getChart(x, y);
+                root.setCenter(chart);
+                root.setMargin(chart, new Insets(12,12,12,12));
             }
         });
 
@@ -88,6 +94,9 @@ public class Line extends Chart {
         column2.setPercentWidth(50);
         selectAxis.getColumnConstraints().addAll(column1, column2);
         root.setBottom(selectAxis);
+        root.setMargin(selectAxis, new Insets(12,12,12,12));
+        root.setMargin(selectAxis, new Insets(12,12,12,12));
+
         return root;
     }
 
@@ -101,6 +110,7 @@ public class Line extends Chart {
         Number[] yData = (Number[]) data.getCol(yname).getData();
 
         LineChart<Number, Number> lineChart = new LineChart<Number, Number> (xAxis, yAxis);
+        lineChart.setLegendVisible(false);
 
         XYChart.Series series = new XYChart.Series();
 
