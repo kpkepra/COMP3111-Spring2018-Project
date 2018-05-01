@@ -74,7 +74,8 @@ public class CSVReader {
     public void readALL(int command){
         try {
             Scanner sc = new Scanner(inputFile);
-            sc.useDelimiter(",|\r\n");
+            String lineSeparator = System.getProperty("line.separator");
+            sc.useDelimiter(",|"+lineSeparator);
             //read the first line in file and construct the data fields
             readField();
             int count = 0;
