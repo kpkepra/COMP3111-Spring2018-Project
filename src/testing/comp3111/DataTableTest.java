@@ -11,6 +11,8 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Objects;
 
 public class DataTableTest {
     DataColumn testDataColumn;
@@ -108,5 +110,298 @@ public class DataTableTest {
 
         boolean equality_check = Arrays.deepEquals(column_contents, dataTable.getColNames());
         assertEquals(true, equality_check);
+    }
+
+    @Test
+    void testRandomSplit_PercentEmpty() throws DataTableException {
+        dataTable.addCol("column", testDataColumn);
+        dataTable.setPercentSplit(new float[0]);
+
+        assertThrows(DataTableException.class, () -> {dataTable.randomSplit();});
+    }
+
+    @Test
+    void testRandomSplit_PercentLessThan100() throws DataTableException {
+        dataTable.addCol("column", testDataColumn);
+        dataTable.setPercentSplit(new float[]{30.5f, 69.4f});
+
+        assertThrows(DataTableException.class, () -> {dataTable.randomSplit();});
+    }
+
+    @Test
+    void testRandomSplit_PercentMoreThan100() throws DataTableException {
+        dataTable.addCol("column", testDataColumn);
+        dataTable.setPercentSplit(new float[]{30.5f, 69.6f});
+
+        assertThrows(DataTableException.class, () -> {dataTable.randomSplit();});
+    }
+
+    @Test
+    void testRandomSplit_PercentEqual100() throws DataTableException {
+        dataTable.addCol("column", testDataColumn);
+        dataTable.setPercentSplit(new float[]{30.5f, 69.5f});
+
+        dataTable.randomSplit();
+    }
+
+    @Test
+    void testFilterData_NullColumn() throws DataTableException {
+        dataTable.addCol("column", testDataColumn);
+        dataTable.setNumberFilter("30.0");
+        dataTable.setOperatorFilter("<");
+
+        Throwable exception = assertThrows(DataTableException.class, () -> {dataTable.filterData();});
+
+        assertEquals("DataTableException: Filter parameters are not filled", exception.getMessage());
+    }
+
+    @Test
+    void testFilterData_NullNumber() throws DataTableException {
+        dataTable.addCol("column", testDataColumn);
+        dataTable.setColumnFilter("column");
+        dataTable.setOperatorFilter("<");
+
+        Throwable exception = assertThrows(DataTableException.class, () -> {dataTable.filterData();});
+
+        assertEquals("DataTableException: Filter parameters are not filled", exception.getMessage());
+    }
+
+    @Test
+    void testFilterData_NullOperator() throws DataTableException {
+        dataTable.addCol("column", testDataColumn);
+        dataTable.setColumnFilter("column");
+        dataTable.setNumberFilter("30.0");
+
+        Throwable exception = assertThrows(DataTableException.class, () -> {dataTable.filterData();});
+
+        assertEquals("DataTableException: Filter parameters are not filled", exception.getMessage());
+    }
+
+    @Test
+    void testFilterData_ColumnFilterNoMatch() throws DataTableException {
+        dataTable.addCol("column", testDataColumn);
+        dataTable.setColumnFilter("a");
+        dataTable.setNumberFilter("30.0");
+        dataTable.setOperatorFilter("<");
+
+        Throwable exception = assertThrows(DataTableException.class, () -> {dataTable.filterData();});
+
+        assertEquals("DataTableException: Failed to format column data", exception.getMessage());
+    }
+
+    @Test
+    void testFilterData_NumberFilterStringInput() throws DataTableException {
+        dataTable.addCol("column", testDataColumn);
+        dataTable.setColumnFilter("column");
+        dataTable.setNumberFilter("a");
+        dataTable.setOperatorFilter("<");
+
+        Throwable exception = assertThrows(DataTableException.class, () -> {dataTable.filterData();});
+
+        assertEquals("DataTableException: Failed to format number", exception.getMessage());
+    }
+
+    @Test
+    void testFilterData_LessThanEqual_NoDataFiltered() throws DataTableException {
+        dataTable.addCol("column", testDataColumn);
+        dataTable.setColumnFilter("column");
+        dataTable.setNumberFilter("3.00");
+        dataTable.setOperatorFilter("<=");
+
+        Object[] filtered = dataTable.filterData().get("column").getData();
+        Object[] original = dataTable.getCol("column").getData();
+
+        boolean testEqual = true;
+        for (int i = 0; i < filtered.length; ++i) {
+            if (!Objects.equals(filtered[i], original[i])) testEqual = false;
+        }
+        assertEquals(true, testEqual);
+    }
+
+    @Test
+    void testFilterData_LessThanEqual_Filtered() throws DataTableException {
+        dataTable.addCol("column", testDataColumn);
+        dataTable.setColumnFilter("column");
+        dataTable.setNumberFilter("2.99");
+        dataTable.setOperatorFilter("<=");
+
+        Object[] filtered = dataTable.filterData().get("column").getData();
+        Object[] original = new Object[]{1, 2};
+
+        boolean testEqual = true;
+        for (int i = 0; i < filtered.length; ++i) {
+            if (!Objects.equals(filtered[i], original[i])) testEqual = false;
+        }
+        assertEquals(true, testEqual);
+    }
+
+    @Test
+    void testFilterData_LessThan_NoDataFiltered() throws DataTableException {
+        dataTable.addCol("column", testDataColumn);
+        dataTable.setColumnFilter("column");
+        dataTable.setNumberFilter("3.01");
+        dataTable.setOperatorFilter("<");
+
+        Object[] filtered = dataTable.filterData().get("column").getData();
+        Object[] original = dataTable.getCol("column").getData();
+
+        boolean testEqual = true;
+        for (int i = 0; i < filtered.length; ++i) {
+            if (!Objects.equals(filtered[i], original[i])) testEqual = false;
+        }
+        assertEquals(true, testEqual);
+    }
+
+    @Test
+    void testFilterData_LessThan_Filtered() throws DataTableException {
+        dataTable.addCol("column", testDataColumn);
+        dataTable.setColumnFilter("column");
+        dataTable.setNumberFilter("3.00");
+        dataTable.setOperatorFilter("<");
+
+        Object[] filtered = dataTable.filterData().get("column").getData();
+        Object[] original = new Object[]{1, 2};
+
+        boolean testEqual = true;
+        for (int i = 0; i < filtered.length; ++i) {
+            if (!Objects.equals(filtered[i], original[i])) testEqual = false;
+        }
+        assertEquals(true, testEqual);
+    }
+
+    @Test
+    void testFilterData_MoreThanEqual_NoDataFiltered() throws DataTableException {
+        dataTable.addCol("column", testDataColumn);
+        dataTable.setColumnFilter("column");
+        dataTable.setNumberFilter("1.00");
+        dataTable.setOperatorFilter(">=");
+
+        Object[] filtered = dataTable.filterData().get("column").getData();
+        Object[] original = dataTable.getCol("column").getData();
+
+        boolean testEqual = true;
+        for (int i = 0; i < filtered.length; ++i) {
+            if (!Objects.equals(filtered[i], original[i])) testEqual = false;
+        }
+        assertEquals(true, testEqual);
+    }
+
+    @Test
+    void testFilterData_MoreThanEqual_Filtered() throws DataTableException {
+        dataTable.addCol("column", testDataColumn);
+        dataTable.setColumnFilter("column");
+        dataTable.setNumberFilter("1.01");
+        dataTable.setOperatorFilter(">=");
+
+        Object[] filtered = dataTable.filterData().get("column").getData();
+        Object[] original = new Object[]{2, 3};
+
+        boolean testEqual = true;
+        for (int i = 0; i < filtered.length; ++i) {
+            if (!Objects.equals(filtered[i], original[i])) testEqual = false;
+        }
+        assertEquals(true, testEqual);
+    }
+
+    @Test
+    void testFilterData_MoreThan_NoDataFiltered() throws DataTableException {
+        dataTable.addCol("column", testDataColumn);
+        dataTable.setColumnFilter("column");
+        dataTable.setNumberFilter("0.99");
+        dataTable.setOperatorFilter(">");
+
+        Object[] filtered = dataTable.filterData().get("column").getData();
+        Object[] original = dataTable.getCol("column").getData();
+
+        boolean testEqual = true;
+        for (int i = 0; i < filtered.length; ++i) {
+            if (!Objects.equals(filtered[i], original[i])) testEqual = false;
+        }
+        assertEquals(true, testEqual);
+    }
+
+    @Test
+    void testFilterData_MoreThan_Filtered() throws DataTableException {
+        dataTable.addCol("column", testDataColumn);
+        dataTable.setColumnFilter("column");
+        dataTable.setNumberFilter("1.00");
+        dataTable.setOperatorFilter(">");
+
+        Object[] filtered = dataTable.filterData().get("column").getData();
+        Object[] original = new Object[]{2, 3};
+
+        boolean testEqual = true;
+        for (int i = 0; i < filtered.length; ++i) {
+            if (!Objects.equals(filtered[i], original[i])) testEqual = false;
+        }
+        assertEquals(true, testEqual);
+    }
+
+    @Test
+    void testFilterData_Equal_NoMatch() throws DataTableException {
+        dataTable.addCol("column", testDataColumn);
+        dataTable.setColumnFilter("column");
+        dataTable.setNumberFilter("0.99");
+        dataTable.setOperatorFilter("==");
+
+        Object[] filtered = dataTable.filterData().get("column").getData();
+        Object[] original = new Object[0];
+
+        boolean testEqual = true;
+        for (int i = 0; i < filtered.length; ++i) {
+            if (!Objects.equals(filtered[i], original[i])) testEqual = false;
+        }
+        assertEquals(true, testEqual);
+    }
+
+    @Test
+    void testFilterData_Equal_OneMatch() throws DataTableException {
+        dataTable.addCol("column", testDataColumn);
+        dataTable.setColumnFilter("column");
+        dataTable.setNumberFilter("1.00");
+        dataTable.setOperatorFilter("==");
+
+        Object[] filtered = dataTable.filterData().get("column").getData();
+        Object[] original = new Object[]{1};
+
+        boolean testEqual = true;
+        for (int i = 0; i < filtered.length; ++i) {
+            if (!Objects.equals(filtered[i], original[i])) testEqual = false;
+        }
+        assertEquals(true, testEqual);
+    }
+
+    @Test
+    void testFilterData_NotEqual_NoMatch() throws DataTableException {
+        dataTable.addCol("column", testDataColumn);
+        dataTable.setColumnFilter("column");
+        dataTable.setNumberFilter("0.99");
+        dataTable.setOperatorFilter("!=");
+
+        Object[] filtered = dataTable.filterData().get("column").getData();
+        Object[] original = dataTable.getCol("column").getData();
+
+        boolean testEqual = true;
+        for (int i = 0; i < filtered.length; ++i) {
+            if (!Objects.equals(filtered[i], original[i])) testEqual = false;
+        }
+        assertEquals(true, testEqual);
+    }
+
+    @Test
+    void testFilterData_NotEqual_OneMatch() throws DataTableException {
+        dataTable.addCol("column", testDataColumn);
+        dataTable.setColumnFilter("column");
+        dataTable.setNumberFilter("1.00");
+        dataTable.setOperatorFilter("!=");
+
+        Object[] filtered = dataTable.filterData().get("column").getData();
+        Object[] original = new Object[]{2, 3};
+
+        boolean testEqual = true;
+        for (int i = 0; i < filtered.length; ++i) {
+            if (!Objects.equals(filtered[i], original[i])) testEqual = false;
+        }
+        assertEquals(true, testEqual);
     }
 }
