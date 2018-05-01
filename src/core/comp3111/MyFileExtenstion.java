@@ -4,8 +4,27 @@ import java.io.*;
 import java.util.ArrayList;
 
 public class MyFileExtenstion {
+    public static class CorgiObj implements Serializable{
+        private DataTable dt;
+        private ArrayList <Chart> charts;
+        public CorgiObj(){
+            dt = new DataTable();
+            charts = new ArrayList<>();
+        }
+        public CorgiObj(DataTable dt,ArrayList<Chart> charts){
+            this.dt = dt;
+            this.charts = charts;
+        }
 
-    public CorgiObj loadCorgi(String fileName){
+        public DataTable getDt() {
+            return dt;
+        }
+        public ArrayList<Chart> getCharts() {
+            return charts;
+        }
+    }
+
+    public CorgiObj loadCorgi(String fileName) throws IOException,ClassNotFoundException{
         CorgiObj corgi = new CorgiObj();
         try {
             FileInputStream fileIn = new FileInputStream(fileName);
@@ -16,31 +35,18 @@ public class MyFileExtenstion {
         }
         catch (FileNotFoundException e) {
             System.out.println("Cannot find the Corgi file");
-
-        } catch (IOException i) {
-            System.out.println("Cannot find the Corgi file");
-        }
-        catch (ClassNotFoundException c) {
-            System.out.println("class not found!");
-            c.printStackTrace();
         }
         return corgi;
     }
 
-    public boolean saveCorgi(String Filename,CorgiObj corgi){
-        try {
-            FileOutputStream fileOut =
-                    new FileOutputStream(Filename);
-            ObjectOutputStream out = new ObjectOutputStream(fileOut);
-            out.writeObject(corgi);
-            out.close();
-            fileOut.close();
-            System.out.println("Serialized data is saved in extensionTest2.corgi");
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        } catch (IOException i) {
-            i.printStackTrace();
-        }
+    public boolean saveCorgi(String Filename,CorgiObj corgi) throws IOException{
+
+        FileOutputStream fileOut = new FileOutputStream(Filename);
+        ObjectOutputStream out = new ObjectOutputStream(fileOut);
+        out.writeObject(corgi);
+        out.close();
+        fileOut.close();
+        System.out.println("Serialized data is saved in extensionTest2.corgi");
         return true;
     }
 
@@ -113,22 +119,3 @@ public class MyFileExtenstion {
 //    }
 //}
 
-class CorgiObj implements Serializable{
-    DataTable dt;
-    ArrayList <Chart> charts;
-    public CorgiObj(){
-        dt = new DataTable();
-        charts = new ArrayList<>();
-    }
-    public CorgiObj(DataTable dt,ArrayList<Chart> charts){
-        this.dt = dt;
-        this.charts = charts;
-    }
-
-    public void printAndDisplayCharts(){
-        dt.printTable();
-        for(Chart chart:charts){
-            chart.display();
-        }
-    }
-}
