@@ -1,5 +1,8 @@
-package core.comp3111;
+package ui.comp3111;
 import java.io.File;
+
+import core.comp3111.CSVReader;
+import core.comp3111.MyFileExtenstion;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -18,7 +21,11 @@ import javafx.stage.Stage;
 * */
 
 public class MyFileChooser extends Application {
-    Button openButton;
+    private Button openButton;
+
+    public Button getOpenButton() {
+        return openButton;
+    }
     @Override
     public void start(final Stage stage) {
 
