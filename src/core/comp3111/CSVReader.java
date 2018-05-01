@@ -147,7 +147,6 @@ public class CSVReader {
         }
     }
 
-<<<<<<< HEAD
     private ArrayList<String> getColWithoutIndex(int index){
        ArrayList<String> curCol = new ArrayList<>();
        for(int i = 0; i < data.size();i++){
@@ -156,18 +155,6 @@ public class CSVReader {
            }
        }
        return curCol;
-=======
-    //TODO refactor this out
-
-    private ArrayList<String> getColWithoutIndex(int index) {
-        ArrayList<String> curCol = new ArrayList<>();
-        for (int i = 0; i < data.size(); i++) {
-            if (i % numCol == index % numCol && i != index) {
-                curCol.add(data.get(i));
-            }
-        }
-        return curCol;
->>>>>>> 6a95cc87f6936823b101349aba1ef8aa5d9c860a
     }
 
     public ArrayList<String> getCol(int colNum) {
