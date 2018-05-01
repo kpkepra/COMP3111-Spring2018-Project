@@ -226,45 +226,46 @@ public class TransformDisplay extends Main {
     /**
      * Ask the user whether to save the new dataset or replace old one instead
      */
-//    private void askSaveReplace() {
-//        GridPane saveReplace = new GridPane();
-//        saveReplace.setHgap(10);
-//        saveReplace.setVgap(10);
-//        ColumnConstraints column1 = new ColumnConstraints();
-//        column1.setHalignment(HPos.CENTER);
-//        column1.setPercentWidth(50);
-//        ColumnConstraints column2 = new ColumnConstraints();
-//        column2.setHalignment(HPos.CENTER);
-//        column2.setPercentWidth(50);
-//        saveReplace.getColumnConstraints().addAll(column1, column2);
-//        saveReplace.add(new Label("What do you want to do with the filtered dataset?"), 0, 0, 2, 1);
-//        saveReplace.setStyle("-fx-font: 16 arial;");
-//
-//
-//        Button saveButton = new Button("Save");
-//        saveButton.setOnAction(new EventHandler<ActionEvent>() {
-//            @Override
-//            public void handle(ActionEvent e) {
-//                transform.setSave(true);
-//                stage.hide();
-//            }
-//        });
-//
-//        Button replaceButton = new Button("Replace");
-//        replaceButton.setOnAction(new EventHandler<ActionEvent>() {
-//            @Override
-//            public void handle(ActionEvent e) {
-//                transform.setSave(false);
-//                stage.hide();
-//            }
-//        });
-//
-//        saveReplace.add(saveButton, 0, 1);
-//        saveReplace.add(replaceButton, 1, 1);
-//        Scene scene = new Scene(saveReplace);
-//        stage.setScene(scene);
-//        stage.show();
-//    }
+    private void askSaveReplace() {
+        GridPane saveReplace = new GridPane();
+        saveReplace.setHgap(10);
+        saveReplace.setVgap(10);
+        ColumnConstraints column1 = new ColumnConstraints();
+        column1.setHalignment(HPos.CENTER);
+        column1.setPercentWidth(50);
+        ColumnConstraints column2 = new ColumnConstraints();
+        column2.setHalignment(HPos.CENTER);
+        column2.setPercentWidth(50);
+        saveReplace.getColumnConstraints().addAll(column1, column2);
+        saveReplace.add(new Label("What do you want to do with the filtered dataset?"), 0, 0, 2, 1);
+        saveReplace.setStyle("-fx-font: 16 arial;");
+
+        // Save Button
+        Button saveButton = new Button("Save");
+        saveButton.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent e) {
+                transform.setSave(true);
+                stage.hide();
+            }
+        });
+
+        // Replace Button
+        Button replaceButton = new Button("Replace");
+        replaceButton.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent e) {
+                transform.setSave(false);
+                stage.hide();
+            }
+        });
+
+        saveReplace.add(saveButton, 0, 1);
+        saveReplace.add(replaceButton, 1, 1);
+        Scene scene = new Scene(saveReplace);
+        stage.setScene(scene);
+        stage.show();
+    }
 
 //    public TableView displayTable(DataTable table) {
 //        TableView<Integer> datasetTable = new TableView();
