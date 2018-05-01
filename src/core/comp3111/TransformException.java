@@ -4,7 +4,7 @@ package core.comp3111;
 public class TransformException extends Exception {
 
     public TransformException(String message) {
-        super("DataTableException: " + message);
+        super("TransformException: " + message);
     }
 
 }
