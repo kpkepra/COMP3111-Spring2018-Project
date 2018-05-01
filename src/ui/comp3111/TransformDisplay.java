@@ -20,7 +20,6 @@ import java.util.Objects;
 
 public class TransformDisplay {
     Transform transform;
-    Stage stage;
 
     public TransformDisplay(Transform tf) {
         transform = tf;
