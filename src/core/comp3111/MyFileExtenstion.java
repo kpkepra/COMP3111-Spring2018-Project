@@ -128,7 +128,7 @@ class CorgiObj implements Serializable{
     public void printAndDisplayCharts(){
         dt.printTable();
         for(Chart chart:charts){
-            chart.display();
+//            chart.display();
         }
     }
 }

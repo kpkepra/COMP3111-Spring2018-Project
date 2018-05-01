@@ -16,8 +16,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Objects;
 
-public class Pie extends Chart implements Serializable{
-    private DataTable data;
+public class Pie extends Chart{
     private ArrayList<String> textCols;
     private ArrayList<String> numCols;
     private String num;
@@ -59,72 +58,15 @@ public class Pie extends Chart implements Serializable{
         return true;
     }
 
-    public BorderPane display() {
-        BorderPane root = new BorderPane();
-        PieChart chart = getChart(text, num);
-        root.setCenter(chart);
-        root.setMargin(chart, new Insets(12,12,12,12));
+    public String getText() { return text; }
 
-        ComboBox textCombo = new ComboBox();
-        for (String colName : textCols) textCombo.getItems().add(colName);
+    public String getNum() { return num; }
 
-        textCombo.valueProperty().addListener(new ChangeListener<String>() {
-            @Override
-            public void changed(ObservableValue observableValue, String old_val, String new_val) {
-                root.getChildren().remove(chart);
-                text = new_val;
-                PieChart chart = getChart(text, num);
-                root.setCenter(chart);
-                root.setMargin(chart, new Insets(12,12,12,12));
-            }
-        });
+    public ArrayList<String> getTextCols() { return textCols; }
 
-        ComboBox numCombo = new ComboBox();
-        for (String colName : numCols) numCombo.getItems().add(colName);
+    public ArrayList<String> getNumCols() { return numCols; }
 
-        numCombo.valueProperty().addListener(new ChangeListener<String>() {
-            @Override
-            public void changed(ObservableValue observableValue, String old_val, String new_val) {
-                root.getChildren().remove(chart);
-                num = new_val;
-                PieChart chart = getChart(text, num);
-                root.setCenter(chart);
-                root.setMargin(chart, new Insets(12,12,12,12));
-            }
-        });
+    public void setText(String input) { text = input; }
 
-        GridPane selectAxis = new GridPane();
-        Label textLabel = new Label("Select text column for categories: ");
-        Label numLabel = new Label("Select numeric column for pie data: ");
-        textLabel.setStyle("-fx-font: 16 arial;");
-        numLabel.setStyle("-fx-font: 16 arial;");
-
-        selectAxis.add(textLabel, 0, 0);
-        selectAxis.add(textCombo, 0, 1);
-        selectAxis.add(numLabel, 1, 0);
-        selectAxis.add(numCombo, 1, 1);
-
-        ColumnConstraints column1 = new ColumnConstraints();
-        column1.setPercentWidth(50);
-        column1.setHalignment(HPos.CENTER);
-        ColumnConstraints column2 = new ColumnConstraints();
-        column2.setHalignment(HPos.CENTER);
-        column2.setPercentWidth(50);
-        selectAxis.getColumnConstraints().addAll(column1, column2);
-        root.setBottom(selectAxis);
-        return root;
-    }
-
-    private PieChart getChart(String text, String num) {
-        PieChart pieChart = new PieChart();
-        
-        Number[] numData = (Number[]) data.getCol(num).getData();
-        String[] textData = (String[]) data.getCol(text).getData();
-
-        for (int i = 0 ; i < data.getNumRow(); ++i) {
-            PieChart.Data slice = new PieChart.Data(textData[i], numData[i].floatValue());
-            pieChart.getData().add(slice);
-        }
-        return pieChart;
-    }
+    public void setNum(String input) { num = input; }
 }
