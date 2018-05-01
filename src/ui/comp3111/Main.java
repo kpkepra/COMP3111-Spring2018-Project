@@ -2,20 +2,8 @@ package ui.comp3111;
 
 import core.comp3111.*;
 import javafx.application.Application;
-import javafx.event.EventHandler;
-import javafx.geometry.Pos;
 import javafx.scene.Scene;
-import javafx.scene.chart.LineChart;
-import javafx.scene.chart.NumberAxis;
-import javafx.scene.chart.XYChart;
-import javafx.scene.control.*;
-import javafx.scene.layout.*;
 import javafx.stage.Stage;
-import javafx.stage.WindowEvent;
-
-import java.io.PrintWriter;
-import java.io.StringWriter;
-import java.util.Random;
 
 /**
  * The Main class of this GUI application
@@ -32,10 +20,8 @@ public class Main extends Application {
     // java.util.ArrayList)
 
     // Attributes: Scene and Stage
-    protected static final int SCENE_NUM = 2;
-    protected static final int SCENE_MAIN_SCREEN = 0;
-    protected static final int SCENE_LINE_CHART = 1;
-    private static final String[] SCENE_TITLES = { "COMP3111 Chart - [Team Name]", "Sample Line Chart Screen" };
+    protected static final int SCENE_NUM = 5;
+    private static final String[] SCENE_TITLES = { "COMP3111 Chart - [Team Name]", "Sample Line Chart Screen", "Animated Chart" };
     protected static Stage stage = null;
     private static Scene[] scenes = null;
 
@@ -48,8 +34,10 @@ public class Main extends Application {
      */
     private void initScenes() {
         scenes = new Scene[SCENE_NUM];
-        scenes[SCENE_MAIN_SCREEN] = new Scene(MainScreen.pane(), 400, 500);
-        scenes[SCENE_LINE_CHART] = new Scene(LineScreen.pane(), 800, 600);
+        scenes[0] = new Scene(MainScreen.pane(), 1280, 720);
+        scenes[1] = new Scene(MyFileChooser.pane(), 800, 600);
+        scenes[2] = new Scene(LineScreen.pane(), 800, 600);
+        scenes[3] = new Scene(AnimatedScreen.pane(), 600, 800);
         for (Scene s : scenes) {
             if (s != null)
                 // Assumption: all scenes share the same stylesheet
@@ -87,7 +75,7 @@ public class Main extends Application {
         try {
             stage = primaryStage; // keep a stage reference as an attribute
             initScenes(); // initialize the scenes
-            putSceneOnStage(SCENE_LINE_CHART); // show the main screen
+            putSceneOnStage(0); // show the main screen
         } catch (Exception e) {
             e.printStackTrace(); // exception handling: print the error message on the console
         }
