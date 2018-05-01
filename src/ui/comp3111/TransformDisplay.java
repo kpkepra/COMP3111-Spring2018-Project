@@ -14,17 +14,22 @@ import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
-//
-//import java.util.HashMap;
-//import java.util.Objects;
-//
-//public class TransformDisplay {
-//    Transform transform;
-//
-//    public TransformDisplay(Transform tf) {
-//        transform = tf;
-//    }
-//
+
+import java.util.HashMap;
+import java.util.Objects;
+
+public class TransformDisplay extends Main {
+    static Transform transform;
+    
+    private static GridPane selectFilter;
+    private static Button filterButton;
+    private static TextField numberField;
+    private static ComboBox columnCombo, operatorCombo;
+
+    public TransformDisplay(Transform tf) {
+        transform = tf;
+    }
+
 //    public GridPane splitDisplay() {
 //        transform.setPercentSplit(new float[2]);
 //        GridPane root = new GridPane();
@@ -217,10 +222,10 @@ import javafx.stage.WindowEvent;
 //
 //        return root;
 //    }
-//
-//    /**
-//     * Ask the user whether to save the new dataset or replace old one instead
-//     */
+
+    /**
+     * Ask the user whether to save the new dataset or replace old one instead
+     */
 //    private void askSaveReplace() {
 //        GridPane saveReplace = new GridPane();
 //        saveReplace.setHgap(10);
@@ -260,7 +265,7 @@ import javafx.stage.WindowEvent;
 //        stage.setScene(scene);
 //        stage.show();
 //    }
-//
+
 //    public TableView displayTable(DataTable table) {
 //        TableView<Integer> datasetTable = new TableView();
 //        datasetTable.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
@@ -300,12 +305,12 @@ import javafx.stage.WindowEvent;
 //
 //        return datasetTable;
 //    }
-//
-//    /**
-//     * Display UI for filtering data
-//     */
-//    public GridPane filterDisplay() throws DataTableException {
-//        GridPane selectFilter = new GridPane();
+
+    /**throws DataTableException 
+     * Display UI for filtering data 
+     */
+    public static GridPane pane() {
+        selectFilter = new GridPane();
 //        selectFilter.setHgap(10);
 //        selectFilter.setVgap(4);
 //        ColumnConstraints column1 = new ColumnConstraints();
@@ -321,66 +326,74 @@ import javafx.stage.WindowEvent;
 //
 //        TableView datasetTable = displayTable(transform.getDataTable());
 //        selectFilter.add(datasetTable, 0, 0, 3, 1);
-//
-//        ComboBox columnCombo = new ComboBox();
+
+//        columnCombo = new ComboBox();
 //        for (String colName : transform.getDataTable().getColNames()) {
 //            String colType = transform.getDataTable().getCol(colName).getTypeName();
 //            if (Objects.equals(colType, DataType.TYPE_NUMBER)) columnCombo.getItems().add(colName);
 //        }
 //
-//        columnCombo.valueProperty().addListener(new ChangeListener<String>() {
-//            @Override
-//            public void changed(ObservableValue observableValue, String old_val, String new_val) {
-//                transform.setColumnFilter(new_val);
-//            }
-//        });
-//
 //        selectFilter.add(new Label("Select column as filter base: "), 0, 1);
 //        selectFilter.add(columnCombo, 0, 2);
-//
-//        String[] operators = {"<", "<=", ">", ">=", "==", "!="};
-//        ComboBox operatorCombo = new ComboBox();
-//        for (String operator : operators) {
-//            operatorCombo.getItems().add(operator);
-//        }
-//
-//        operatorCombo.valueProperty().addListener(new ChangeListener<String>() {
-//            @Override
-//            public void changed(ObservableValue observableValue, String old_val, String new_val) {
-//                transform.setOperatorFilter(new_val);
-//            }
-//        });
-//
-//        selectFilter.add(new Label("Select operator to filter with: "), 1, 1);
-//        selectFilter.add(operatorCombo, 1, 2);
-//
-//        TextField numberField = new TextField();
-//        numberField.textProperty().addListener(new ChangeListener<String>() {
-//            @Override
-//            public void changed(ObservableValue observableValue, String old_val, String new_val) {
-//                if (!new_val.matches("\\d*")) {
-//                    numberField.setText(new_val.replaceAll("[^\\d]", ""));
-//                }
-//            }
-//        });
-//
-//        selectFilter.add(new Label("Input number to check against: "), 2, 1);
-//        selectFilter.add(numberField, 2, 2);
-//        selectFilter.setStyle("-fx-font: 16 arial;");
-//
-//        Button filterButton = new Button("Filter");
-//        filterButton.setOnAction(new EventHandler<ActionEvent>() {
-//            @Override
-//            public void handle(ActionEvent e) {
-//                try {
-//                    transform.setNumberFilter(numberField.getText());
-//                    HashMap<String, DataColumn> tempTable = transform.filterData();
-//
+
+        String[] operators = {"<", "<=", ">", ">=", "==", "!="};
+        operatorCombo = new ComboBox();
+        for (String operator : operators) {
+            operatorCombo.getItems().add(operator);
+        }
+
+        selectFilter.add(new Label("Select operator to filter with: "), 1, 1);
+        selectFilter.add(operatorCombo, 1, 2);
+
+        numberField = new TextField();
+
+        selectFilter.add(new Label("Input number to check against: "), 1, 3);
+        selectFilter.add(numberField, 1, 4);
+        selectFilter.getStyleClass().add("filter-gridpane");
+        
+        filterButton = new Button("Filter");
+       
+        selectFilter.add(filterButton, 0, 5, 3, 1);
+
+        return selectFilter;
+    }
+    
+    static void initHandlers() {
+        columnCombo.valueProperty().addListener(new ChangeListener<String>() {
+            @Override
+            public void changed(ObservableValue observableValue, String old_val, String new_val) {
+                transform.setColumnFilter(new_val);
+            }
+        });
+    	
+    	operatorCombo.valueProperty().addListener(new ChangeListener<String>() {
+    	  	@Override
+      		public void changed(ObservableValue observableValue, String old_val, String new_val) {
+    	  		transform.setOperatorFilter(new_val);
+      		}
+      	});
+    	
+    	numberField.textProperty().addListener(new ChangeListener<String>() {
+    		@Override
+    		public void changed(ObservableValue observableValue, String old_val, String new_val) {
+    			if (!new_val.matches("\\d*")) {
+    				numberField.setText(new_val.replaceAll("[^\\d]", ""));
+    			}
+    		}
+    	});
+    	
+    	filterButton.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent e) {
+                try {
+                    transform.setNumberFilter(numberField.getText());
+                    HashMap<String, DataColumn> tempTable = transform.filterData();
+
 //                    selectFilter.getChildren().remove(datasetTable);
-//
-//                    DataTable temp = new DataTable();
-//                    temp.setDc(tempTable);
-//
+
+                    DataTable temp = new DataTable();
+                    temp.setDc(tempTable);
+
 //                    TableView datasetTable = displayTable(temp);
 //                    selectFilter.add(datasetTable, 0, 0, 3, 1);
 //
@@ -397,17 +410,13 @@ import javafx.stage.WindowEvent;
 //                            }
 //                        }
 //                    });
-//
+
 //                    askSaveReplace();
-//                }
-//                catch (Exception ex) {
-//                    ex.printStackTrace();
-//                }
-//            }
-//        });
-//
-//        selectFilter.add(filterButton, 0, 3, 3, 1);
-//
-//        return selectFilter;
-//    }
-//}
+                }
+                catch (Exception ex) {
+                    ex.printStackTrace();
+                }
+            }
+        });
+    }
+}

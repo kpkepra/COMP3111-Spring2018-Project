@@ -22,12 +22,6 @@ import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
 
 public class LineScreen extends Main {
-	private static DataTable sampleDataTable = null;
-    private static Button btSampleLineChartData;
-	private static Button btSampleLineChartDataV2;
-	private static Button btSampleLineChart;
-    private static Label lbSampleDataTable;
-	private static Label lbMainScreenTitle;
     private static LineChart<Number, Number> lineChart = null;
     private static NumberAxis xAxis = null;
     private static NumberAxis yAxis = null;
@@ -81,7 +75,7 @@ public class LineScreen extends Main {
 		
 		try {
             // TEST PARAMETERS
-            boolean linePie = false; // LINE true PIE false
+            boolean linePie = true; // LINE true PIE false
             int numCols = 20;
             int textCols = 5;
             int row = 5;
@@ -124,6 +118,7 @@ public class LineScreen extends Main {
             }
 
             try {
+            	// Assign Chart
                 Chart lineChart = linePie ? new Line(table) : new Pie(table);
                 chartNode = lineChart.display();
             } catch (ChartException ex) {
