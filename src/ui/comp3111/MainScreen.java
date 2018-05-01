@@ -20,7 +20,7 @@ public class MainScreen extends Main {
 		bt_Transform;
 	
 	
-    private static Label lbSampleDataTable;
+    private static Label lb_Left, lb_Right, lb_Chart, lb_Table;
 	private static Label lbMainScreenTitle;
 	
 	public MainScreen() {
@@ -28,26 +28,52 @@ public class MainScreen extends Main {
 	}
 	
 	public static Pane pane() {
-		 lbMainScreenTitle = new Label("COMP3111 Chart");
+		 lbMainScreenTitle = new Label("CORGI3111");
 	     bt_SampleLineChart = new Button("Sample Line Chart");
 	     bt_SampleLine2 = new Button("Sample 2");
 	     bt_SampleLine = new Button("Sample 1");
-	     lbSampleDataTable = new Label("DataTable: empty");
+	     lb_Left = new Label("Dataset");
+	     lb_Right = new Label("Type");
+	     lb_Chart = new Label("Chart");
+	     lb_Table = new Label("Table");
 	     
 	     bt_Transform = new Button("Transform");
 	     
-	
 	     // Layout the UI components
 	     HBox hc = new HBox(20);
 	     hc.setAlignment(Pos.CENTER);
-	     hc.getChildren().addAll(bt_SampleLine, bt_SampleLine2);
+	     hc.getChildren().addAll(lbMainScreenTitle);
+	     
+	     VBox leftc = new VBox(20);
+	     leftc.setAlignment(Pos.CENTER);
+	     leftc.getChildren().addAll(lb_Left);
+	     
+	     VBox rightc = new VBox(20);
+	     rightc.setAlignment(Pos.CENTER);
+	     rightc.getChildren().addAll(lb_Right);
+	     
+	     HBox tablec = new HBox(20);
+	     tablec.setAlignment(Pos.CENTER);
+	     tablec.getChildren().addAll(lb_Table);
+
+	     HBox chartc = new HBox(20);
+	     tablec.setAlignment(Pos.CENTER);
+	     tablec.getChildren().addAll(lb_Chart);
+	     
+	     HBox centerc = new HBox(2);
+	     centerc.setAlignment(Pos.CENTER);
+	     centerc.getChildren().addAll(tablec, chartc);
+//	     hc.getChildren().addAll(bt_SampleLine, bt_SampleLine2);
 	
-	     VBox container = new VBox(20);
-	     container.getChildren().addAll(lbMainScreenTitle, hc, lbSampleDataTable, new Separator(), bt_SampleLineChart);
-	     container.setAlignment(Pos.CENTER);
+//	     VBox container = new VBox(20);
+//	     container.getChildren().addAll(lbMainScreenTitle, hc, lbSampleDataTable, new Separator(), bt_SampleLineChart);
+//	     container.setAlignment(Pos.CENTER);
 	
 	     BorderPane pane = new BorderPane();
-	     pane.setCenter(container);
+	     pane.setLeft(leftc);
+	     pane.setRight(rightc);
+	     pane.setCenter(centerc);
+	     pane.setTop(hc);
 	
 	     // Apply style to the GUI components
 	     bt_SampleLineChart.getStyleClass().add("menu-button");
@@ -62,14 +88,12 @@ public class MainScreen extends Main {
 
         // click handler
         bt_SampleLine.setOnAction(e -> {
-        	lbSampleDataTable.setText("Clicked1");
-
+        	lb_Left.setText("Clicked1");
         });
 
         // click handler
         bt_SampleLine2.setOnAction(e -> {
-        	lbSampleDataTable.setText("Clicked2");
-
+        	lb_Left.setText("Clicked2");
         });
 
         // click handler
