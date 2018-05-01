@@ -34,7 +34,6 @@ public class MyFileChooser extends Main {
     }
     
     public static Pane pane() {
-    	
     	// FileChooser
     	fileChooser = new FileChooser();
     	openButton = new Button("Open From File");
