@@ -1,5 +1,6 @@
-package core.comp3111;
+package testing.comp3111;
 
+import core.comp3111.CSVReader;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 

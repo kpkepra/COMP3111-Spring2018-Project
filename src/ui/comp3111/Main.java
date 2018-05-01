@@ -128,7 +128,6 @@ public class Main extends Application {
 
             // add the new series as the only one series for this line chart
             lineChart.getData().add(series);
-
         }
 
     }
@@ -276,123 +275,124 @@ public class Main extends Application {
 //        -----------------------------------------------------------------------------
 
 //        -------------------------------- TEST CHARTS --------------------------------
-        try {
-            // TEST PARAMETERS
-            boolean linePie = false; // LINE true PIE false
-            int numCols = 20;
-            int textCols = 5;
-            int row = 5;
-
-            stage = primaryStage;
-            DataTable table = new DataTable();
-            Random rand = new Random();
-            char[] base = new char[]{'A', 'B', 'C', 'D', 'E', 'F', 'G'};
-
-            for (int i = 0; i < numCols; ++i) {
-                Number[] content = new Number[row];
-
-                for (int j = 0; j < row; ++j) {
-                    int type = rand.nextInt(100) + 1;
-
-                    if (type >= 67) content[j] = rand.nextInt(20);
-                    else if (type >= 33) content[j] = rand.nextFloat();
-                    else content[j] = rand.nextDouble();
-                }
-
-                DataColumn column = new DataColumn(DataType.TYPE_NUMBER, content);
-                table.addCol("numCol" + i, column);
-            }
-
-            for (int i = 0; i < textCols; ++i) {
-                String[] content = new String[row];
-
-                for (int j = 0; j < row; ++j) {
-                    int length = rand.nextInt(10) + 1;
-
-                    String word = "";
-                    for (int k = 0; k < length; ++k) {
-                        word += base[rand.nextInt(base.length)];
-                    }
-
-                    content[j] = word;
-                }
-
-                DataColumn column = new DataColumn(DataType.TYPE_STRING, content);
-                table.addCol("textCol" + i, column);
-            }
-
-            Scene scene;
-            BorderPane chartNode = null;
-            try {
-                Chart lineChart = linePie ? new Line(table) : new Pie(table);
-                chartNode = lineChart.display();
-            } catch (ChartException ex) {
-                Alert alert = new Alert(Alert.AlertType.ERROR);
-                alert.setTitle("Chart Display Error");
-                alert.setHeaderText("There was an error in displaying chart!");
-                alert.setContentText(ex.getMessage());
-                alert.getDialogPane().setMinHeight(Region.USE_PREF_SIZE);
-                alert.showAndWait();
-            }
-            scene  = new Scene(chartNode, 1280, 720);
-            stage.setScene(scene);
-            stage.setResizable(true);
-            stage.show();
-        } catch (Exception e) {
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle("Exception Dialog");
-            alert.setHeaderText("An exception occured during runtime");
-
-            StringWriter sw = new StringWriter();
-            PrintWriter pw = new PrintWriter(sw);
-            e.printStackTrace(pw);
-            String exceptionText = sw.toString();
-
-            Label label = new Label("The exception stacktrace was:");
-
-            TextArea textArea = new TextArea(exceptionText);
-            textArea.setEditable(false);
-            textArea.setWrapText(true);
-
-            textArea.setMaxWidth(Double.MAX_VALUE);
-            textArea.setMaxHeight(Double.MAX_VALUE);
-            GridPane.setVgrow(textArea, Priority.ALWAYS);
-            GridPane.setHgrow(textArea, Priority.ALWAYS);
-
-            GridPane expContent = new GridPane();
-            expContent.setMaxWidth(Double.MAX_VALUE);
-            expContent.add(label, 0, 0);
-            expContent.add(textArea, 0, 1);
-
-        // Set expandable Exception into the dialog pane.
-            alert.getDialogPane().setExpandableContent(expContent);
-            alert.showAndWait();
-        }
-//        -----------------------------------------------------------------------------
-
-//        ------------------------------- TEST TRANSFORM ------------------------------
 //        try {
-//            DataTable data = SampleDataGenerator.generateSampleLineData();
-//            printTable(data);
+//            // TEST PARAMETERS
+//            boolean linePie = false; // LINE true PIE false
+//            int numCols = 20;
+//            int textCols = 5;
+//            int row = 5;
 //
 //            stage = primaryStage;
+//            DataTable table = new DataTable();
+//            Random rand = new Random();
+//            char[] base = new char[]{'A', 'B', 'C', 'D', 'E', 'F', 'G'};
 //
-//            GridPane node = data.filterDisplay();
-//            Scene scene  = new Scene(node, 1280, 720);
+//            for (int i = 0; i < numCols; ++i) {
+//                Number[] content = new Number[row];
 //
+//                for (int j = 0; j < row; ++j) {
+//                    int type = rand.nextInt(100) + 1;
+//
+//                    if (type >= 67) content[j] = rand.nextInt(20);
+//                    else if (type >= 33) content[j] = rand.nextFloat();
+//                    else content[j] = rand.nextDouble();
+//                }
+//
+//                DataColumn column = new DataColumn(DataType.TYPE_NUMBER, content);
+//                table.addCol("numCol" + i, column);
+//            }
+//
+//            for (int i = 0; i < textCols; ++i) {
+//                String[] content = new String[row];
+//
+//                for (int j = 0; j < row; ++j) {
+//                    int length = rand.nextInt(10) + 1;
+//
+//                    String word = "";
+//                    for (int k = 0; k < length; ++k) {
+//                        word += base[rand.nextInt(base.length)];
+//                    }
+//
+//                    content[j] = word;
+//                }
+//
+//                DataColumn column = new DataColumn(DataType.TYPE_STRING, content);
+//                table.addCol("textCol" + i, column);
+//            }
+//
+//            Scene scene;
+//            BorderPane chartNode = null;
+//            try {
+//                Chart lineChart = linePie ? new Line(table) : new Pie(table);
+//                chartNode = lineChart.display();
+//            } catch (ChartException ex) {
+//                Alert alert = new Alert(Alert.AlertType.ERROR);
+//                alert.setTitle("Chart Display Error");
+//                alert.setHeaderText("There was an error in displaying chart!");
+//                alert.setContentText(ex.getMessage());
+//                alert.getDialogPane().setMinHeight(Region.USE_PREF_SIZE);
+//                alert.showAndWait();
+//            }
+//            scene  = new Scene(chartNode, 1280, 720);
 //            stage.setScene(scene);
 //            stage.setResizable(true);
 //            stage.show();
-//            stage.setOnCloseRequest(new EventHandler<WindowEvent>() {
-//                                        public void handle(WindowEvent we) {
-//                                            System.out.println("AFTER FILTER");
-//                                            printTable(data);
-//                                        }
-//                                    });
-//
 //        } catch (Exception e) {
-//            e.printStackTrace();
+//            Alert alert = new Alert(Alert.AlertType.ERROR);
+//            alert.setTitle("Exception Dialog");
+//            alert.setHeaderText("An exception occured during runtime");
+//
+//            StringWriter sw = new StringWriter();
+//            PrintWriter pw = new PrintWriter(sw);
+//            e.printStackTrace(pw);
+//            String exceptionText = sw.toString();
+//
+//            Label label = new Label("The exception stacktrace was:");
+//
+//            TextArea textArea = new TextArea(exceptionText);
+//            textArea.setEditable(false);
+//            textArea.setWrapText(true);
+//
+//            textArea.setMaxWidth(Double.MAX_VALUE);
+//            textArea.setMaxHeight(Double.MAX_VALUE);
+//            GridPane.setVgrow(textArea, Priority.ALWAYS);
+//            GridPane.setHgrow(textArea, Priority.ALWAYS);
+//
+//            GridPane expContent = new GridPane();
+//            expContent.setMaxWidth(Double.MAX_VALUE);
+//            expContent.add(label, 0, 0);
+//            expContent.add(textArea, 0, 1);
+//
+//        // Set expandable Exception into the dialog pane.
+//            alert.getDialogPane().setExpandableContent(expContent);
+//            alert.showAndWait();
 //        }
+//        -----------------------------------------------------------------------------
+
+//        ------------------------------- TEST TRANSFORM ------------------------------
+        try {
+            DataTable data = SampleDataGenerator.generateSampleLineData();
+            Transform transform = new Transform(data);
+            TransformDisplay transformDisplay = new TransformDisplay(transform);
+
+            stage = primaryStage;
+
+            GridPane node = transformDisplay.filterDisplay();
+            Scene scene  = new Scene(node, 1280, 720);
+
+            stage.setScene(scene);
+            stage.setResizable(true);
+            stage.show();
+            stage.setOnCloseRequest(new EventHandler<WindowEvent>() {
+                                        public void handle(WindowEvent we) {
+                                            System.out.println("AFTER FILTER");
+                                            transform.getDataTable().printTable();
+                                        }
+                                    });
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 //        -----------------------------------------------------------------------------
     }
 
