@@ -66,7 +66,7 @@ public class Pie extends Chart{
 
     public ArrayList<String> getNumCols() { return numCols; }
 
-    public void setText(String input) { text = input; }
+    public void setText(String input) { if (textCols.contains(input))text = input; }
 
-    public void setNum(String input) { num = input; }
+    public void setNum(String input) { if (numCols.contains(input)) num = input; }
 }
