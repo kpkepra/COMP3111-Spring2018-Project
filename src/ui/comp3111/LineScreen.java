@@ -75,9 +75,9 @@ public class LineScreen extends Main {
 	static BorderPane loadSample() {
 
         // Get 2 columns
-            lineChart.setTitle("Sample Line Chart");
-            xAxis.setLabel("X");
-            yAxis.setLabel("Y");
+		lineChart.setTitle("Sample Line Chart");
+        xAxis.setLabel("X");
+        yAxis.setLabel("Y");
 		
 		try {
             // TEST PARAMETERS
@@ -127,12 +127,12 @@ public class LineScreen extends Main {
                 Chart lineChart = linePie ? new Line(table) : new Pie(table);
                 chartNode = lineChart.display();
             } catch (ChartException ex) {
-//                Alert alert = new Alert(Alert.AlertType.ERROR);
-//                alert.setTitle("Chart Display Error");
-//                alert.setHeaderText("There was an error in displaying chart!");
-//                alert.setContentText(ex.getMessage());
-//                alert.getDialogPane().setMinHeight(Region.USE_PREF_SIZE);
-//                alert.showAndWait();
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle("Chart Display Error");
+                alert.setHeaderText("There was an error in displaying chart!");
+                alert.setContentText(ex.getMessage());
+                alert.getDialogPane().setMinHeight(Region.USE_PREF_SIZE);
+                alert.showAndWait();
             }
         } catch (Exception e) {
 //            Alert alert = new Alert(Alert.AlertType.ERROR);
@@ -170,7 +170,7 @@ public class LineScreen extends Main {
     static void initHandlers() {
         // click handler
         btLineChartBackMain.setOnAction(e -> {
-            Main.putSceneOnStage(SCENE_MAIN_SCREEN);
+            Main.putSceneOnStage(0);
         });
     }
 }
