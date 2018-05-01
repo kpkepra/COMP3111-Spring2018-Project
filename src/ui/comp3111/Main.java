@@ -23,7 +23,7 @@ public class Main extends Application {
     protected static final int SCENE_NUM = 5;
     private static final String[] SCENE_TITLES = { "COMP3111 Chart - [Team Name]", "Sample Line Chart Screen", "Animated Chart" };
     protected static Stage stage = null;
-    private static Scene[] scenes = null;
+    public static Scene[] scenes = null;
 
     // To keep this application more structural,
     // The following UI components are used to keep references after invoking
