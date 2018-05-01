@@ -40,10 +40,10 @@ public class Pie extends Chart implements Serializable{
 
             if (Objects.equals(colType, DataType.TYPE_NUMBER)) {
                 boolean allPositive = true;
-                Number[] colData = (Number[]) data.getCol(colName).getData();
+                Object[] colData = data.getCol(colName).getData();
 
-                for (Number val : colData) {
-                    if (val.floatValue() < 0.0) allPositive = false;
+                for (Object val : colData) {
+                    if (Double.valueOf((String)val) < 0.0) allPositive = false;
                 }
                 if (allPositive) numCols.add(colName);
             }
@@ -126,5 +126,12 @@ public class Pie extends Chart implements Serializable{
             pieChart.getData().add(slice);
         }
         return pieChart;
+    }
+
+    @Override
+    public boolean equals(Object o){
+        Pie pie = (Pie) o;
+        if (!pie.data.equals(pie.data)) return false;
+        return true;
     }
 }
