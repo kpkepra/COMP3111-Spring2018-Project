@@ -50,7 +50,9 @@ public class Line extends Chart {
 
     public ArrayList<String> getNumCols() { return numCols; }
 
-    public void setX(String input) { x = input; }
+    public void setX(String input) {
+        if (numCols.contains(input)) x = input;
+    }
 
-    public void setY(String input) { y = input; }
+    public void setY(String input) { if (numCols.contains(input)) y = input; }
 }
