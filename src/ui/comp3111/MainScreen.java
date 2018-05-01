@@ -43,18 +43,41 @@ public class MainScreen extends Main {
 	     hc.getChildren().addAll(lbMainScreenTitle);
 	     
 	     Pane leftc = MyFileChooser.pane();
+	     leftc.setMinWidth(240);
+	     leftc.setMaxWidth(240);
+	     leftc.setStyle("-fx-background-color: blue");
 	     
-	     Pane rightc = ChartType.pane();
+	     Pane typePane = ChartType.pane();
+	     Pane filterPane = TransformDisplay.pane();
+	     VBox rightc = new VBox(20);
+	     rightc.setAlignment(Pos.CENTER);
+	     rightc.getChildren().addAll(typePane, filterPane);
+	     rightc.setMinWidth(240);
+	     rightc.setMaxWidth(240);
+	     rightc.setStyle("-fx-background-color: blue");
+	     
 	     
 	     HBox tablec = new HBox(20);
 	     tablec.setAlignment(Pos.CENTER);
 	     tablec.getChildren().addAll(lb_Table);
+	     tablec.setMinWidth(800);
+	     tablec.setMaxWidth(800);
+	     tablec.setMinHeight(300);
+	     tablec.setMaxHeight(300);
+	     tablec.setStyle("-fx-background-color: orange");
 
 	     Pane chartc = LineScreen.pane();
+	     chartc.setStyle("-fx-background-color: red");
+	     chartc.setMinWidth(800);
+	     chartc.setMaxWidth(800);
+	     chartc.setMinHeight(400);
+	     chartc.setMaxHeight(400);
 	     
-	     HBox centerc = new HBox(2);
+	     VBox centerc = new VBox(2);
 	     centerc.setAlignment(Pos.CENTER);
 	     centerc.getChildren().addAll(tablec, chartc);
+	     
+	     
 //	     hc.getChildren().addAll(bt_SampleLine, bt_SampleLine2);
 	
 //	     VBox container = new VBox(20);
