@@ -11,7 +11,7 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
 public class OpenCSV {
-	public void openCSV(){
+	public void openCSV(CSVReader readerCSV){
         Stage stage = new Stage();
         Button btFillWithZero = new Button("Fill Empty Data With 0");
         btFillWithZero.setOnAction(
