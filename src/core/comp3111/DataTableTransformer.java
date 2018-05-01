@@ -1,10 +1,9 @@
 package core.comp3111;
 
-import javax.xml.crypto.Data;
 import java.util.ArrayList;
 
 public class DataTableTransformer {
-    static CSVReader  tcsv = new CSVReader();
+    static CSVReader tcsv = new CSVReader();
     public static DataTable transform(CSVReader csv){
         tcsv = csv;
         DataTable dt = new DataTable();
