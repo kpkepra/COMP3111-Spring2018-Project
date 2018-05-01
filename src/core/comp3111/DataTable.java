@@ -170,6 +170,16 @@ public class DataTable implements Serializable {
 
     public void setDc(Map<String, DataColumn> input) { dc = input; }
 
+    @Override
+    public boolean equals(Object o){
+        boolean testEquality = true;
+        DataTable other = (DataTable) o;
+        for (String key : dc.keySet()) {
+            if (!Arrays.equals(dc.get(key).getData(), other.dc.get(key).getData())) testEquality = false;
+        }
+        return testEquality;
+    }
+
     // attribute: A java.util.Map interface
     // KeyType: String
     // ValueType: DataColumn

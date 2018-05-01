@@ -1,5 +1,6 @@
 package ui.comp3111;
 import java.io.File;
+import java.io.IOException;
 
 import core.comp3111.CSVReader;
 import core.comp3111.MyFileExtenstion;
@@ -91,7 +92,14 @@ public class MyFileChooser extends Main {
                     OpenCSV.openCSV(readerCSV);
                 } else if (extension.equals("corgi")) {
                     MyFileExtenstion mf = new MyFileExtenstion();
-                    mf.loadCorgi(fileName);
+                    try {
+                        mf.loadCorgi(fileName);
+                    }catch(IOException ioe){
+                        System.out.println("IO Exception in FileExtension");
+                    }
+                    catch(ClassNotFoundException efe) {
+                        System.out.println("Corgi, chart or dataTable class not found! ");
+                    }
                 } else {
                     System.out.println("unknown file type!!!!");
                 }
