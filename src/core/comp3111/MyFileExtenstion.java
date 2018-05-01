@@ -5,7 +5,7 @@ import java.util.ArrayList;
 
 public class MyFileExtenstion {
 
-    public CorgiObj loadCorgi( String fileName){
+    public CorgiObj loadCorgi(String fileName){
         CorgiObj corgi = new CorgiObj();
         try {
             FileInputStream fileIn = new FileInputStream(fileName);
@@ -15,11 +15,10 @@ public class MyFileExtenstion {
             fileIn.close();
         }
         catch (FileNotFoundException e) {
-            e.printStackTrace();
+            System.out.println("Cannot find the Corgi file");
 
         } catch (IOException i) {
-            i.printStackTrace();
-
+            System.out.println("Cannot find the Corgi file");
         }
         catch (ClassNotFoundException c) {
             System.out.println("class not found!");
@@ -46,27 +45,27 @@ public class MyFileExtenstion {
     }
 
     /*for testing only*/
-    static  TestObj t = new TestObj();
-    public static void main(String args[]) {
-        CSVReader ch = new CSVReader("csvTest1.csv");
-        ch.readALL(0);
-        ch.readField();
+//    static  TestObj t = new TestObj();
+//    public static void main(String args[]) {
+//        CSVReader ch = new CSVReader("csvTest1.csv");
+//        ch.readALL(0);
+//        ch.readField();
 //        System.out.println(ch.getData());
 //        System.out.println(ch.getFields());
-        DataTable dt  = DataTableTransformer.transform(ch);
-        try {
-            Chart chart = new Pie(dt);
-            ArrayList<Chart> charts = new ArrayList<>();
-            charts.add(chart);
-            CorgiObj corgi = new CorgiObj(dt,charts);
-            MyFileExtenstion mfe = new MyFileExtenstion();
-            mfe.saveCorgi("extensionTest2.corgi",corgi);
-            CorgiObj corl = mfe.loadCorgi("extensionTest2.corgi");
-            corl.printAndDisplayCharts();
-        }
-        catch (ChartException ce){
-            System.out.print("chart gg");
-        }
+//        DataTable dt  = DataTableTransformer.transform(ch);
+//        try {
+//            Chart chart = new Pie(dt);
+//            ArrayList<Chart> charts = new ArrayList<>();
+//            charts.add(chart);
+//            CorgiObj corgi = new CorgiObj(dt,charts);
+//            MyFileExtenstion mfe = new MyFileExtenstion();
+//            mfe.saveCorgi("extensionTest2.corgi",corgi);
+//            CorgiObj corl = mfe.loadCorgi("extensionTest2.corgi");
+//            corl.printAndDisplayCharts();
+//        }
+//        catch (ChartException ce){
+//            System.out.print("chart gg");
+//        }
 
 
 //        try {
@@ -96,21 +95,23 @@ public class MyFileExtenstion {
 //        }
 //        System.out.println(t.num);
 //        t.f();
-    }
+//    }
 
 }
-class TestObj implements Serializable{
 
-    int num;
-    private int privateNum;
-    TestObj(){
-        num = 123;
-        privateNum = 456;
-    }
-    public void f(){
-        System.out.print(privateNum);
-    }
-}
+//
+//class TestObj implements Serializable{
+//
+//    int num;
+//    private int privateNum;
+//    TestObj(){
+//        num = 123;
+//        privateNum = 456;
+//    }
+//    public void f(){
+//        System.out.print(privateNum);
+//    }
+//}
 
 class CorgiObj implements Serializable{
     DataTable dt;
