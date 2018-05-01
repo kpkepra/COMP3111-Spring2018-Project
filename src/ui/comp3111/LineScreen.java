@@ -22,12 +22,11 @@ import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
 
 public class LineScreen extends Main {
-    private static LineChart<Number, Number> lineChart = null;
     private static NumberAxis xAxis = null;
     private static NumberAxis yAxis = null;
     private static Button btLineChartBackMain = null;
     
-    static boolean linePie = false; // LINE true PIE false
+    static boolean linePie = true; // LINE true PIE false
     static int numCols = 20;
     static int textCols = 5;
     static int row = 5;
@@ -36,22 +35,25 @@ public class LineScreen extends Main {
     static Random rand = new Random();
     static char[] base = new char[]{'A', 'B', 'C', 'D', 'E', 'F', 'G'};
     
+    static Line lineChart;
+    static Pie pieChart;
+    static LineChartDisplay lcd;
+    static PieChartDisplay pcd;
+    
     static BorderPane chartNode = null;
 	
 	public static Pane pane() {
 		xAxis = new NumberAxis();
         yAxis = new NumberAxis();
-        lineChart = new LineChart<Number, Number>(xAxis, yAxis);
 
         btLineChartBackMain = new Button("Back");
 
         xAxis.setLabel("undefined");
         yAxis.setLabel("undefined");
-        lineChart.setTitle("An empty line chart");
 
         // Layout the UI components
         VBox container = new VBox(20);
-        container.getChildren().addAll(lineChart, btLineChartBackMain);
+        container.getChildren().addAll(btLineChartBackMain);
         container.setAlignment(Pos.CENTER);
 
         BorderPane pane = new BorderPane();
@@ -69,13 +71,11 @@ public class LineScreen extends Main {
 	static BorderPane loadSample() {
 
         // Get 2 columns
-		lineChart.setTitle("Sample Line Chart");
         xAxis.setLabel("X");
         yAxis.setLabel("Y");
 		
 		try {
             // TEST PARAMETERS
-            boolean linePie = true; // LINE true PIE false
             int numCols = 20;
             int textCols = 5;
             int row = 5;
@@ -116,19 +116,7 @@ public class LineScreen extends Main {
                 DataColumn column = new DataColumn(DataType.TYPE_STRING, content);
                 table.addCol("textCol" + i, column);
             }
-
-            try {
-            	// Assign Chart
-                Chart lineChart = linePie ? new Line(table) : new Pie(table);
-//                chartNode = lineChart.display();
-            } catch (ChartException ex) {
-                Alert alert = new Alert(Alert.AlertType.ERROR);
-                alert.setTitle("Chart Display Error");
-                alert.setHeaderText("There was an error in displaying chart!");
-                alert.setContentText(ex.getMessage());
-                alert.getDialogPane().setMinHeight(Region.USE_PREF_SIZE);
-                alert.showAndWait();
-            }
+            changeType();
         } catch (Exception e) {
 //            Alert alert = new Alert(Alert.AlertType.ERROR);
 //            alert.setTitle("Exception Dialog");
@@ -160,6 +148,23 @@ public class LineScreen extends Main {
 //            alert.showAndWait();
         }
 		return chartNode;
+	}
+	
+	public static void changeType() {
+		try {
+			lineChart = new Line(table);
+			lcd = new LineChartDisplay(lineChart);
+			pieChart = new Pie(table);
+			pcd = new PieChartDisplay(pieChart);
+			chartNode = (linePie ? lcd.display() : pcd.display());
+		} catch (ChartException ex) {
+          Alert alert = new Alert(Alert.AlertType.ERROR);
+          alert.setTitle("Chart Display Error");
+          alert.setHeaderText("There was an error in displaying chart!");
+          alert.setContentText(ex.getMessage());
+          alert.getDialogPane().setMinHeight(Region.USE_PREF_SIZE);
+          alert.showAndWait();
+      }
 	}
 	
     static void initHandlers() {
