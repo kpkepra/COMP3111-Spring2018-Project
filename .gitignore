@@ -7,3 +7,5 @@
 # Ignore DS_Store in Mac OS X
 .DS_Store
 .idea
+
+out/
