@@ -120,7 +120,7 @@ public class LineScreen extends Main {
             try {
             	// Assign Chart
                 Chart lineChart = linePie ? new Line(table) : new Pie(table);
-                chartNode = lineChart.display();
+//                chartNode = lineChart.display();
             } catch (ChartException ex) {
                 Alert alert = new Alert(Alert.AlertType.ERROR);
                 alert.setTitle("Chart Display Error");
