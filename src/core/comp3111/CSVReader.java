@@ -54,18 +54,15 @@ public class CSVReader {
                 String line = sc.nextLine();
                 String [] rowData = line.split(",");
                 row = new ArrayList<>(Arrays.asList(rowData));
-                if(numCol ==0) numCol = row.size();
-                else if(numCol != row.size()){
-                    System.out.println("Error: Input File does not have " +
-                            "same col number for each row");
-                }
+                numCol = row.size();
+
             }
             else{
-                System.out.print("Error: There's no more line");
+                System.out.print("Error: This is an empty file");
             }
         }
         catch (FileNotFoundException e){
-            e.printStackTrace();
+            System.out.println("File Not Existed");
         }
         fields = row;
     }
@@ -73,6 +70,7 @@ public class CSVReader {
 
     public void readALL(int command){
         try {
+            data.clear();
             Scanner sc = new Scanner(inputFile);
             String lineSeparator = System.getProperty("line.separator");
             sc.useDelimiter(",|"+lineSeparator);
@@ -87,6 +85,12 @@ public class CSVReader {
                 }
                 data.add(current);
             }
+            //TODO check if there's same col number for each row
+
+//             else if(numCol != row.size()){
+//                System.out.println("Error: Input File does not have " +
+//                        "same col number for each row");
+//            }
 
             for(int i = 0; i < data.size();i++) {
                 if (data.get(i).equals("")) {
@@ -102,13 +106,15 @@ public class CSVReader {
                         }
                     }catch (IndexOutOfBoundsException e){
                         System.out.println("This column is empty");
+                        return;
                     }
                     missingDataHandler(isNumericCol(data.get(nextNum)), i,command);
                 }
             }
         }
         catch(FileNotFoundException e){
-            e.printStackTrace();
+            System.out.println("Error: No such File!");
+            return;
         }
 
     }
@@ -151,6 +157,7 @@ public class CSVReader {
         }
     }
 
+    //TODO refactor this out
     public void openCSV(){
         Stage stage = new Stage();
         Button btFillWithZero = new Button("Fill Empty Data With 0");
@@ -265,8 +272,12 @@ public class CSVReader {
         dt.printTable();
 //        System.out.println(Arrays.asList(dt.getColNames()));
 //        System.out.println(dt.getCol("Name"));
-        CSVWriter writer = new CSVWriter("output.csv");
-        writer.writeArray(ch.data,ch.getNumCol());
-        writer.close();
+        try {
+            CSVWriter writer = new CSVWriter("output.csv");
+            writer.writeArray(ch.data, ch.getNumCol());
+            writer.close();
+        }catch (FileNotFoundException fe){
+            fe.printStackTrace();
+        }
     }
 }
