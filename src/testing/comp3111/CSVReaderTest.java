@@ -1,8 +1,10 @@
 package testing.comp3111;
 
 import core.comp3111.CSVReader;
-import org.testng.Assert;
-import org.testng.annotations.Test;
+//import org.testng.Assert;
+//import org.testng.annotations.Test;
+import org.junit.jupiter.api.Test;
+import org.junit.Assert;
 
 import java.util.ArrayList;
 import java.util.Arrays;
