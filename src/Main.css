@@ -14,3 +14,7 @@
 .screen-background {
 	-fx-background-color: white;
 }
+
+.filter-gridpane {
+	-fx-font: 16 arial;
+}
