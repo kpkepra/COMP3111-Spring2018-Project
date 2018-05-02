@@ -1,9 +1,15 @@
 package ui.comp3111;
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 
 import core.comp3111.CSVReader;
+import core.comp3111.Chart;
+import core.comp3111.DataTable;
+import core.comp3111.DataTableTransformer;
 import core.comp3111.MyFileExtenstion;
+import core.comp3111.Transform;
+import core.comp3111.MyFileExtenstion.CorgiObj;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -22,10 +28,10 @@ import javafx.stage.Stage;
 * */
 
 public class MyFileChooser extends Main {
-    private static Button openButton;
+    private static Button openButton, saveButton;
     
     private static FileChooser fileChooser;
-    
+    private static CSVReader csv;
     private static Pane pane;
     private static GridPane inputGridPane;
     
@@ -38,16 +44,16 @@ public class MyFileChooser extends Main {
     	// FileChooser
     	fileChooser = new FileChooser();
     	openButton = new Button("Open From File");
+    	saveButton = new Button("Save to File");
     	
     	initHandlers();
-    	
     	
     	// GridPane
     	inputGridPane = new GridPane();
     	GridPane.setConstraints(openButton, 0, 0);
     	inputGridPane.setHgap(6);
     	inputGridPane.setVgap(6);
-    	inputGridPane.getChildren().addAll(openButton);
+    	inputGridPane.getChildren().addAll(openButton, saveButton);
     	
     	// Pane
     	pane = new VBox(12);
@@ -77,6 +83,17 @@ public class MyFileChooser extends Main {
                         }
                     }
                 });
+        
+        saveButton.setOnAction(
+        		new EventHandler<ActionEvent>() {
+        			@Override
+        			public void handle(final ActionEvent e) {
+        				File file = fileChooser.showSaveDialog(stage);
+        				if (file != null) {
+        					saveFile(file);
+        				}
+        			}
+        		});
     }
     
     static void openFile(File file) {
@@ -94,7 +111,8 @@ public class MyFileChooser extends Main {
                 } else if (extension.equals("corgi")) {
                     MyFileExtenstion mf = new MyFileExtenstion();
                     try {
-                        mf.loadCorgi(fileName);
+                        CorgiObj corgi = mf.loadCorgi(fileName);
+                        Listbox.addCorgi(corgi);
                     }catch(IOException ioe){
                         System.out.println("IO Exception in FileExtension");
                     }
@@ -105,5 +123,19 @@ public class MyFileChooser extends Main {
                     System.out.println("unknown file type!!!!");
                 }
             }
+    }
+    
+    static void saveFile(File file) {
+    	String fileName = file.getName();
+    	ArrayList<DataTable> dt = Listbox.getTables();
+    	
+    	ArrayList<Chart> ct = new ArrayList<Chart>();
+    	CorgiObj corgi = new CorgiObj(dt, ct);
+    	MyFileExtenstion mf = new MyFileExtenstion();
+    	try {
+			mf.saveCorgi(fileName, corgi);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
     }
 }
