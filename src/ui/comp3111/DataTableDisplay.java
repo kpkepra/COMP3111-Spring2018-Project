@@ -1,8 +1,6 @@
 package ui.comp3111;
 
-import core.comp3111.DataColumn;
-import core.comp3111.DataTable;
-import core.comp3111.DataType;
+import core.comp3111.*;
 import javafx.beans.property.ReadOnlyFloatWrapper;
 import javafx.beans.property.ReadOnlyStringWrapper;
 import javafx.scene.control.TableColumn;
@@ -55,5 +53,15 @@ public class DataTableDisplay {
         }
 
         return datasetTable;
+    }
+
+    //TODO debug for the display
+    public static void main(String args[]){
+        CSVReader csv = new CSVReader("csvTest1.csv");
+        csv.readALL(0);
+        csv.readField();
+        DataTable dt = DataTableTransformer.transform(csv);
+        DataTableDisplay dt_display = new DataTableDisplay(dt);
+        TableView tv = dt_display.displayTable();
     }
 }
