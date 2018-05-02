@@ -13,31 +13,22 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 
 public class MainScreen extends Pane {
-    private static Button bt_SampleLine, bt_SampleLine2, bt_SampleLineChart;
 	public static BorderPane pane;
 	public static VBox leftc, centerc, rightc;
 	public static HBox hc;
 	public static Pane impexp, listView, typePane, filterPane, chartc, tablec;
 	
-	private static Button 
-		bt_Transform;
+	public static TransformDisplay tfDisplay;
 	
-    private static Label lb_Left;
 	private Label lb_Title;
 	
 	public MainScreen() {
 		super();
 		lb_Title = new Label("CORGI3111");
 		
-	}
+	}	
 	
-	public Pane pane() {
-	     bt_SampleLineChart = new Button("Sample Line Chart");
-	     bt_SampleLine2 = new Button("Sample 2");
-	     bt_SampleLine = new Button("Sample 1");
-	     
-	     bt_Transform = new Button("Transform");
-	     
+	public Pane pane() {	     
 	     // Layout the UI components
 	     hc = new HBox(20);
 	     hc.setAlignment(Pos.CENTER);
@@ -58,30 +49,26 @@ public class MainScreen extends Pane {
 	     
 	     typePane = ChartType.pane();
 	     
-       Transform tf = new Transform(DataTableDisplay.getDT());
-       TransformDisplay tfDisplay = new TransformDisplay(tf);
-       
-       
+	     tfDisplay = new TransformDisplay(new Transform(DataTableDisplay.getDT()));
 	     filterPane = tfDisplay.splitFilter();
-//	     filterPane.getChildren().addAll(tfDisplay.filterDisplay(), tfDisplay.splitDisplay());
 	     rightc = new VBox(20);
 	     rightc.setAlignment(Pos.CENTER);
 	     rightc.getChildren().addAll(typePane, filterPane);
-	     rightc.setMinWidth(240);
-	     rightc.setMaxWidth(240);
+	     rightc.setMinWidth(300);
+	     rightc.setMaxWidth(300);
 	     rightc.setStyle("-fx-background-color: blue");
 	     
 	     tablec = DataTableDisplay.displayTable();
-	     tablec.setMinWidth(800);
-	     tablec.setMaxWidth(800);
+	     tablec.setMinWidth(760);
+	     tablec.setMaxWidth(760);
 	     tablec.setMinHeight(300);
 	     tablec.setMaxHeight(300);
 	     tablec.setStyle("-fx-background-color: orange");
 
 	     chartc = LineScreen.pane();
 	     chartc.setStyle("-fx-background-color: red");
-	     chartc.setMinWidth(800);
-	     chartc.setMaxWidth(800);
+	     chartc.setMinWidth(760);
+	     chartc.setMaxWidth(760);
 	     chartc.setMinHeight(400);
 	     chartc.setMaxHeight(400);
 	     
@@ -89,14 +76,9 @@ public class MainScreen extends Pane {
 	     centerc.setAlignment(Pos.CENTER);
 	     centerc.getChildren().addAll(tablec, chartc);
 	
-	     pane = new BorderPane();
-	     pane.setLeft(leftc);
-	     pane.setRight(rightc);
-	     pane.setCenter(centerc);
-	     pane.setTop(hc);
+	     pane = new BorderPane(centerc, hc, rightc, null, leftc);
 	
 	     // Apply style to the GUI components
-	     bt_SampleLineChart.getStyleClass().add("menu-button");
 	     lb_Title.getStyleClass().add("menu-title");
 	     pane.getStyleClass().add("screen-background");
 	     
@@ -105,21 +87,6 @@ public class MainScreen extends Pane {
 	}
 	
     static void initHandlers() {
-
-        // click handler
-        bt_SampleLine.setOnAction(e -> {
-        	lb_Left.setText("Clicked1");
-        });
-
-        // click handler
-        bt_SampleLine2.setOnAction(e -> {
-        	lb_Left.setText("Clicked2");
-        });
-
-        // click handler
-        bt_SampleLineChart.setOnAction(e -> {
-            Main.putSceneOnStage(1);
-        });
-
+    	
     }
 }
