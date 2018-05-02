@@ -23,6 +23,10 @@ public class DataTableDisplay {
 	  public DataTableDisplay(DataTable dt) {
 		  table = dt;
 	  }
+	  
+	  public static DataTable getDT() {
+		  return table;
+	  }
 	
 	  public static Pane displayTable() {
 		  pane = new Pane();
