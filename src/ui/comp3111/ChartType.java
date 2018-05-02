@@ -42,14 +42,21 @@ public class ChartType extends Main {
 		tg.selectedToggleProperty().addListener(new ChangeListener<Toggle>() {
 			public void changed(ObservableValue<? extends Toggle> ov, Toggle oldT, Toggle newT) {
 				if (tg.getSelectedToggle() != null) {
-					if (tg.getSelectedToggle().getUserData().toString() == radioText[0]) {
-						LineScreen.linePie = true;
+					if (tg.getSelectedToggle().getUserData().toString() == radioText[2]) {
+						MainScreen.centerc.getChildren().remove(MainScreen.chartc);
+						MainScreen.chartc = AnimatedScreen.pane();
+						MainScreen.centerc.getChildren().add(1, MainScreen.chartc);
 					} else {
-						LineScreen.linePie = false;
+						if (tg.getSelectedToggle().getUserData().toString() == radioText[0]) {
+							LineScreen.linePie = true;
+						} else {
+							LineScreen.linePie = false;
+						}
+						MainScreen.centerc.getChildren().remove(MainScreen.chartc);
+						MainScreen.chartc = LineScreen.pane();
+						MainScreen.centerc.getChildren().add(1, MainScreen.chartc);
 					}
-					MainScreen.centerc.getChildren().remove(MainScreen.chartc);
-					MainScreen.chartc = LineScreen.pane();
-					MainScreen.centerc.getChildren().add(1, MainScreen.chartc);
+
 				}
 			}
 		});
