@@ -85,7 +85,7 @@ public class DataColumn implements Serializable {
 	public void printCol(){
 	 	System.out.println(Arrays.asList(data));
 	}
-
+ 	//ToDo javadoc here
 	public boolean isNumericCol(){
 			try
 			{

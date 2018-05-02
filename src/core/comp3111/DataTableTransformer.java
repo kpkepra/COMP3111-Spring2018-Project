@@ -3,8 +3,21 @@ package core.comp3111;
 import java.util.ArrayList;
 import java.util.Map;
 
+
+
+/**
+ * DataTableTransformer - DataTableTransformer is a class transform between
+ * ArrayList and DataTable
+ * @author Wu Yun Ju
+ */
 public class DataTableTransformer {
     static CSVReader tcsv = new CSVReader();
+
+
+    /**
+     * Take in the CSVReader with the ArrayList data and fields and transform the
+     * Two ArrayList into 
+     * */
     public static DataTable transform(CSVReader csv){
         tcsv = csv;
         DataTable dt = new DataTable();
