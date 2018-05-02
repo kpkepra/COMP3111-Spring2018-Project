@@ -22,7 +22,6 @@ public class Listbox {
 	
 	// List for Display
 	private static ListView<String> list = new ListView<String>();
-
 	
 	public static Pane pane() {
 		list.setItems(filenames);

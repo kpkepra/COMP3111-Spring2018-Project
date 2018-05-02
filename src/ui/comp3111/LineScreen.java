@@ -76,11 +76,6 @@ public class LineScreen extends Main {
 		
 		try {
             // TEST PARAMETERS
-            int numCols = 20;
-            int textCols = 5;
-            int row = 5;
-
-            DataTable table = new DataTable();
             Random rand = new Random();
             char[] base = new char[]{'A', 'B', 'C', 'D', 'E', 'F', 'G'};
 
@@ -164,6 +159,26 @@ public class LineScreen extends Main {
             alert.showAndWait();
         }
 		return chartNode;
+	}
+	
+	public static void changeType() {
+		try {
+			if (linePie) {
+				lineChart = new Line(table);
+                lcd = new LineChartDisplay(lineChart);
+			} else {
+				pieChart = new Pie(table);
+				pcd = new PieChartDisplay(pieChart);
+			}
+			chartNode = (linePie ? lcd.display() : pcd.display());
+		} catch (ChartException ex) {
+          Alert alert = new Alert(Alert.AlertType.ERROR);
+          alert.setTitle("Chart Display Error");
+          alert.setHeaderText("There was an error in displaying chart!");
+          alert.setContentText(ex.getMessage());
+          alert.getDialogPane().setMinHeight(Region.USE_PREF_SIZE);
+          alert.showAndWait();
+      }
 	}
 	
     static void initHandlers() {
