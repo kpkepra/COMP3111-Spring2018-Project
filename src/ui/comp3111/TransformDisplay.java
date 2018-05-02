@@ -1,8 +1,6 @@
 package ui.comp3111;
 
 import core.comp3111.*;
-import javafx.beans.property.ReadOnlyFloatWrapper;
-import javafx.beans.property.ReadOnlyStringWrapper;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
@@ -168,7 +166,7 @@ public class TransformDisplay extends Main {
                             column.setCellValueFactory(cellData -> {
                                 Integer rowIndex = cellData.getValue();
 
-                                if (rowIndex < newTables[0].getNumRow()) return new ReadOnlyFloatWrapper(((Number)data[rowIndex]).floatValue());
+                                if (rowIndex < newTables[0].getNumRow()) return new ReadOnlyFloatWrapper(((Float.valueOf((String)data[rowIndex])).floatValue()));
                                 else return null;
                             });
                             column.prefWidthProperty().bind(dataset1.widthProperty().divide(newTables[0].getNumCol()));
@@ -199,7 +197,7 @@ public class TransformDisplay extends Main {
                             column.setCellValueFactory(cellData -> {
                                 Integer rowIndex = cellData.getValue();
 
-                                if (rowIndex < newTables[1].getNumRow()) return new ReadOnlyFloatWrapper(((Number)data[rowIndex]).floatValue());
+                                if (rowIndex < newTables[1].getNumRow()) return new ReadOnlyFloatWrapper(((Float.valueOf((String)data[rowIndex]))).floatValue());
                                 else return null;
                             });
                             column.prefWidthProperty().bind(dataset2.widthProperty().divide(newTables[1].getNumCol()));
@@ -243,6 +241,7 @@ public class TransformDisplay extends Main {
             @Override
             public void handle(ActionEvent e) {
                 save = true;
+
                 stage.hide();
             }
         });
