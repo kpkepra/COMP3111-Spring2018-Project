@@ -88,7 +88,7 @@ public class TransformDisplay extends Main {
                     stage = new Stage();
                     stage.setOnHiding(new EventHandler<WindowEvent>() {
                         public void handle(WindowEvent we) {
-                            if (save) {
+                            if (save) {""
                                 //TODO: Save Data Tables
                             }
                             else {
