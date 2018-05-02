@@ -16,7 +16,7 @@ public class DataTableTransformer {
 
     /**
      * Take in the CSVReader with the ArrayList data and fields and transform the
-     * Two ArrayList into 
+     * Two ArrayList into
      * */
     public static DataTable transform(CSVReader csv){
         tcsv = csv;

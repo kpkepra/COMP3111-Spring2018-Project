@@ -134,14 +134,26 @@ public class Transform {
             table1.put(colName, new ArrayList<Object>());
         }
 
+        float percentage = percentSplit[0]/100.0f;
+        int table0Size = Math.round(percentage * dataTable.getNumRow());
+        int table1Size = dataTable.getNumRow() - table0Size;
+
         for (int i = 0; i < dataTable.getNumRow(); ++i) {
             int tableSelect = rand.nextInt(100) + 1;
 
             for (String colName : dataTable.getColNames()) {
                 Object data = dataTable.getCol(colName).getData()[i];
 
-                if (tableSelect < percentSplit[0]) table0.get(colName).add(data);
-                else table1.get(colName).add(data);
+                if (tableSelect < percentSplit[0]) {
+                    if (table0.get(colName).size() < table0Size) {
+                        table0.get(colName).add(data);
+                    }
+                    else table1.get(colName).add(data);
+                }
+                else {
+                    if (table1.get(colName).size() < table1Size) table1.get(colName).add(data);
+                    else table0.get(colName).add(data);
+                }
             }
         }
 
@@ -186,6 +198,8 @@ public class Transform {
         Number op_filter;
 
         try {
+            for (String colName:dataTable.getColNames()) System.out.println(colName);
+            System.out.println("COLUMN:" + columnFilter);
             for (int i = 0; i < dataTable.getNumRow(); ++i) {
                 data[i] = (Number) dataTable.getCol(columnFilter).getData()[i];
             }
