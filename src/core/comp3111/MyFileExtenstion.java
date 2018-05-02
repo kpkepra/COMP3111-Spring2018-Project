@@ -3,22 +3,29 @@ package core.comp3111;
 import java.io.*;
 import java.util.ArrayList;
 
+
+/**
+ * MyFileExtension - MyFileExtension provides load and save features to our
+ * self-defined fileType .corgi extension
+ * Each of the .corgi file has one Corgi object,
+ * in the corgi object there is an ArrayList of DataTable and an ArrayList of charts
+ */
 public class MyFileExtenstion {
     public static class CorgiObj implements Serializable{
-        private DataTable dt;
+        private ArrayList<DataTable> dts;
         private ArrayList <Chart> charts;
         private String name;
         public CorgiObj(){
-            dt = new DataTable();
+            dts = new ArrayList<>();
             charts = new ArrayList<>();
         }
-        public CorgiObj(DataTable dt,ArrayList<Chart> charts){
-            this.dt = dt;
+        public CorgiObj(ArrayList<DataTable> dts,ArrayList<Chart> charts){
+            this.dts = dts;
             this.charts = charts;
         }
 
-        public DataTable getDt() {
-            return dt;
+        public ArrayList<DataTable> getDts() {
+            return dts;
         }
         public ArrayList<Chart> getCharts() {
             return charts;
