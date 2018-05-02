@@ -34,6 +34,8 @@ class MyFileExtenstionTest {
             MyFileExtenstion.CorgiObj corl = mfe.loadCorgi("extensionTest.corgi");
             assertEquals(corl.getDts().get(0),dt);
             assertEquals(corl.getCharts().get(0),chart);
+            corgi.setName("corgi_1");
+            assertEquals(corgi.getName(),"corgi_1");
 //            String [] fields = ch.getFields().
 //                    toArray(new String[ch.getFields().size()]);
 //            String [] data = ch.getData().
