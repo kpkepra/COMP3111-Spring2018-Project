@@ -57,7 +57,7 @@ public class Listbox {
 			@Override
 			public void handle(MouseEvent arg0) {
 				int idx = list.getSelectionModel().getSelectedIndex();
-				DataTableDisplay.setTable(files[idx]);
+//				DataTableDisplay.setTable(files[idx]);
 				System.out.println(list.getSelectionModel().getSelectedIndex());
 			}
 			

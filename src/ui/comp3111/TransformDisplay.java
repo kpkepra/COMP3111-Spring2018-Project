@@ -346,12 +346,12 @@ public class TransformDisplay extends Main {
             public void handle(ActionEvent e) {
                 try {
                     transform.setNumberFilter(numberField.getText());
-//                    DataTable tempTable = transform.filterData();
+                    DataTable tempTable = transform.filterData();
 
 //                    selectFilter.getChildren().remove(datasetTable);
 
                     DataTable temp = new DataTable();
-                    temp.setDc(tempTable);
+//                    temp.setDc(tempTable);
 
 //                    TableView datasetTable = displayTable(temp);
 //                    selectFilter.add(datasetTable, 0, 0, 3, 1);
