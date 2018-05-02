@@ -12,9 +12,9 @@ import javafx.scene.control.*;
 
 public class DataTableDisplay {
 	  private static File file;
-	  private static DataTable table;
+//	  private static DataTable table;
 	
-	  public TableView displayTable() {
+	  public TableView displayTable(DataTable table) {
 		  TableView<Integer> datasetTable = new TableView();
 		  datasetTable.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
 		
