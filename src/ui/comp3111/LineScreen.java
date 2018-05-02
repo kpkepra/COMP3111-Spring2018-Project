@@ -152,10 +152,13 @@ public class LineScreen extends Main {
 	
 	public static void changeType() {
 		try {
-			lineChart = new Line(table);
-			lcd = new LineChartDisplay(lineChart);
-			pieChart = new Pie(table);
-			pcd = new PieChartDisplay(pieChart);
+			if (linePie) {
+				lineChart = new Line(table);
+				lcd = new LineChartDisplay(lineChart);
+			} else {
+				pieChart = new Pie(table);
+				pcd = new PieChartDisplay(pieChart);
+			}
 			chartNode = (linePie ? lcd.display() : pcd.display());
 		} catch (ChartException ex) {
           Alert alert = new Alert(Alert.AlertType.ERROR);
