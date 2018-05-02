@@ -1,5 +1,6 @@
 package core.comp3111;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Objects;
 
@@ -12,7 +13,7 @@ import java.util.Objects;
  * @author apsusanto
  *
  */
-public class Pie extends Chart implements Serializable{
+public class Pie extends Chart implements Serializable {
     private ArrayList<String> textCols;
     private ArrayList<String> numCols;
     private String num;
@@ -52,7 +53,7 @@ public class Pie extends Chart implements Serializable{
                 Object[] colData = data.getCol(colName).getData();
 
                 for (Object val : colData) {
-                    if (((Number) val).floatValue() < 0.0) allPositive = false;
+                    if ((Float.valueOf((String)val)) < 0.0) allPositive = false;
                 }
                 if (allPositive) numCols.add(colName);
             }
