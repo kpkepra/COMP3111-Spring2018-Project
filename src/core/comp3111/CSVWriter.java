@@ -22,6 +22,7 @@ public class CSVWriter{
      * - Create an CSV writer that write to the specified Filename
      * @param fileName
      *      -specified the csv filename that we want to write to.
+     * @throws FileNotFoundException
      */
     public CSVWriter(String fileName) throws FileNotFoundException {
             pw = new PrintWriter(new File(fileName));
