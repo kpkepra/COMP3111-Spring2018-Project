@@ -16,6 +16,7 @@ import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Objects;
 
@@ -23,6 +24,8 @@ public class TransformDisplay extends Main {
     private Transform transform;
 
     private boolean save;
+
+    private String fileName;
 
     GridPane splitFilter;
 
@@ -89,7 +92,40 @@ public class TransformDisplay extends Main {
                     stage.setOnHiding(new EventHandler<WindowEvent>() {
                         public void handle(WindowEvent we) {
                             if (save) {
-                                //TODO: Save Data Tables
+                                stage = new Stage();
+                                askFileName();
+
+                                stage.setOnHiding(new EventHandler<WindowEvent>() {
+                                    public void handle(WindowEvent we) {
+                                        try {
+                                            if (fileName != null) {
+                                                CSVWriter csvWriter = new CSVWriter(fileName + ".csv");
+                                                ArrayList<String> array = new DataTableTransformer().reverseTransform(newTables[0]);
+                                                csvWriter.writeArray(array, newTables[0].getNumCol());
+                                                csvWriter.close();
+                                                stage = new Stage();
+                                                askFileName();
+                                                stage.setOnHiding(new EventHandler<WindowEvent>() {
+                                                    public void handle(WindowEvent we) {
+                                                        try {
+                                                            if (fileName != null) {
+                                                                CSVWriter csvWriter = new CSVWriter(fileName + ".csv");
+                                                                ArrayList<String> array = new DataTableTransformer().reverseTransform(newTables[1]);
+                                                                csvWriter.writeArray(array, newTables[1].getNumCol());
+                                                                csvWriter.close();
+                                                            }
+                                                        } catch (Exception e) {
+                                                            e.printStackTrace();
+                                                        }
+                                                    }
+                                                });
+                                            }
+                                        } catch (Exception e) {
+                                            e.printStackTrace();
+                                        }
+
+                                    }
+                                });
                             }
                             else {
                                 GridPane chooseReplace = new GridPane();
@@ -171,7 +207,7 @@ public class TransformDisplay extends Main {
                             column.setCellValueFactory(cellData -> {
                                 Integer rowIndex = cellData.getValue();
 
-                                if (rowIndex < newTables[0].getNumRow()) return new ReadOnlyFloatWrapper(((Float.valueOf((String)data[rowIndex])).floatValue()));
+                                if (rowIndex < newTables[0].getNumRow()) return new ReadOnlyFloatWrapper((float)(double)(Double)data[rowIndex]);
                                 else return null;
                             });
                             column.prefWidthProperty().bind(dataset1.widthProperty().divide(newTables[0].getNumCol()));
@@ -202,7 +238,7 @@ public class TransformDisplay extends Main {
                             column.setCellValueFactory(cellData -> {
                                 Integer rowIndex = cellData.getValue();
 
-                                if (rowIndex < newTables[1].getNumRow()) return new ReadOnlyFloatWrapper(((Float.valueOf((String)data[rowIndex]))).floatValue());
+                                if (rowIndex < newTables[1].getNumRow()) return new ReadOnlyFloatWrapper((float)(double)(Double)data[rowIndex]);
                                 else return null;
                             });
                             column.prefWidthProperty().bind(dataset2.widthProperty().divide(newTables[1].getNumCol()));
@@ -423,6 +459,39 @@ public class TransformDisplay extends Main {
         root.add(splitFilter, 0, 2, 2, 1);
 
         return root;
+    }
+
+    public void askFileName() {
+        GridPane root = new GridPane();
+        root.setHgap(10);
+        root.setVgap(10);
+        ColumnConstraints column1 = new ColumnConstraints();
+        column1.setHalignment(HPos.CENTER);
+        column1.setPercentWidth(50);
+        ColumnConstraints column2 = new ColumnConstraints();
+        column2.setHalignment(HPos.CENTER);
+        column2.setPercentWidth(50);
+        root.getColumnConstraints().addAll(column1, column2);
+        root.add(new Label("What is the file name you would like to save as?"), 0, 0);
+
+        TextField nameField = new TextField();
+        root.add(nameField, 0, 1);
+
+        Button saveButton = new Button("Save");
+        saveButton.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent e) {
+                if (nameField.getText() != null) {
+                    fileName = nameField.getText();
+                    stage.hide();
+                }
+            }
+        });
+        root.add(saveButton, 0, 2);
+
+        Scene scene = new Scene(root);
+        stage.setScene(scene);
+        stage.show();
     }
 
 }
