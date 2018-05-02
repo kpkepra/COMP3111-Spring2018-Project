@@ -88,7 +88,7 @@ public class TransformDisplay extends Main {
                     stage = new Stage();
                     stage.setOnHiding(new EventHandler<WindowEvent>() {
                         public void handle(WindowEvent we) {
-                            if (save) {""
+                            if (save) {
                                 //TODO: Save Data Tables
                             }
                             else {
@@ -286,7 +286,7 @@ public class TransformDisplay extends Main {
         selectFilter.getColumnConstraints().addAll(column1, column2, column3);
 
         Pane datasetTable = new DataTableDisplay(transform.getDataTable()).displayTable();
-        selectFilter.add(datasetTable, 0, 3, 3, 1);
+        selectFilter.add(datasetTable, 0, 0, 3, 1);
 
         ComboBox columnCombo = new ComboBox();
         columnCombo = new ComboBox();
@@ -352,7 +352,8 @@ public class TransformDisplay extends Main {
                     DataTable temp = transform.filterData();
 
                     Pane datasetTable = new DataTableDisplay(temp).displayTable();
-                    selectFilter.add(datasetTable, 0, 4, 3, 1);
+
+                    selectFilter.add(datasetTable, 0, 0, 3, 1);
 
                     stage = new Stage();
                     stage.setOnHiding(new EventHandler<WindowEvent>() {

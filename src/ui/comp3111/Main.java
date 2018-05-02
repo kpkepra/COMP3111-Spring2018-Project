@@ -37,9 +37,6 @@ public class Main extends Application {
     private void initScenes() {
         scenes = new Scene[SCENE_NUM];
         scenes[0] = new Scene(MainScreen.pane(), 1280, 720);
-//        scenes[1] = new Scene(MyFileChooser.pane(), 800, 600);
-//        scenes[2] = new Scene(LineScreen.pane(), 800, 600);
-//        scenes[3] = new Scene(AnimatedScreen.pane(), 600, 800);
         for (Scene s : scenes) {
             if (s != null)
                 // Assumption: all scenes share the same stylesheet
