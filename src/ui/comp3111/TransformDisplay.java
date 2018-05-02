@@ -28,7 +28,7 @@ public class TransformDisplay extends Main {
         transform = tf;
     }
 
-//    public GridPane splitDisplay() {
+    public GridPane splitDisplay() {
 //        transform.setPercentSplit(new float[2]);
 //        GridPane root = new GridPane();
 //        root.setHgap(10);
@@ -73,7 +73,7 @@ public class TransformDisplay extends Main {
 //        root.add(datasetTable, 0, 4, 2, 1);
 //
 //        Button splitButton = new Button("Split");
-//        splitButton.setOnAction(new EventHandler<ActionEvent>() {
+//        splitButton.setOnAction(new EventHandler<ActionEvent>() {                transform.setSave(false);
 //            @Override
 //            public void handle(ActionEvent e) {
 //                try {
@@ -127,7 +127,7 @@ public class TransformDisplay extends Main {
 //                                stage = new Stage();
 //                                stage.setScene(scene);
 //                                stage.show();
-//                            }
+//                            }                transform.setSave(false);
 //                        }
 //                    });
 //
@@ -218,8 +218,8 @@ public class TransformDisplay extends Main {
 //
 //        root.add(splitButton, 0, 3, 2, 1);
 //
-//        return root;
-//    }
+        return root;
+    }
 
     /**
      * Ask the user whether to save the new dataset or replace old one instead
@@ -243,7 +243,6 @@ public class TransformDisplay extends Main {
         saveButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent e) {
-                transform.setSave(true);
                 stage.hide();
             }
         });
@@ -253,7 +252,6 @@ public class TransformDisplay extends Main {
         replaceButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent e) {
-                transform.setSave(false);
                 stage.hide();
             }
         });
