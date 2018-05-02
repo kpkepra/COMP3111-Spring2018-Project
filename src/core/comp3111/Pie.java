@@ -1,18 +1,5 @@
 package core.comp3111;
 
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
-import javafx.geometry.HPos;
-import javafx.geometry.Insets;
-import javafx.scene.chart.LineChart;
-import javafx.scene.chart.PieChart;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.Label;
-import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.ColumnConstraints;
-import javafx.scene.layout.GridPane;
-
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Objects;
 
@@ -65,7 +52,7 @@ public class Pie extends Chart{
                 Object[] colData = data.getCol(colName).getData();
 
                 for (Object val : colData) {
-                    if (Double.valueOf((String)val) < 0.0) allPositive = false;
+                    if (((Number) val).floatValue() < 0.0) allPositive = false;
                 }
                 if (allPositive) numCols.add(colName);
             }
