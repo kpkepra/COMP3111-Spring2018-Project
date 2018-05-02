@@ -102,6 +102,7 @@ public class TransformDisplay extends Main {
                                                 CSVWriter csvWriter = new CSVWriter(fileName + ".csv");
                                                 ArrayList<String> array = new DataTableTransformer().reverseTransform(newTables[0]);
                                                 csvWriter.writeArray(array, newTables[0].getNumCol());
+                                                csvWriter.close();
 
                                                 stage = new Stage();
                                                 askFileName();
@@ -112,6 +113,7 @@ public class TransformDisplay extends Main {
                                                                 CSVWriter csvWriter = new CSVWriter(fileName + ".csv");
                                                                 ArrayList<String> array = new DataTableTransformer().reverseTransform(newTables[1]);
                                                                 csvWriter.writeArray(array, newTables[1].getNumCol());
+                                                                csvWriter.close();
                                                             }
                                                         } catch (Exception e) {
                                                             e.printStackTrace();
@@ -122,7 +124,6 @@ public class TransformDisplay extends Main {
                                         } catch (Exception e) {
                                             e.printStackTrace();
                                         }
-
                                     }
                                 });
                             }
@@ -383,9 +384,9 @@ public class TransformDisplay extends Main {
 
                     selectFilter.getChildren().remove(datasetTable);
 
-                    DataTable temp = transform.filterData();
+                    DataTable newTable = transform.filterData();
 
-                    Pane datasetTable = new DataTableDisplay(temp).displayTable();
+                    Pane datasetTable = new DataTableDisplay(newTable).displayTable();
 
                     selectFilter.add(datasetTable, 0, 4, 3, 1);
 
@@ -393,7 +394,21 @@ public class TransformDisplay extends Main {
                     stage.setOnHiding(new EventHandler<WindowEvent>() {
                         public void handle(WindowEvent we) {
                             if (save) {
-                                //TODO: SAVE DATATABLE
+                                stage = new Stage();
+                                askFileName();
+
+                                stage.setOnHiding(new EventHandler<WindowEvent>() {
+                                    public void handle(WindowEvent we) {
+                                        try {
+                                            CSVWriter csvWriter = new CSVWriter(fileName + ".csv");
+                                            ArrayList<String> array = new DataTableTransformer().reverseTransform(newTable);
+                                            csvWriter.writeArray(array, newTable.getNumCol());
+                                            csvWriter.close();
+                                        } catch (Exception e) {
+                                            e.printStackTrace();
+                                        }
+                                    }
+                                });
                             }
                             else {
                                 // TODO: REPLACE DATATABLE WITH NEW DATASET
