@@ -15,6 +15,7 @@ class CSVWriterTest {
         {
             CSVWriter cw = new CSVWriter("csvTest1_w.csv");
             ArrayList<String> words = new ArrayList<>();
+            words.add("Name");
             words.add("Judy");
             words.add("Kepra");
             words.add("Adrian");
