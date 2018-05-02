@@ -3,6 +3,8 @@ package core.comp3111;
 import java.io.*;
 import java.util.ArrayList;
 
+import ui.comp3111.Listbox;
+
 
 /**
  * MyFileExtension - MyFileExtension provides load and save features to our
@@ -113,7 +115,7 @@ public class MyFileExtenstion {
         out.writeObject(corgi);
         out.close();
         fileOut.close();
-        System.out.println("Serialized data is saved in extensionTest2.corgi");
+        System.out.println("Serialized data is saved in " + fileName);
         return true;
     }
 
