@@ -1,64 +1,112 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
 package ui.comp3111;
 
-import javafx.animation.Animation;
-import javafx.animation.KeyFrame;
-import javafx.animation.Timeline;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
-import javafx.scene.chart.BarChart;
-import javafx.scene.chart.CategoryAxis;
-import javafx.scene.chart.LineChart;
-import javafx.scene.chart.NumberAxis;
-import javafx.scene.chart.XYChart;
+import java.net.URL;
+import java.util.ArrayList;
+import java.util.ResourceBundle;
+import java.util.concurrent.atomic.AtomicInteger;
+
+import javafx.animation.Interpolator;
+import javafx.animation.TranslateTransition;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
+import javafx.geometry.Bounds;
+import javafx.scene.chart.PieChart;
+import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.Pane;
 import javafx.util.Duration;
 
-public class AnimatedScreen extends Main {
-    final static String itemA = "A";
-    final static String itemB = "B";
-    final static String itemC = "F";
-    
-    public static LineChart<Number, String> pane() {
-    	final NumberAxis xAxis = new NumberAxis();
-    	final CategoryAxis yAxis = new CategoryAxis();
-    	final LineChart<Number, String> bc = new LineChart<Number, String>(xAxis, yAxis);
-    	bc.setTitle("Summary");
-        xAxis.setLabel("Value");
-        xAxis.setTickLabelRotation(90);
-        yAxis.setLabel("Item");
-        
-        XYChart.Series series1 = new XYChart.Series();
-        series1.setName("2003");
-        series1.getData().add(new XYChart.Data(2, itemA));
-        series1.getData().add(new XYChart.Data(20, itemB));
-        series1.getData().add(new XYChart.Data(10, itemC));
+/**
+ *
+ * @author gail
+ */
+public class AnimatedScreen {
 
-        XYChart.Series series2 = new XYChart.Series();
-        series2.setName("2004");
-        series2.getData().add(new XYChart.Data(50, itemA));
-        series2.getData().add(new XYChart.Data(41, itemB));
-        series2.getData().add(new XYChart.Data(45, itemC));
+	private static Pane pane;
+    private static PieChart chart;
+    private static boolean[] tg;
+//    private Rectangle rectangle;
+    private static ObservableList<PieChart.Data> pcData;
+    private static ArrayList<String> nameID = new ArrayList<String>();
 
-        XYChart.Series series3 = new XYChart.Series();
-        series3.setName("2005");
-        series3.getData().add(new XYChart.Data(45, itemA));
-        series3.getData().add(new XYChart.Data(44, itemB));
-        series3.getData().add(new XYChart.Data(18, itemC));
-
-        Timeline tl = new Timeline();
-        tl.getKeyFrames().add(new KeyFrame(Duration.millis(500), 
-            new EventHandler<ActionEvent>() {
-                @Override public void handle(ActionEvent actionEvent) {
-                for (XYChart.Series<Number, String> series : bc.getData()) {
-                    for (XYChart.Data<Number, String> data : series.getData()) {
-                        data.setXValue(Math.random() * 100);
-                    }
-                }
-            }
-        }));
-        tl.setCycleCount(Animation.INDEFINITE);
-        tl.play();
-        
-        bc.getData().addAll(series1, series2, series3);
-        return bc;
+    public static void initialize() {
+        // Add data to the observable list
+    	chart = new PieChart();
+        pcData = FXCollections.observableArrayList();
+        pcData.add(new PieChart.Data("Nokia", 77.3));
+        pcData.add(new PieChart.Data("RIM", 51.1));
+        pcData.add(new PieChart.Data("Apple", 93.2));
+        pcData.add(new PieChart.Data("HTC", 43.5));
+        pcData.add(new PieChart.Data("Samsung", 94.0));
+        pcData.add(new PieChart.Data("Others", 132.3));
+        chart.setData(pcData);
+        chart.setTitle("Smart Phone Sales 2011");
+        setupAnimation();
     }
+
+    private static void setupAnimation() {
+    	tg = new boolean[pcData.size()];
+    	for (int i = 0; i < pcData.size(); i++) {
+    		tg[i] = false;
+    	}
+    	
+        pcData.stream().forEach(pieData -> {
+        	nameID.add(pieData.getName());
+            System.out.println(pieData.getName() + ": " + pieData.getPieValue());
+            pieData.getNode().addEventHandler(MouseEvent.MOUSE_ENTERED, event -> {
+            	Bounds b1 = pieData.getNode().getBoundsInLocal();
+                double newX = (b1.getWidth()) / 2 + b1.getMinX();
+                double newY = (b1.getHeight()) / 2 + b1.getMinY();
+                // Make sure pie wedge location is reset
+                int idx = nameID.indexOf(pieData.getName());
+                if (tg[idx] == false) {
+                    pieData.getNode().setTranslateX(0);
+                    pieData.getNode().setTranslateY(0);
+
+                    // Create the animation
+                    TranslateTransition tt = new TranslateTransition(
+                            Duration.millis(150), pieData.getNode());
+                    tt.setByX(newX/5);
+                    tt.setByY(newY/5);
+                    tt.play();
+                    tg[idx] = true;
+                }
+            });
+            
+            pieData.getNode().addEventHandler(MouseEvent.MOUSE_EXITED, event -> {
+            	Bounds b1 = pieData.getNode().getBoundsInLocal();
+                double newX = (b1.getWidth()) / 2 + b1.getMinX();
+                double newY = (b1.getHeight()) / 2 + b1.getMinY();
+                // Make sure pie wedge location is reset
+                int idx = nameID.indexOf(pieData.getName());
+                if (tg[idx] == true) {
+                    pieData.getNode().setTranslateX(newX/5);
+                    pieData.getNode().setTranslateY(newY/5);
+
+                    // Create the animation
+                    TranslateTransition tt = new TranslateTransition(
+                            Duration.millis(150), pieData.getNode());
+                    tt.setByX(-newX/5);
+                    tt.setByY(-newY/5);
+                    tt.play();
+                	tg[idx] = false;
+                }
+            });
+        });
+    }
+    
+    public static Pane pane() {
+    	initialize();
+    	System.out.println(chart.getData());
+    	pane = new Pane();
+    	pane.getChildren().add(chart);
+    	return pane;
+    }
+
 }

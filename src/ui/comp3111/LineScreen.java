@@ -129,6 +129,7 @@ public class LineScreen extends Main {
                 alert.showAndWait();
       		}
         } catch (Exception e) {
+        	System.out.println(e);
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Exception Dialog");
             alert.setHeaderText("An exception occured during runtime");
@@ -143,7 +144,7 @@ public class LineScreen extends Main {
 //            TextArea textArea = new TextArea(exceptionText);
 //            textArea.setEditable(false);
 //            textArea.setWrapText(true);
-
+//
 //            textArea.setMaxWidth(Double.MAX_VALUE);
 //            textArea.setMaxHeight(Double.MAX_VALUE);
 //            GridPane.setVgrow(textArea, Priority.ALWAYS);
