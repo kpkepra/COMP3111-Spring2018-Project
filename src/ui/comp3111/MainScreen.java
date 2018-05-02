@@ -14,9 +14,9 @@ import javafx.scene.layout.VBox;
 
 public class MainScreen extends Pane {
 	public static BorderPane pane;
-	public static VBox leftc, centerc, rightc;
+	public static VBox leftc, centerc, rightc, tablec;
 	public static HBox hc;
-	public static Pane impexp, listView, typePane, filterPane, chartc, tablec;
+	public static Pane impexp, listView, typePane, filterPane, chartc;
 	
 	public static TransformDisplay tfDisplay;
 	
@@ -54,21 +54,21 @@ public class MainScreen extends Pane {
 	     rightc = new VBox(20);
 	     rightc.setAlignment(Pos.CENTER);
 	     rightc.getChildren().addAll(typePane, filterPane);
-	     rightc.setMinWidth(300);
-	     rightc.setMaxWidth(300);
+	     rightc.setMinWidth(400);
+	     rightc.setMaxWidth(400);
 	     rightc.setStyle("-fx-background-color: blue");
-	     
+	     //760
 	     tablec = DataTableDisplay.displayTable();
-	     tablec.setMinWidth(760);
-	     tablec.setMaxWidth(760);
+	     tablec.setMinWidth(500);
+	     tablec.setMaxWidth(500);
 	     tablec.setMinHeight(300);
 	     tablec.setMaxHeight(300);
 	     tablec.setStyle("-fx-background-color: orange");
 
 	     chartc = LineScreen.pane();
 	     chartc.setStyle("-fx-background-color: red");
-	     chartc.setMinWidth(760);
-	     chartc.setMaxWidth(760);
+	     chartc.setMinWidth(500);
+	     chartc.setMaxWidth(500);
 	     chartc.setMinHeight(400);
 	     chartc.setMaxHeight(400);
 	     
