@@ -2,9 +2,9 @@ package testing.comp3111;
 
 import core.comp3111.*;
 import org.junit.jupiter.api.Test;
-
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -20,6 +20,7 @@ class MyFileExtenstionTest {
             ch_rowprob.readField();
             ch_rowprob.readALL(0);
             DataTable dt  = DataTableTransformer.transform(ch);
+            ArrayList<String> dt_reverse = DataTableTransformer.reverseTransform(dt);
             DataTable dt2  = DataTableTransformer.transform(ch_rowprob);
             Chart chart = new Pie(dt);
             ArrayList<Chart> charts = new ArrayList<>();
@@ -31,6 +32,16 @@ class MyFileExtenstionTest {
             MyFileExtenstion.CorgiObj corl = mfe.loadCorgi("extensionTest.corgi");
             assertEquals(corl.getDt(),dt);
             assertEquals(corl.getCharts().get(0),chart);
+//            String [] fields = ch.getFields().
+//                    toArray(new String[ch.getFields().size()]);
+//            String [] data = ch.getData().
+//                    toArray(new String[ch.getData().size()]);
+//            int fl = fields.length;
+//            int dl = data.length;
+//            String [] result = new String[fl+dl];
+//            System.arraycopy(fields, 0, result, 0, fl);
+//            System.arraycopy(data, 0, result, fl, dl);
+//            assertEquals(new ArrayList<>(Arrays.asList(result)),dt_reverse);
         }
         catch (ChartException ce){
             System.out.print("chart gg");
