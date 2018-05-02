@@ -11,12 +11,13 @@ import javafx.beans.property.ReadOnlyFloatWrapper;
 import javafx.beans.property.ReadOnlyStringWrapper;
 import javafx.scene.control.*;
 import javafx.scene.layout.Pane;
+import javafx.scene.layout.VBox;
 
 public class DataTableDisplay {
 	  private static File file;
 	  private static DataTable table = new DataTable();
 	  private static CSVReader csv;
-	  private static Pane pane;
+	  private static VBox pane;
 	  private static TableView datasetTable;
 	  private static TableColumn firstNameCol, lastNameCol, emailCol;
 	  
@@ -28,10 +29,10 @@ public class DataTableDisplay {
 		  return table;
 	  }
 	
-	  public static Pane displayTable() {
-		  pane = new Pane();
+	  public static VBox displayTable() {
+		  pane = new VBox();
 		  datasetTable = new TableView();
-		  datasetTable.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
+		  datasetTable.setColumnResizePolicy(TableView.UNCONSTRAINED_RESIZE_POLICY);
 		  table.printTable();
 		  
 			  for (int i = 0; i < table.getNumRow(); i++) {
@@ -75,8 +76,8 @@ public class DataTableDisplay {
 		  table = newTable;
 		  MainScreen.centerc.getChildren().remove(MainScreen.tablec);
 		  MainScreen.tablec = displayTable();
-		  MainScreen.tablec.setMinWidth(800);
-		  MainScreen.tablec.setMaxWidth(800);
+		  MainScreen.tablec.setMinWidth(500);
+		  MainScreen.tablec.setMaxWidth(500);
 		  MainScreen.tablec.setMinHeight(300);
 		  MainScreen.tablec.setMaxHeight(300);
 		  MainScreen.tablec.setStyle("-fx-background-color: orange");
