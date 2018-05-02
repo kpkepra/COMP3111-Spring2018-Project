@@ -3,6 +3,8 @@ package ui.comp3111;
 import core.comp3111.*;
 import javafx.application.Application;
 import javafx.scene.Scene;
+import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
 /**
@@ -35,9 +37,6 @@ public class Main extends Application {
     private void initScenes() {
         scenes = new Scene[SCENE_NUM];
         scenes[0] = new Scene(MainScreen.pane(), 1280, 720);
-        scenes[1] = new Scene(MyFileChooser.pane(), 800, 600);
-        scenes[2] = new Scene(LineScreen.pane(), 800, 600);
-        scenes[3] = new Scene(AnimatedScreen.pane(), 600, 800);
         for (Scene s : scenes) {
             if (s != null)
                 // Assumption: all scenes share the same stylesheet
@@ -72,12 +71,34 @@ public class Main extends Application {
      */
     @Override
     public void start(Stage primaryStage) {
+//        try {
+//            stage = primaryStage; // keep a stage reference as an attribute
+//            initScenes(); // initialize the scenes
+//            putSceneOnStage(0); // show the main screen
+//        } catch (Exception e) {
+//            e.printStackTrace(); // exception handling: print the error message on the console
+//        }
         try {
-            stage = primaryStage; // keep a stage reference as an attribute
-            initScenes(); // initialize the scenes
-            putSceneOnStage(0); // show the main screen
+            stage = primaryStage;
+            BorderPane root = new BorderPane();
+            CSVReader csv = new CSVReader("csvTest1.csv");
+            csv.readALL(0);
+            csv.readField();
+            DataTable table = DataTableTransformer.transform(csv);
+            VBox transform = new VBox();
+            Transform tf = new Transform(table);
+            TransformDisplay tfDisplay = new TransformDisplay(tf);
+            transform.getChildren().add(tfDisplay.filterDisplay());
+            transform.getChildren().add(tfDisplay.splitDisplay());
+
+            root.setRight(transform);
+            root.setCenter(new DataTableDisplay(table).displayTable());
+
+            Scene scene = new Scene(root);
+            stage.setScene(scene);
+            stage.show();
         } catch (Exception e) {
-            e.printStackTrace(); // exception handling: print the error message on the console
+            e.printStackTrace();
         }
     }
 
