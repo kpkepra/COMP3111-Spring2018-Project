@@ -13,7 +13,7 @@ public class DataTableTransformer {
             try {
                 dt.addCol(fields.get(i), col);
             }catch (DataTableException dte){
-                dte.printStackTrace();
+                System.out.println("Some row has wrong number of columns");
             }
         }
         dt.printTable();
