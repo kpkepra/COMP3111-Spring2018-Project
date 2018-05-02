@@ -11,25 +11,30 @@ import static org.junit.jupiter.api.Assertions.*;
 class PieTest {
     Pie testPie;
     DataTable dataTable;
+    DataColumn numCol1;
+    DataColumn numCol2;
+    DataColumn textCol1;
+    DataColumn textCol2;
 
     @BeforeEach
     void init() {
         dataTable = new DataTable();
+        numCol1 = new DataColumn(DataType.TYPE_NUMBER, new Double[]{1.0d,2.0d,3.0d});
+        numCol2 = new DataColumn(DataType.TYPE_NUMBER, new Double[]{1.3d,12.7d,11.3d});
+        textCol1 = new DataColumn(DataType.TYPE_STRING, new String[]{"A", "B", "C"});
+        textCol2 = new DataColumn(DataType.TYPE_STRING, new String[]{"D", "E", "F"});
     }
 
     @Test
     void testIsLegal_Legal() throws DataTableException, ChartException {
-        DataColumn numCol1 = new DataColumn(DataType.TYPE_NUMBER, new Number[]{1,2,3});
-        DataColumn textCol = new DataColumn(DataType.TYPE_STRING, new String[]{"A", "B", "C"});
         dataTable.addCol("numCol", numCol1);
-        dataTable.addCol("textCol", textCol);
+        dataTable.addCol("textCol", textCol1);
 
         Chart testPie = new Pie(dataTable);
     }
 
     @Test
     void testIsLegal_Illegal_NoText() throws DataTableException, ChartException {
-        DataColumn numCol1 = new DataColumn(DataType.TYPE_NUMBER, new Number[]{1,2,3});
         dataTable.addCol("numCol", numCol1);
 
         assertThrows(ChartException.class, () -> {new Pie(dataTable);});
@@ -37,8 +42,7 @@ class PieTest {
 
     @Test
     void testIsLegal_Illegal_NoNum() throws DataTableException, ChartException {
-        DataColumn textCol = new DataColumn(DataType.TYPE_STRING, new String[]{"A", "B", "C"});
-        dataTable.addCol("textCol", textCol);
+        dataTable.addCol("textCol", textCol1);
 
         assertThrows(ChartException.class, () -> {new Pie(dataTable);});
     }
@@ -50,10 +54,9 @@ class PieTest {
 
     @Test
     void testIsLegal_Illegal_NegativeValue() throws DataTableException, ChartException {
-        DataColumn numCol1 = new DataColumn(DataType.TYPE_NUMBER, new Number[]{-1,2,3});
-        DataColumn textCol = new DataColumn(DataType.TYPE_STRING, new String[]{"A", "B", "C"});
+        DataColumn numCol1 = new DataColumn(DataType.TYPE_NUMBER, new Double[]{-1d,2d,3d});
 
-        dataTable.addCol("textCol", textCol);
+        dataTable.addCol("textCol", textCol1);
         dataTable.addCol("numCol", numCol1);
 
         assertThrows(ChartException.class, () -> {new Pie(dataTable);});
@@ -61,11 +64,8 @@ class PieTest {
 
     @Test
     void testGetText() throws DataTableException, ChartException {
-        DataColumn numCol1 = new DataColumn(DataType.TYPE_NUMBER, new Number[]{1,2,3});
-        DataColumn textCol = new DataColumn(DataType.TYPE_STRING, new String[]{"A", "B", "C"});
-
         dataTable.addCol("numCol1", numCol1);
-        dataTable.addCol("textCol", textCol);
+        dataTable.addCol("textCol", textCol1);
 
         testPie = new Pie(dataTable);
 
@@ -74,11 +74,9 @@ class PieTest {
 
     @Test
     void testGetNum() throws DataTableException, ChartException {
-        DataColumn numCol1 = new DataColumn(DataType.TYPE_NUMBER, new Number[]{1,2,3});
-        DataColumn textCol = new DataColumn(DataType.TYPE_STRING, new String[]{"A", "B", "C"});
 
         dataTable.addCol("numCol1", numCol1);
-        dataTable.addCol("textCol", textCol);
+        dataTable.addCol("textCol", textCol1);
 
         testPie = new Pie(dataTable);
 
@@ -87,11 +85,8 @@ class PieTest {
 
     @Test
     void testGetTextCols_OneText_OneNum() throws DataTableException, ChartException {
-        DataColumn numCol1 = new DataColumn(DataType.TYPE_NUMBER, new Number[]{1,2,3});
-        DataColumn textCol = new DataColumn(DataType.TYPE_STRING, new String[]{"A", "B", "C"});
-
         dataTable.addCol("numCol", numCol1);
-        dataTable.addCol("textCol", textCol);
+        dataTable.addCol("textCol", textCol1);
 
         testPie = new Pie(dataTable);
 
@@ -103,13 +98,9 @@ class PieTest {
 
     @Test
     void testGetTextCols_OneText_TwoNum() throws DataTableException, ChartException {
-        DataColumn numCol1 = new DataColumn(DataType.TYPE_NUMBER, new Number[]{1,2,3});
-        DataColumn numCol2 = new DataColumn(DataType.TYPE_NUMBER, new Number[]{1,2,3});
-        DataColumn textCol = new DataColumn(DataType.TYPE_STRING, new String[]{"A", "B", "C"});
-
         dataTable.addCol("numCol1", numCol1);
         dataTable.addCol("numCol2", numCol2);
-        dataTable.addCol("textCol", textCol);
+        dataTable.addCol("textCol", textCol1);
 
         testPie = new Pie(dataTable);
 
@@ -121,10 +112,6 @@ class PieTest {
 
     @Test
     void testGetTextCols_TwoText_OneNum() throws DataTableException, ChartException {
-        DataColumn numCol1 = new DataColumn(DataType.TYPE_NUMBER, new Number[]{1,2,3});
-        DataColumn textCol1 = new DataColumn(DataType.TYPE_STRING, new String[]{"A", "B", "C"});
-        DataColumn textCol2 = new DataColumn(DataType.TYPE_STRING, new String[]{"D", "E", "F"});
-
         dataTable.addCol("numCol1", numCol1);
         dataTable.addCol("textCol1", textCol1);
         dataTable.addCol("textCol2", textCol2);
@@ -140,11 +127,6 @@ class PieTest {
 
     @Test
     void testGetTextCols_TwoText_TwoNum() throws DataTableException, ChartException {
-        DataColumn numCol1 = new DataColumn(DataType.TYPE_NUMBER, new Number[]{1,2,3});
-        DataColumn numCol2 = new DataColumn(DataType.TYPE_NUMBER, new Number[]{1,2,3});
-        DataColumn textCol1 = new DataColumn(DataType.TYPE_STRING, new String[]{"A", "B", "C"});
-        DataColumn textCol2 = new DataColumn(DataType.TYPE_STRING, new String[]{"D", "E", "F"});
-
         dataTable.addCol("numCol1", numCol1);
         dataTable.addCol("numCol2", numCol1);
         dataTable.addCol("textCol1", textCol1);
@@ -161,11 +143,8 @@ class PieTest {
 
     @Test
     void testGetNumCols_OneText_OneNum() throws DataTableException, ChartException {
-        DataColumn numCol1 = new DataColumn(DataType.TYPE_NUMBER, new Number[]{1,2,3});
-        DataColumn textCol = new DataColumn(DataType.TYPE_STRING, new String[]{"A", "B", "C"});
-
         dataTable.addCol("numCol", numCol1);
-        dataTable.addCol("textCol", textCol);
+        dataTable.addCol("textCol", textCol1);
 
         testPie = new Pie(dataTable);
 
@@ -177,13 +156,9 @@ class PieTest {
 
     @Test
     void testGetNumCols_OneText_TwoNum() throws DataTableException, ChartException {
-        DataColumn numCol1 = new DataColumn(DataType.TYPE_NUMBER, new Number[]{1,2,3});
-        DataColumn numCol2 = new DataColumn(DataType.TYPE_NUMBER, new Number[]{1,2,3});
-        DataColumn textCol = new DataColumn(DataType.TYPE_STRING, new String[]{"A", "B", "C"});
-
         dataTable.addCol("numCol1", numCol1);
         dataTable.addCol("numCol2", numCol2);
-        dataTable.addCol("textCol", textCol);
+        dataTable.addCol("textCol", textCol1);
 
         testPie = new Pie(dataTable);
 
@@ -196,10 +171,6 @@ class PieTest {
 
     @Test
     void testGetNumCols_TwoText_OneNum() throws DataTableException, ChartException {
-        DataColumn numCol1 = new DataColumn(DataType.TYPE_NUMBER, new Number[]{1,2,3});
-        DataColumn textCol1 = new DataColumn(DataType.TYPE_STRING, new String[]{"A", "B", "C"});
-        DataColumn textCol2 = new DataColumn(DataType.TYPE_STRING, new String[]{"D", "E", "F"});
-
         dataTable.addCol("numCol1", numCol1);
         dataTable.addCol("textCol1", textCol1);
         dataTable.addCol("textCol2", textCol2);
@@ -214,11 +185,6 @@ class PieTest {
 
     @Test
     void testGetNumCols_TwoText_TwoNum() throws DataTableException, ChartException {
-        DataColumn numCol1 = new DataColumn(DataType.TYPE_NUMBER, new Number[]{1,2,3});
-        DataColumn numCol2 = new DataColumn(DataType.TYPE_NUMBER, new Number[]{1,2,3});
-        DataColumn textCol1 = new DataColumn(DataType.TYPE_STRING, new String[]{"A", "B", "C"});
-        DataColumn textCol2 = new DataColumn(DataType.TYPE_STRING, new String[]{"D", "E", "F"});
-
         dataTable.addCol("numCol1", numCol1);
         dataTable.addCol("numCol2", numCol2);
         dataTable.addCol("textCol1", textCol1);
@@ -235,11 +201,6 @@ class PieTest {
 
     @Test
     void testSetText_NonExistant() throws DataTableException, ChartException {
-        DataColumn numCol1 = new DataColumn(DataType.TYPE_NUMBER, new Number[]{1,2,3});
-        DataColumn numCol2 = new DataColumn(DataType.TYPE_NUMBER, new Number[]{1,2,3});
-        DataColumn textCol1 = new DataColumn(DataType.TYPE_STRING, new String[]{"A", "B", "C"});
-        DataColumn textCol2 = new DataColumn(DataType.TYPE_STRING, new String[]{"D", "E", "F"});
-
         dataTable.addCol("numCol1", numCol1);
         dataTable.addCol("numCol2", numCol2);
         dataTable.addCol("textCol1", textCol1);
@@ -254,11 +215,6 @@ class PieTest {
 
     @Test
     void testSetText_NumColumn() throws DataTableException, ChartException {
-        DataColumn numCol1 = new DataColumn(DataType.TYPE_NUMBER, new Number[]{1,2,3});
-        DataColumn numCol2 = new DataColumn(DataType.TYPE_NUMBER, new Number[]{1,2,3});
-        DataColumn textCol1 = new DataColumn(DataType.TYPE_STRING, new String[]{"A", "B", "C"});
-        DataColumn textCol2 = new DataColumn(DataType.TYPE_STRING, new String[]{"D", "E", "F"});
-
         dataTable.addCol("numCol1", numCol1);
         dataTable.addCol("numCol2", numCol2);
         dataTable.addCol("textCol1", textCol1);
@@ -273,11 +229,6 @@ class PieTest {
 
     @Test
     void testSetText_StringColumn() throws DataTableException, ChartException {
-        DataColumn numCol1 = new DataColumn(DataType.TYPE_NUMBER, new Number[]{1,2,3});
-        DataColumn numCol2 = new DataColumn(DataType.TYPE_NUMBER, new Number[]{1,2,3});
-        DataColumn textCol1 = new DataColumn(DataType.TYPE_STRING, new String[]{"A", "B", "C"});
-        DataColumn textCol2 = new DataColumn(DataType.TYPE_STRING, new String[]{"D", "E", "F"});
-
         dataTable.addCol("numCol1", numCol1);
         dataTable.addCol("numCol2", numCol2);
         dataTable.addCol("textCol1", textCol1);
@@ -292,11 +243,6 @@ class PieTest {
 
     @Test
     void testSetNum_NonExistant() throws DataTableException, ChartException {
-        DataColumn numCol1 = new DataColumn(DataType.TYPE_NUMBER, new Number[]{1,2,3});
-        DataColumn numCol2 = new DataColumn(DataType.TYPE_NUMBER, new Number[]{1,2,3});
-        DataColumn textCol1 = new DataColumn(DataType.TYPE_STRING, new String[]{"A", "B", "C"});
-        DataColumn textCol2 = new DataColumn(DataType.TYPE_STRING, new String[]{"D", "E", "F"});
-
         dataTable.addCol("numCol1", numCol1);
         dataTable.addCol("numCol2", numCol2);
         dataTable.addCol("textCol1", textCol1);
@@ -311,11 +257,6 @@ class PieTest {
 
     @Test
     void testSetNum_NumColumn() throws DataTableException, ChartException {
-        DataColumn numCol1 = new DataColumn(DataType.TYPE_NUMBER, new Number[]{1,2,3});
-        DataColumn numCol2 = new DataColumn(DataType.TYPE_NUMBER, new Number[]{1,2,3});
-        DataColumn textCol1 = new DataColumn(DataType.TYPE_STRING, new String[]{"A", "B", "C"});
-        DataColumn textCol2 = new DataColumn(DataType.TYPE_STRING, new String[]{"D", "E", "F"});
-
         dataTable.addCol("numCol1", numCol1);
         dataTable.addCol("numCol2", numCol2);
         dataTable.addCol("textCol1", textCol1);
@@ -330,11 +271,6 @@ class PieTest {
 
     @Test
     void testSetNum_StringColumn() throws DataTableException, ChartException {
-        DataColumn numCol1 = new DataColumn(DataType.TYPE_NUMBER, new Number[]{1,2,3});
-        DataColumn numCol2 = new DataColumn(DataType.TYPE_NUMBER, new Number[]{1,2,3});
-        DataColumn textCol1 = new DataColumn(DataType.TYPE_STRING, new String[]{"A", "B", "C"});
-        DataColumn textCol2 = new DataColumn(DataType.TYPE_STRING, new String[]{"D", "E", "F"});
-
         dataTable.addCol("numCol1", numCol1);
         dataTable.addCol("numCol2", numCol2);
         dataTable.addCol("textCol1", textCol1);
