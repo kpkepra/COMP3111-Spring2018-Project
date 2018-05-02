@@ -49,7 +49,7 @@ public class MainScreen extends Main {
 	     impexp = MyFileChooser.pane();
 	     impexp.setMinWidth(240);
 	     impexp.setMaxWidth(240);
-	     
+
 	     listView = Listbox.pane();
 	     listView.setMinWidth(240);
 	     listView.setMaxWidth(240);
