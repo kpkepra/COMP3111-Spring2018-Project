@@ -47,7 +47,7 @@ public class DataTableDisplay {
                 column.setCellValueFactory(cellData -> {
                     Integer rowIndex = cellData.getValue();
 
-                    return new ReadOnlyFloatWrapper(((Number)data[rowIndex]).floatValue());
+                    return new ReadOnlyFloatWrapper(((Number)(Float.valueOf((String)data[rowIndex]))).floatValue());
                 });
                 column.prefWidthProperty().bind(datasetTable.widthProperty().divide(table.getNumCol()));
                 datasetTable.getColumns().add(column);

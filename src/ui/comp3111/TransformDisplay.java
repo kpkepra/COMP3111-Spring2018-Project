@@ -168,7 +168,7 @@ public class TransformDisplay extends Main {
                             column.setCellValueFactory(cellData -> {
                                 Integer rowIndex = cellData.getValue();
 
-                                if (rowIndex < newTables[0].getNumRow()) return new ReadOnlyFloatWrapper(((Number)data[rowIndex]).floatValue());
+                                if (rowIndex < newTables[0].getNumRow()) return new ReadOnlyFloatWrapper(((Float.valueOf((String)data[rowIndex])).floatValue()));
                                 else return null;
                             });
                             column.prefWidthProperty().bind(dataset1.widthProperty().divide(newTables[0].getNumCol()));
@@ -199,7 +199,7 @@ public class TransformDisplay extends Main {
                             column.setCellValueFactory(cellData -> {
                                 Integer rowIndex = cellData.getValue();
 
-                                if (rowIndex < newTables[1].getNumRow()) return new ReadOnlyFloatWrapper(((Number)data[rowIndex]).floatValue());
+                                if (rowIndex < newTables[1].getNumRow()) return new ReadOnlyFloatWrapper(((Float.valueOf((String)data[rowIndex]))).floatValue());
                                 else return null;
                             });
                             column.prefWidthProperty().bind(dataset2.widthProperty().divide(newTables[1].getNumCol()));
