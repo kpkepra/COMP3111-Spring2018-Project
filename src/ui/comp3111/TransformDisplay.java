@@ -1,6 +1,8 @@
 package ui.comp3111;
 
 import core.comp3111.*;
+import javafx.beans.property.ReadOnlyFloatWrapper;
+import javafx.beans.property.ReadOnlyStringWrapper;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
@@ -241,7 +243,6 @@ public class TransformDisplay extends Main {
             @Override
             public void handle(ActionEvent e) {
                 save = true;
-
                 stage.hide();
             }
         });
