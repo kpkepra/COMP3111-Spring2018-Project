@@ -102,7 +102,7 @@ public class TransformDisplay extends Main {
                                                 CSVWriter csvWriter = new CSVWriter(fileName + ".csv");
                                                 ArrayList<String> array = new DataTableTransformer().reverseTransform(newTables[0]);
                                                 csvWriter.writeArray(array, newTables[0].getNumCol());
-
+                                                csvWriter.close();
                                                 stage = new Stage();
                                                 askFileName();
                                                 stage.setOnHiding(new EventHandler<WindowEvent>() {
@@ -112,6 +112,7 @@ public class TransformDisplay extends Main {
                                                                 CSVWriter csvWriter = new CSVWriter(fileName + ".csv");
                                                                 ArrayList<String> array = new DataTableTransformer().reverseTransform(newTables[1]);
                                                                 csvWriter.writeArray(array, newTables[1].getNumCol());
+                                                                csvWriter.close();
                                                             }
                                                         } catch (Exception e) {
                                                             e.printStackTrace();
