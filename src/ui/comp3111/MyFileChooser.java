@@ -4,6 +4,7 @@ import java.io.IOException;
 
 import core.comp3111.CSVReader;
 import core.comp3111.MyFileExtenstion;
+import core.comp3111.MyFileExtenstion.CorgiObj;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -90,10 +91,13 @@ public class MyFileChooser extends Main {
                     System.out.println("-----"+fileName);
                     CSVReader readerCSV = new CSVReader(fileName);
                     OpenCSV.openCSV(readerCSV);
+                    Listbox.addDataset(file);
                 } else if (extension.equals("corgi")) {
                     MyFileExtenstion mf = new MyFileExtenstion();
                     try {
-                        mf.loadCorgi(fileName);
+                        CorgiObj corgi = mf.loadCorgi(fileName);
+                        corgi.setName(fileName);
+                        Listbox.addCorgi(corgi);
                     }catch(IOException ioe){
                         System.out.println("IO Exception in FileExtension");
                     }
