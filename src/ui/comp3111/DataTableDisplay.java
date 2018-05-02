@@ -6,25 +6,34 @@ import java.util.Objects;
 import core.comp3111.CSVReader;
 import core.comp3111.DataColumn;
 import core.comp3111.DataTable;
+import core.comp3111.DataTableException;
 import core.comp3111.DataTableTransformer;
 import core.comp3111.DataType;
 import javafx.beans.property.ReadOnlyFloatWrapper;
 import javafx.beans.property.ReadOnlyStringWrapper;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.Pane;
 
 public class DataTableDisplay {
 	  private static File file;
 	  private static DataTable table = new DataTable();
 	  private static CSVReader csv;
+	  private static Pane pane;
+	  private static TableView datasetTable;
+	  private static TableColumn firstNameCol, lastNameCol, emailCol;
 	
-	  public static TableView displayTable() {
-		  TableView<Integer> datasetTable = new TableView();
+	  public static Pane displayTable() {
+		  pane = new Pane();
+		  datasetTable = new TableView();
 		  datasetTable.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
+		  
 		  if (table.getNumRow() > 0 && table.getNumCol() > 0) {
 			  for (int i = 0; i < table.getNumRow(); i++) {
 			      datasetTable.getItems().add(i);
 			  }
-			
+//			
 			  for (String colName : table.getColNames()) {
 			      DataColumn dataColumn = table.getCol(colName);
 			      Object[] data = dataColumn.getData();
@@ -54,8 +63,10 @@ public class DataTableDisplay {
 			      }
 			  }
 		  }
+		  
+		  pane.getChildren().addAll(datasetTable);
 		
-		  return datasetTable;
+		  return pane;
 	  }
 	  
 	  public static void setTable(File newFile) {
@@ -64,6 +75,13 @@ public class DataTableDisplay {
 		  csv.readALL(0);
 		  csv.readField();
 		  table = DataTableTransformer.transform(csv);
-		  System.out.println(table.getNumCol());
+		  MainScreen.centerc.getChildren().remove(MainScreen.tablec);
+		  MainScreen.tablec = displayTable();
+		  MainScreen.tablec.setMinWidth(800);
+		  MainScreen.tablec.setMaxWidth(800);
+		  MainScreen.tablec.setMinHeight(300);
+		  MainScreen.tablec.setMaxHeight(300);
+		  MainScreen.tablec.setStyle("-fx-background-color: orange");
+		  MainScreen.centerc.getChildren().add(0, MainScreen.tablec);
 	  }
 }
