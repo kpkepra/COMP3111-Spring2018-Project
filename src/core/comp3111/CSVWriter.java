@@ -38,20 +38,37 @@ public class CSVWriter{
      */
     public void writeArray(ArrayList<String> words,int colNum){
         int count = 0;
-        for(String word:words){
-            sb.append(word);
+        int numOfDataRow = (words.size()-colNum)/colNum;
+        int cur_row = 0;
+        String lineSep = System.getProperty("line.separator");
+        //read the fields
+        for(int i = 0; i < colNum; i++){
+            sb.append(words.get(i));
             sb.append(",");
-            count++;
-            //current row is full change to next row
-            if(count == colNum){
-                //delete the last, and change to new row
-                sb.deleteCharAt(sb.length()-1);
-                sb.append("\r");
-                count = 0;
-            }
         }
+        sb.deleteCharAt(sb.length()-1);
+        sb.append(lineSep);
+        int index = colNum;
+        for(int i = 0; i < numOfDataRow; i++){
+            while(true) {
+                    sb.append(words.get(index));
+                    sb.append(",");
+                    count++;
+                    index += numOfDataRow;
+                    //current row is full change to next row
+                    if (count == colNum) {
+                        //delete the last, and change to new row
+                        sb.deleteCharAt(sb.length() - 1);
+                        sb.append(lineSep);
+                        count = 0;
+                        cur_row++;
+                        index = colNum + cur_row;
+                        break;
+                    }
+                }
+            }
         pw.print(sb.toString());
-    }
+        }
 
     /**
      * Close the printWriter whenever done writing to the .csv

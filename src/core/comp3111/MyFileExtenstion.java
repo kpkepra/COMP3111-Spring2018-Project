@@ -9,6 +9,7 @@ import java.util.ArrayList;
  * self-defined fileType .corgi extension
  * Each of the .corgi file has one Corgi object,
  * in the corgi object there is an ArrayList of DataTable and an ArrayList of charts
+ * @author Wu Yun Ju
  */
 public class MyFileExtenstion {
 
