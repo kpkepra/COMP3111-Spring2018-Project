@@ -283,7 +283,7 @@ public class TransformDisplay extends Main {
         column3.setPercentWidth(25);
         selectFilter.getColumnConstraints().addAll(column1, column2, column3);
 
-        TableView datasetTable = new DataTableDisplay(transform.getDataTable()).displayTable();
+        Pane datasetTable = new DataTableDisplay(transform.getDataTable()).displayTable();
         selectFilter.add(datasetTable, 0, 0, 3, 1);
 
         ComboBox columnCombo = new ComboBox();
@@ -347,7 +347,7 @@ public class TransformDisplay extends Main {
 
                     DataTable temp = transform.filterData();
 
-                    TableView datasetTable = new DataTableDisplay(temp).displayTable();
+                    Pane datasetTable = new DataTableDisplay(temp).displayTable();
                     selectFilter.add(datasetTable, 0, 0, 3, 1);
 
                     stage = new Stage();
