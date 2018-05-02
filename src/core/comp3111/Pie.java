@@ -1,17 +1,5 @@
 package core.comp3111;
 
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
-import javafx.geometry.HPos;
-import javafx.geometry.Insets;
-import javafx.scene.chart.LineChart;
-import javafx.scene.chart.PieChart;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.Label;
-import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.ColumnConstraints;
-import javafx.scene.layout.GridPane;
-
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Objects;
@@ -25,7 +13,7 @@ import java.util.Objects;
  * @author apsusanto
  *
  */
-public class Pie extends Chart{
+public class Pie extends Chart implements Serializable {
     private ArrayList<String> textCols;
     private ArrayList<String> numCols;
     private String num;
@@ -66,10 +54,7 @@ public class Pie extends Chart{
                 Object[] colData = data.getCol(colName).getData();
 
                 for (Object val : colData) {
-                    if (Double.valueOf(val.toString()) < 0.0) {
-                    	allPositive = false;
-                    	break;
-                    }
+                    if ((Float.valueOf((String)val)) < 0.0) allPositive = false;
                 }
                 if (allPositive) numCols.add(colName);
             }

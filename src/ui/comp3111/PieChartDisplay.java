@@ -80,11 +80,11 @@ public class PieChartDisplay extends ChartDisplay implements Serializable {
     private PieChart getChart(String text, String num) {
         PieChart temp = new PieChart();
 
-        Number[] numData = (Number[]) piechart.getData().getCol(piechart.getNum()).getData();
-        String[] textData = (String[]) piechart.getData().getCol(piechart.getText()).getData();
+        Object[] numData =  piechart.getData().getCol(piechart.getNum()).getData();
+        Object[] textData =  piechart.getData().getCol(piechart.getText()).getData();
 
         for (int i = 0 ; i < piechart.getData().getNumRow(); ++i) {
-            PieChart.Data slice = new PieChart.Data(textData[i], numData[i].floatValue());
+            PieChart.Data slice = new PieChart.Data((String)textData[i], ((Number)numData[i]).floatValue());
             temp.getData().add(slice);
         }
         return temp;
