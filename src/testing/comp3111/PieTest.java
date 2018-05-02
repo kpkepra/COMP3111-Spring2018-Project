@@ -220,7 +220,7 @@ class PieTest {
         DataColumn textCol2 = new DataColumn(DataType.TYPE_STRING, new String[]{"D", "E", "F"});
 
         dataTable.addCol("numCol1", numCol1);
-        dataTable.addCol("numCol2", numCol1);
+        dataTable.addCol("numCol2", numCol2);
         dataTable.addCol("textCol1", textCol1);
         dataTable.addCol("textCol2", textCol2);
 
@@ -241,7 +241,7 @@ class PieTest {
         DataColumn textCol2 = new DataColumn(DataType.TYPE_STRING, new String[]{"D", "E", "F"});
 
         dataTable.addCol("numCol1", numCol1);
-        dataTable.addCol("numCol2", numCol1);
+        dataTable.addCol("numCol2", numCol);
         dataTable.addCol("textCol1", textCol1);
         dataTable.addCol("textCol2", textCol2);
 
@@ -260,7 +260,7 @@ class PieTest {
         DataColumn textCol2 = new DataColumn(DataType.TYPE_STRING, new String[]{"D", "E", "F"});
 
         dataTable.addCol("numCol1", numCol1);
-        dataTable.addCol("numCol2", numCol1);
+        dataTable.addCol("numCol2", numCol2);
         dataTable.addCol("textCol1", textCol1);
         dataTable.addCol("textCol2", textCol2);
 
@@ -279,7 +279,7 @@ class PieTest {
         DataColumn textCol2 = new DataColumn(DataType.TYPE_STRING, new String[]{"D", "E", "F"});
 
         dataTable.addCol("numCol1", numCol1);
-        dataTable.addCol("numCol2", numCol1);
+        dataTable.addCol("numCol2", numCol2);
         dataTable.addCol("textCol1", textCol1);
         dataTable.addCol("textCol2", textCol2);
 
@@ -298,7 +298,7 @@ class PieTest {
         DataColumn textCol2 = new DataColumn(DataType.TYPE_STRING, new String[]{"D", "E", "F"});
 
         dataTable.addCol("numCol1", numCol1);
-        dataTable.addCol("numCol2", numCol1);
+        dataTable.addCol("numCol2", numCol2);
         dataTable.addCol("textCol1", textCol1);
         dataTable.addCol("textCol2", textCol2);
 
@@ -317,7 +317,7 @@ class PieTest {
         DataColumn textCol2 = new DataColumn(DataType.TYPE_STRING, new String[]{"D", "E", "F"});
 
         dataTable.addCol("numCol1", numCol1);
-        dataTable.addCol("numCol2", numCol1);
+        dataTable.addCol("numCol2", numCol2);
         dataTable.addCol("textCol1", textCol1);
         dataTable.addCol("textCol2", textCol2);
 
@@ -336,7 +336,7 @@ class PieTest {
         DataColumn textCol2 = new DataColumn(DataType.TYPE_STRING, new String[]{"D", "E", "F"});
 
         dataTable.addCol("numCol1", numCol1);
-        dataTable.addCol("numCol2", numCol1);
+        dataTable.addCol("numCol2", numCol2);
         dataTable.addCol("textCol1", textCol1);
         dataTable.addCol("textCol2", textCol2);
 
