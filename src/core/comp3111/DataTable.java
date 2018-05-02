@@ -160,7 +160,7 @@ public class DataTable implements Serializable {
     }
 
     /**
-     * Get the DataColumn map
+     * Retrieve the DataTable map
      *
      * @returns Map<String, DataColumn> of the DataTable
      */
@@ -168,8 +168,22 @@ public class DataTable implements Serializable {
         return dc;
     }
 
+    /**
+     * Change the DataTable map
+     *
+     * @param input
+     *          The new map
+     */
     public void setDc(Map<String, DataColumn> input) { dc = input; }
 
+    /**
+     * Check the equality of two DataTables
+     *
+     * @param o
+     *      The DataTable to be checked against
+     *
+     * @returns True if the DataTable contents are the same
+     */
     @Override
     public boolean equals(Object o){
         boolean testEquality = true;
