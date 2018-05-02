@@ -20,6 +20,10 @@ public class DataTableDisplay {
 	  private static Pane pane;
 	  private static TableView datasetTable;
 	  private static TableColumn firstNameCol, lastNameCol, emailCol;
+	  
+	  public DataTableDisplay(DataTable dt) {
+		  table = dt;
+	  }
 	
 	  public static Pane displayTable() {
 		  pane = new Pane();
@@ -61,7 +65,6 @@ public class DataTableDisplay {
 			  }
 		  
 		  pane.getChildren().addAll(datasetTable);
-		
 		  return pane;
 	  }
 	  
