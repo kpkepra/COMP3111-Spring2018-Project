@@ -25,12 +25,14 @@ class MyFileExtenstionTest {
             Chart chart = new Pie(dt);
             ArrayList<Chart> charts = new ArrayList<>();
             charts.add(chart);
-            MyFileExtenstion.CorgiObj corgi = new MyFileExtenstion.CorgiObj(dt,charts);
+            ArrayList<DataTable> dts = new ArrayList<>();
+            dts.add(dt);
+            MyFileExtenstion.CorgiObj corgi = new MyFileExtenstion.CorgiObj(dts,charts);
             MyFileExtenstion mfe = new MyFileExtenstion();
             mfe.saveCorgi("extensionTest.corgi",corgi);
             MyFileExtenstion.CorgiObj corlFileNotFound = mfe.loadCorgi("extensionTest_.corgi");
             MyFileExtenstion.CorgiObj corl = mfe.loadCorgi("extensionTest.corgi");
-            assertEquals(corl.getDt(),dt);
+            assertEquals(corl.getDts().get(0),dt);
             assertEquals(corl.getCharts().get(0),chart);
 //            String [] fields = ch.getFields().
 //                    toArray(new String[ch.getFields().size()]);
