@@ -12,10 +12,8 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 
-public class MainScreen extends Main {
-    private static Button bt_SampleLine;
-	private static Button bt_SampleLine2;
-	private static Button bt_SampleLineChart;
+public class MainScreen extends Pane {
+    private static Button bt_SampleLine, bt_SampleLine2, bt_SampleLineChart;
 	public static BorderPane pane;
 	public static VBox leftc, centerc, rightc;
 	public static HBox hc;
@@ -24,29 +22,26 @@ public class MainScreen extends Main {
 	private static Button 
 		bt_Transform;
 	
-	
-    private static Label lb_Left, lb_Right, lb_Chart, lb_Table;
-	private static Label lbMainScreenTitle;
+    private static Label lb_Left;
+	private Label lb_Title;
 	
 	public MainScreen() {
 		super();
+		lb_Title = new Label("CORGI3111");
+		
 	}
 	
-	public static Pane pane() {
-		 lbMainScreenTitle = new Label("CORGI3111");
+	public Pane pane() {
 	     bt_SampleLineChart = new Button("Sample Line Chart");
 	     bt_SampleLine2 = new Button("Sample 2");
 	     bt_SampleLine = new Button("Sample 1");
-	     lb_Left = new Label("Dataset");
-	     lb_Chart = new Label("Chart");
-	     lb_Table = new Label("Table");
 	     
 	     bt_Transform = new Button("Transform");
 	     
 	     // Layout the UI components
 	     hc = new HBox(20);
 	     hc.setAlignment(Pos.CENTER);
-	     hc.getChildren().addAll(lbMainScreenTitle);
+	     hc.getChildren().addAll(lb_Title);
 	     
 	     impexp = MyFileChooser.pane();
 	     impexp.setMinWidth(240);
@@ -62,10 +57,16 @@ public class MainScreen extends Main {
 	     leftc.setStyle("-fx-background-color: blue");
 	     
 	     typePane = ChartType.pane();
-//	     filterPane = TransformDisplay.pane();
+	     
+       Transform tf = new Transform(DataTableDisplay.getDT());
+       TransformDisplay tfDisplay = new TransformDisplay(tf);
+       
+       
+	     filterPane = tfDisplay.splitFilter();
+//	     filterPane.getChildren().addAll(tfDisplay.filterDisplay(), tfDisplay.splitDisplay());
 	     rightc = new VBox(20);
 	     rightc.setAlignment(Pos.CENTER);
-	     rightc.getChildren().addAll(typePane);
+	     rightc.getChildren().addAll(typePane, filterPane);
 	     rightc.setMinWidth(240);
 	     rightc.setMaxWidth(240);
 	     rightc.setStyle("-fx-background-color: blue");
@@ -87,13 +88,6 @@ public class MainScreen extends Main {
 	     centerc = new VBox(2);
 	     centerc.setAlignment(Pos.CENTER);
 	     centerc.getChildren().addAll(tablec, chartc);
-	     
-	     
-//	     hc.getChildren().addAll(bt_SampleLine, bt_SampleLine2);
-	
-//	     VBox container = new VBox(20);
-//	     container.getChildren().addAll(lbMainScreenTitle, hc, lbSampleDataTable, new Separator(), bt_SampleLineChart);
-//	     container.setAlignment(Pos.CENTER);
 	
 	     pane = new BorderPane();
 	     pane.setLeft(leftc);
@@ -103,7 +97,7 @@ public class MainScreen extends Main {
 	
 	     // Apply style to the GUI components
 	     bt_SampleLineChart.getStyleClass().add("menu-button");
-	     lbMainScreenTitle.getStyleClass().add("menu-title");
+	     lb_Title.getStyleClass().add("menu-title");
 	     pane.getStyleClass().add("screen-background");
 	     
 	     initHandlers();
