@@ -51,7 +51,7 @@ public class MainScreen extends Main {
 	     impexp = MyFileChooser.pane();
 	     impexp.setMinWidth(240);
 	     impexp.setMaxWidth(240);
-	     
+
 	     listView = Listbox.pane();
 	     listView.setMinWidth(240);
 	     listView.setMaxWidth(240);
@@ -62,7 +62,7 @@ public class MainScreen extends Main {
 	     leftc.setStyle("-fx-background-color: blue");
 	     
 	     typePane = ChartType.pane();
-	     filterPane = TransformDisplay.pane();
+//	     filterPane = TransformDisplay.filterDisplay();
 	     rightc = new VBox(20);
 	     rightc.setAlignment(Pos.CENTER);
 	     rightc.getChildren().addAll(typePane, filterPane);
