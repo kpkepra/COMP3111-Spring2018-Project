@@ -76,11 +76,6 @@ public class LineScreen extends Main {
 		
 		try {
             // TEST PARAMETERS
-            int numCols = 20;
-            int textCols = 5;
-            int row = 5;
-
-            DataTable table = new DataTable();
             Random rand = new Random();
             char[] base = new char[]{'A', 'B', 'C', 'D', 'E', 'F', 'G'};
 
@@ -154,7 +149,7 @@ public class LineScreen extends Main {
 		try {
 			if (linePie) {
 				lineChart = new Line(table);
-				lcd = new LineChartDisplay(lineChart);
+                lcd = new LineChartDisplay(lineChart);
 			} else {
 				pieChart = new Pie(table);
 				pcd = new PieChartDisplay(pieChart);

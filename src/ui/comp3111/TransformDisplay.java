@@ -24,6 +24,8 @@ public class TransformDisplay extends Main {
 
     private boolean save;
 
+    GridPane splitFilter;
+
     public TransformDisplay(Transform tf) {
         transform = tf;
     }
@@ -283,8 +285,8 @@ public class TransformDisplay extends Main {
         column3.setPercentWidth(25);
         selectFilter.getColumnConstraints().addAll(column1, column2, column3);
 
-        TableView datasetTable = new DataTableDisplay(transform.getDataTable()).displayTable();
-        selectFilter.add(datasetTable, 0, 0, 3, 1);
+        Pane datasetTable = new DataTableDisplay(transform.getDataTable()).displayTable();
+        selectFilter.add(datasetTable, 0, 3, 3, 1);
 
         ComboBox columnCombo = new ComboBox();
         columnCombo = new ComboBox();
@@ -300,8 +302,10 @@ public class TransformDisplay extends Main {
             }
         });
 
+        selectFilter.add(new Label("Input filter parameters:"), 0, 0, 3, 1);
+
         selectFilter.add(new Label("Select column as filter base: "), 0, 1);
-        selectFilter.add(columnCombo, 0, 3);
+        selectFilter.add(columnCombo, 0, 2);
 
         String[] operators = {"<", "<=", ">", ">=", "==", "!="};
 
@@ -331,8 +335,8 @@ public class TransformDisplay extends Main {
             }
         });
 
-        selectFilter.add(new Label("Input number to check against: "), 1, 3);
-        selectFilter.add(numberField, 1, 4);
+        selectFilter.add(new Label("Input number to check against: "), 2, 1);
+        selectFilter.add(numberField, 2, 2);
         selectFilter.getStyleClass().add("filter-gridpane");
         
         Button filterButton = new Button("Filter");
@@ -347,8 +351,8 @@ public class TransformDisplay extends Main {
 
                     DataTable temp = transform.filterData();
 
-                    TableView datasetTable = new DataTableDisplay(temp).displayTable();
-                    selectFilter.add(datasetTable, 0, 0, 3, 1);
+                    Pane datasetTable = new DataTableDisplay(temp).displayTable();
+                    selectFilter.add(datasetTable, 0, 4, 3, 1);
 
                     stage = new Stage();
                     stage.setOnHiding(new EventHandler<WindowEvent>() {
@@ -370,8 +374,55 @@ public class TransformDisplay extends Main {
             }
         });
        
-        selectFilter.add(filterButton, 0, 5, 3, 1);
+        selectFilter.add(filterButton, 0, 3, 3, 1);
 
         return selectFilter;
     }
+
+    public GridPane splitFilter() {
+        GridPane root = new GridPane();
+        root.setHgap(10);
+        root.setVgap(4);
+        ColumnConstraints column1 = new ColumnConstraints();
+        column1.setPercentWidth(50);
+        column1.setHalignment(HPos.CENTER);
+        ColumnConstraints column2 = new ColumnConstraints();
+        column2.setHalignment(HPos.CENTER);
+        column2.setPercentWidth(50);
+        root.getColumnConstraints().addAll(column1, column2);
+
+        splitFilter = splitDisplay();
+
+        ToggleGroup group = new ToggleGroup();
+
+        RadioButton splitButton = new RadioButton("Split");
+        splitButton.setToggleGroup(group);
+        splitButton.setSelected(true);
+        splitButton.setUserData("split");
+
+        RadioButton filterButton = new RadioButton("Filter");
+        filterButton.setToggleGroup(group);
+        filterButton.setUserData("filter");
+
+        group.selectedToggleProperty().addListener(new ChangeListener<Toggle>() {
+            public void changed(ObservableValue<? extends Toggle> ov, Toggle old_toggle, Toggle new_toggle) {
+                if (group.getSelectedToggle() != null) {
+                    root.getChildren().remove(splitFilter);
+                    String choice = new_toggle.getUserData().toString();
+                    if (Objects.equals("split", choice)) splitFilter = splitDisplay();
+                    else if (Objects.equals("filter", choice)) splitFilter = filterDisplay();
+                    else splitFilter = new GridPane();
+                    root.add(splitFilter, 0, 2, 2, 1);
+                }
+            }
+        });
+
+        root.add(new Label("Choose transformation method:"), 0, 0, 2, 1);
+        root.add(splitButton, 0, 1);
+        root.add(filterButton, 1, 1);
+        root.add(splitFilter, 0, 2, 2, 1);
+
+        return root;
+    }
+
 }
