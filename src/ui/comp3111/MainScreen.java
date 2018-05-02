@@ -5,6 +5,7 @@ import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.Separator;
+import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
@@ -18,8 +19,7 @@ public class MainScreen extends Main {
 	public static BorderPane pane;
 	public static VBox leftc, centerc, rightc;
 	public static HBox hc;
-	public static TableView tablec;
-	public static Pane impexp, listView, typePane, filterPane, chartc;
+	public static Pane impexp, listView, typePane, filterPane, chartc, tablec;
 	
 	private static Button 
 		bt_Transform;
