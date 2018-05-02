@@ -50,7 +50,7 @@ public class ChartType extends Main {
 					}
 					MainScreen.centerc.getChildren().remove(MainScreen.chartc);
 					MainScreen.chartc = LineScreen.pane();
-					MainScreen.centerc.getChildren().addAll(MainScreen.chartc);
+					MainScreen.centerc.getChildren().add(1, MainScreen.chartc);
 				}
 			}
 		});
