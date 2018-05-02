@@ -33,9 +33,8 @@ public class Pie extends Chart implements Serializable {
         data = dt;
         textCols = new ArrayList<String>();
         numCols = new ArrayList<String>();
-
+        
         if (!isLegal()) throw new ChartException("Data does not fill the requirement of pie chart: containing at least one numeric column, one text column, and there are no negative column present in any column.");
-
         text = textCols.get(0);
         num = numCols.get(0);
     }
@@ -46,9 +45,11 @@ public class Pie extends Chart implements Serializable {
      */
     protected boolean isLegal() {
         for (String colName : data.getColNames()) {
+        	
             String colType = data.getCol(colName).getTypeName();
 
             if (Objects.equals(colType, DataType.TYPE_NUMBER)) {
+            	System.out.println(colName);
                 boolean allPositive = true;
                 Object[] colData = data.getCol(colName).getData();
 
