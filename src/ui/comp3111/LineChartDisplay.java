@@ -82,8 +82,8 @@ public class LineChartDisplay {
         NumberAxis yAxis = new NumberAxis();
         yAxis.setLabel(yname);
 
-        Number[] xData = (Number[]) linechart.getData().getCol(xname).getData();
-        Number[] yData = (Number[]) linechart.getData().getCol(yname).getData();
+        Object[] yData = linechart.getData().getCol(yname).getData();
+        Object[] xData = linechart.getData().getCol(xname).getData();
 
         LineChart<Number, Number> lineChart = new LineChart<Number, Number> (xAxis, yAxis);
         lineChart.setLegendVisible(false);
@@ -91,7 +91,7 @@ public class LineChartDisplay {
         XYChart.Series series = new XYChart.Series();
 
         for (int i = 0; i < linechart.getData().getNumRow(); ++i) {
-            series.getData().add(new XYChart.Data(xData[i], yData[i]));
+            series.getData().add(new XYChart.Data((Number)xData[i], (Number)yData[i]));
         }
 
         lineChart.getData().add(series);
