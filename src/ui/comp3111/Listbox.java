@@ -40,7 +40,6 @@ public class Listbox {
 	public static void addDataset(File file) {
 		filenames.add(file.getName());
 		files.add(file);
-		System.out.println(files.size());
 	}
 	
 	/* addCorgi
@@ -57,8 +56,8 @@ public class Listbox {
 			@Override
 			public void handle(MouseEvent arg0) {
 				int idx = list.getSelectionModel().getSelectedIndex();
-//				DataTableDisplay.setTable(files[idx]);
-				System.out.println(list.getSelectionModel().getSelectedIndex());
+//				System.out.println(files.get(idx));
+				DataTableDisplay.setTable(files.get(idx));
 			}
 			
 		});
