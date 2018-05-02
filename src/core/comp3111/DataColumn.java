@@ -85,7 +85,12 @@ public class DataColumn implements Serializable {
 	public void printCol(){
 	 	System.out.println(Arrays.asList(data));
 	}
- 	//ToDo javadoc here
+
+
+
+    /**
+     * Check if the data in column is a numeric
+     * */
 	public boolean isNumericCol(){
 			try
 			{
@@ -98,6 +103,9 @@ public class DataColumn implements Serializable {
 			return true;
 	}
 
+    /**
+     * Transform the String Columns into Numeric Column
+     * */
 	public void stringToNumericType(){
 		Number[] newData = new Number[data.length];
 		for(int i =0; i < data.length; i++){
