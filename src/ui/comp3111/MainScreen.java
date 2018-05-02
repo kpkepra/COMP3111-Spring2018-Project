@@ -5,6 +5,8 @@ import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.Separator;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
@@ -16,8 +18,8 @@ public class MainScreen extends Main {
 	private static Button bt_SampleLineChart;
 	public static BorderPane pane;
 	public static VBox leftc, centerc, rightc;
-	public static HBox hc, tablec;
-	public static Pane impexp, listView, typePane, filterPane, chartc;
+	public static HBox hc;
+	public static Pane impexp, listView, typePane, filterPane, chartc, tablec;
 	
 	private static Button 
 		bt_Transform;
@@ -60,17 +62,15 @@ public class MainScreen extends Main {
 	     leftc.setStyle("-fx-background-color: blue");
 	     
 	     typePane = ChartType.pane();
-//	     filterPane = TransformDisplay.filterDisplay();
+//	     filterPane = TransformDisplay.pane();
 	     rightc = new VBox(20);
 	     rightc.setAlignment(Pos.CENTER);
-	     rightc.getChildren().addAll(typePane, filterPane);
+	     rightc.getChildren().addAll(typePane);
 	     rightc.setMinWidth(240);
 	     rightc.setMaxWidth(240);
 	     rightc.setStyle("-fx-background-color: blue");
 	     
-	     tablec = new HBox(20);
-	     tablec.setAlignment(Pos.CENTER);
-	     tablec.getChildren().addAll(lb_Table);
+	     tablec = DataTableDisplay.displayTable();
 	     tablec.setMinWidth(800);
 	     tablec.setMaxWidth(800);
 	     tablec.setMinHeight(300);
@@ -87,13 +87,6 @@ public class MainScreen extends Main {
 	     centerc = new VBox(2);
 	     centerc.setAlignment(Pos.CENTER);
 	     centerc.getChildren().addAll(tablec, chartc);
-	     
-	     
-//	     hc.getChildren().addAll(bt_SampleLine, bt_SampleLine2);
-	
-//	     VBox container = new VBox(20);
-//	     container.getChildren().addAll(lbMainScreenTitle, hc, lbSampleDataTable, new Separator(), bt_SampleLineChart);
-//	     container.setAlignment(Pos.CENTER);
 	
 	     pane = new BorderPane();
 	     pane.setLeft(leftc);
