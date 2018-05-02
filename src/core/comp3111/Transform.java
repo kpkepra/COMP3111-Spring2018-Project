@@ -2,46 +2,123 @@ package core.comp3111;
 
 import java.util.*;
 
+/**
+ * Transform - A class containing methods to transform a DataTable. It
+ * stores the tables which will be transformed (dataTable) and the transform parameters.
+ * Filtering parameter includes a string which is the base column to check filter against (columnFilter),
+ * another string for the filter operator (operatorFilter), and a string which will be
+ * formatted to a Number functioning as a value to check filter against (numberFilter).
+ * Split parameter consists of only an array which will be used as the ratio to split
+ * the table into.
+ *
+ * @author apsusanto
+ *
+ */
 public class Transform {
     DataTable dataTable;
 
-    // Filtering Variables
-    boolean save;
+    // Filtering Parameters
     String columnFilter;
     String operatorFilter;
     String numberFilter;
 
-    // Split Variable
+    // Split Parameters
     float[] percentSplit;
 
+    /**
+     * Construct - Create a Transform object by giving the DataTable to transform
+     *
+     * @param dt
+     *             - The DataTable object that will be transformed.
+     */
     public Transform(DataTable dt) {
         dataTable = dt;
     }
 
+    /**
+     * Get the String object that will be used as the base column to filter the data with.
+     *
+     * @return String The column name
+     */
     public String getColumnFilter() { return columnFilter; }
 
+    /**
+     * Get the String object that will be used as the operator to filter the data with, for example, "<" or ">=".
+     *
+     * @return String The operator filter
+     */
     public String getOperatorFilter() { return operatorFilter; }
 
+    /**
+     * Get the String object which can be formatted into a Number, for instance, "5.5" or "-3". This will function as a value to check filtration against.
+     *
+     * @return String The number filter
+     */
     public String getNumberFilter() { return numberFilter; }
 
+    /**
+     * Get the float array which will be used as the ratio of resultant DataTables when splitting, for instance, {99.1, 0.9}.
+     *
+     * @return float[] The array containing percentages of split.
+     */
     public float[] getPercentSplit() { return percentSplit; }
 
-    public boolean getSave() { return save; }
-
-    public void setColumnFilter(String input) { columnFilter = input; }
-
-    public void setOperatorFilter(String input) { operatorFilter = input; }
-
-    public void setNumberFilter(String input) { numberFilter = input; }
-
-    public void setPercentSplit(float[] input) { percentSplit =Arrays.copyOf(input, input.length); }
-
-    public void setSave(boolean input) { save = input; }
+    /**
+     * Get the DataTable object of the Transform.
+     *
+     * @return DataTable the table that will be transformed.
+     */
+    public DataTable getDataTable() { return dataTable; }
 
     /**
-     * Split two num
+     * Set the base column to filter the data with.
      *
-     * @return array containing two DataTable, each holding number of data according to the ratio.
+     * @param input
+     *          - The column name.
+     */
+    public void setColumnFilter(String input) { columnFilter = input; }
+
+    /**
+     * Set the operator to filter the data with.
+     *
+     * @param input
+     *          - The operator, e.g. "<" or ">=".
+     */
+    public void setOperatorFilter(String input) { operatorFilter = input; }
+
+    /**
+     * Set the value to check the filtration against.
+     *
+     * @param input
+     *          - The string which can be formatted into a Number, e.g. "5" or "-3.3".
+     */
+    public void setNumberFilter(String input) { numberFilter = input; }
+
+    /**
+     * Set the percentage of split.
+     *
+     * @param input
+     *          - Array of float with the ratio of split in each elements.
+     */
+    public void setPercentSplit(float[] input) { percentSplit =Arrays.copyOf(input, input.length); }
+
+    /**
+     * Set the table that will be transformed.
+     *
+     * @param input
+     *          - DataTable object which will be transformed.
+     */
+    public void setDataTable(DataTable input) { dataTable = input; }
+
+    /**
+     * Split the dataTable of the class into two instances of DataTables according to the parameter percentSplit.
+     *
+     * @throws TransformException
+     *             - It throws TransformException if the percentSplit does not have two elements, or the sum of elements of percentSplit is not equal to 100.
+     * @throws DataTableException
+     *             - It throws DataTableException if the method fails to add one of the columns into the new DataTables.
+     *
+     * @return DataTable[] The two resultant DataTables
      */
     public DataTable[] randomSplit() throws TransformException, DataTableException {
         if (percentSplit.length != 2) throw new TransformException("Percent array length is not 2!");
@@ -85,9 +162,15 @@ public class Transform {
     }
 
     /**
-     * Filter data according to input from user interface
+     * Filter the DataTable according to the parameters columnFilter, numberFilter, and operatorFilter.
+     *
+     * @throws TransformException
+     *             - It throws TransformException if one of the filtering parameters is null, or it fails to format the data inside the column into a Number array,
+     *             or it fails to format the numberFilter into float
+     *
+     * @return DataTable The new DataTable containing elements that passed the filter
      */
-    public HashMap<String, DataColumn> filterData() throws TransformException, DataTableException {
+    public DataTable filterData() throws TransformException {
         if (columnFilter == null) throw new TransformException("Column Filter parameters are not filled");
         if (numberFilter == null) throw new TransformException("Number Filter parameters are not filled");
         if (operatorFilter == null) throw new TransformException("Operator Filter parameters are not filled");
@@ -99,11 +182,13 @@ public class Transform {
             temp.put(colName, new ArrayList<Object>());
         }
 
-        Number[] data;
+        Number[] data = new Number[dataTable.getNumRow()];
         Number op_filter;
 
         try {
-            data = (Number[]) dataTable.getCol(columnFilter).getData();
+            for (int i = 0; i < dataTable.getNumRow(); ++i) {
+                data[i] = (Number) dataTable.getCol(columnFilter).getData()[i];
+            }
         } catch (Exception e) {
             throw new TransformException("Failed to format column data");
         }
@@ -129,18 +214,21 @@ public class Transform {
             tempMap.put(colName, filteredCol);
         }
 
-        return tempMap;
+        DataTable tempTable = new DataTable();
+        tempTable.setDc(tempMap);
+
+        return tempTable;
     }
 
     /**
-     * Check if the number pass the filter
+     * Check whether a number pass a filter
      *
      * @param operator
-     * 			- the string containing filter operator that will be used to filter the data table. Example: "<"
+     * 			   - the string containing filter operator that will be used to filter the data table. Example: "<"
      * @param op_val
-     * 			- the number that will be used for filter
+     * 			   - the number that will be used for filter
      * @param number
-     * 			- the number that will be checked against
+     * 		       - the number that will be checked against
      *
      * @return whether the data pass the filter
      */
@@ -169,14 +257,4 @@ public class Transform {
 
         return ret_val;
     }
-
-    public DataTable getDataTable() { return dataTable; }
-
-    public void setDataTable(DataTable input) { dataTable = input; }
-
-    public Map<String, DataColumn> getDc(){
-        return dataTable.getDc();
-    }
-
-    public void setDc(Map<String, DataColumn> input) { dataTable.setDc(input); }
 }
