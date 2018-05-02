@@ -48,7 +48,6 @@ public class Pie extends Chart{
             String colType = data.getCol(colName).getTypeName();
 
             if (Objects.equals(colType, DataType.TYPE_NUMBER)) {
-            	System.out.println(colName);
                 boolean allPositive = true;
                 Object[] colData = data.getCol(colName).getData();
 
