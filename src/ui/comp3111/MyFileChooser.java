@@ -90,6 +90,7 @@ public class MyFileChooser extends Main {
                     System.out.println("-----"+fileName);
                     CSVReader readerCSV = new CSVReader(fileName);
                     OpenCSV.openCSV(readerCSV);
+                    Listbox.addDataset(file);
                 } else if (extension.equals("corgi")) {
                     MyFileExtenstion mf = new MyFileExtenstion();
                     try {

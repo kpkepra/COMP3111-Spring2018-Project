@@ -12,6 +12,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
 
@@ -67,7 +68,7 @@ public class TransformDisplay extends Main {
         root.add(numberField1, 0, 2);
         root.add(numberField2, 1, 2);
 
-        TableView<Integer> datasetTable = new DataTableDisplay(transform.getDataTable()).displayTable();
+        Pane datasetTable = new DataTableDisplay(transform.getDataTable()).displayTable();
 
         root.add(datasetTable, 0, 4, 2, 1);
 
@@ -168,7 +169,7 @@ public class TransformDisplay extends Main {
                             column.setCellValueFactory(cellData -> {
                                 Integer rowIndex = cellData.getValue();
 
-                                if (rowIndex < newTables[0].getNumRow()) return new ReadOnlyFloatWrapper(((Number)data[rowIndex]).floatValue());
+                                if (rowIndex < newTables[0].getNumRow()) return new ReadOnlyFloatWrapper(((Float.valueOf((String)data[rowIndex])).floatValue()));
                                 else return null;
                             });
                             column.prefWidthProperty().bind(dataset1.widthProperty().divide(newTables[0].getNumCol()));
@@ -199,7 +200,7 @@ public class TransformDisplay extends Main {
                             column.setCellValueFactory(cellData -> {
                                 Integer rowIndex = cellData.getValue();
 
-                                if (rowIndex < newTables[1].getNumRow()) return new ReadOnlyFloatWrapper(((Number)data[rowIndex]).floatValue());
+                                if (rowIndex < newTables[1].getNumRow()) return new ReadOnlyFloatWrapper(((Float.valueOf((String)data[rowIndex]))).floatValue());
                                 else return null;
                             });
                             column.prefWidthProperty().bind(dataset2.widthProperty().divide(newTables[1].getNumCol()));
@@ -282,7 +283,7 @@ public class TransformDisplay extends Main {
         column3.setPercentWidth(25);
         selectFilter.getColumnConstraints().addAll(column1, column2, column3);
 
-        TableView datasetTable = new DataTableDisplay(transform.getDataTable()).displayTable();
+        Pane datasetTable = new DataTableDisplay(transform.getDataTable()).displayTable();
         selectFilter.add(datasetTable, 0, 0, 3, 1);
 
         ComboBox columnCombo = new ComboBox();
@@ -300,7 +301,7 @@ public class TransformDisplay extends Main {
         });
 
         selectFilter.add(new Label("Select column as filter base: "), 0, 1);
-        selectFilter.add(columnCombo, 0, 2);
+        selectFilter.add(columnCombo, 0, 3);
 
         String[] operators = {"<", "<=", ">", ">=", "==", "!="};
 
@@ -346,7 +347,7 @@ public class TransformDisplay extends Main {
 
                     DataTable temp = transform.filterData();
 
-                    TableView datasetTable = new DataTableDisplay(temp).displayTable();
+                    Pane datasetTable = new DataTableDisplay(temp).displayTable();
                     selectFilter.add(datasetTable, 0, 0, 3, 1);
 
                     stage = new Stage();
