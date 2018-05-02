@@ -1,5 +1,4 @@
 package ui.comp3111;
-
 import java.io.File;
 import java.util.Objects;
 
@@ -23,6 +22,10 @@ public class DataTableDisplay {
 	  
 	  public DataTableDisplay(DataTable dt) {
 		  table = dt;
+	  }
+	  
+	  public static DataTable getDT() {
+		  return table;
 	  }
 	
 	  public static Pane displayTable() {
