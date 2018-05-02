@@ -103,7 +103,7 @@ public class DataColumn implements Serializable {
 		for(int i =0; i < data.length; i++){
 			newData[i] = Double.valueOf((String)data[i]);
 		}
-
+		data = newData;
 		typeName = DataType.TYPE_NUMBER;
 	}
 }
