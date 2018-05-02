@@ -16,8 +16,12 @@ public class DataTableTransformer {
 
     /**
      * Take in the CSVReader with the ArrayList data and fields and transform the
-     * Two ArrayList into
-     * */
+     * Two ArrayList into DataTable
+     * @param  csv
+     *      -a CSVReader that has already called csv.readFields() and csv.ReadAll()
+     *      and store the .csv file content in its data and fields variables.
+     * @return the transformed dataTable
+     */
     public static DataTable transform(CSVReader csv){
         tcsv = csv;
         DataTable dt = new DataTable();
@@ -34,6 +38,13 @@ public class DataTableTransformer {
         return toNumericCol(dt);
     }
 
+
+    /**
+     * Take the DataTable and transform it into ArrayList of String
+     * @param  dt
+     *      dataTable that needs to be transformed into String ArrayList
+     * @return the transformed dataTable
+     */
     public static ArrayList<String> reverseTransform(DataTable dt){
         ArrayList<String> data = new ArrayList<>();
         Map dc = dt.getDc();
@@ -52,6 +63,12 @@ public class DataTableTransformer {
         return data;
     }
 
+    /**
+     * Take the DataTable and transform all the data in numeric col to Number Type
+     * @param  dt
+     *      dataTable that stored all data in String
+     * @return the transformed dataTable
+     */
     private static DataTable toNumericCol(DataTable dt){
         for(DataColumn col : dt.getDc().values()){
             if(col.isNumericCol()){
