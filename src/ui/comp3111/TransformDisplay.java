@@ -238,7 +238,6 @@ public class TransformDisplay extends Main {
         column2.setPercentWidth(50);
         saveReplace.getColumnConstraints().addAll(column1, column2);
         saveReplace.add(new Label("What do you want to do with the filtered dataset?"), 0, 0, 2, 1);
-        saveReplace.setStyle("-fx-font: 16 arial;");
 
         // Save Button
         Button saveButton = new Button("Save");
@@ -286,7 +285,7 @@ public class TransformDisplay extends Main {
         selectFilter.getColumnConstraints().addAll(column1, column2, column3);
 
         Pane datasetTable = new DataTableDisplay(transform.getDataTable()).displayTable();
-        selectFilter.add(datasetTable, 0, 0, 3, 1);
+        selectFilter.add(datasetTable, 0, 4, 3, 1);
 
         ComboBox columnCombo = new ComboBox();
         columnCombo = new ComboBox();
@@ -337,7 +336,7 @@ public class TransformDisplay extends Main {
 
         selectFilter.add(new Label("Input number to check against: "), 2, 1);
         selectFilter.add(numberField, 2, 2);
-        selectFilter.getStyleClass().add("filter-gridpane");
+//        selectFilter.getStyleClass().add("filter-gridpane");
         
         Button filterButton = new Button("Filter");
 
@@ -353,7 +352,7 @@ public class TransformDisplay extends Main {
 
                     Pane datasetTable = new DataTableDisplay(temp).displayTable();
 
-                    selectFilter.add(datasetTable, 0, 0, 3, 1);
+                    selectFilter.add(datasetTable, 0, 4, 3, 1);
 
                     stage = new Stage();
                     stage.setOnHiding(new EventHandler<WindowEvent>() {
