@@ -171,8 +171,8 @@ public class TransformDisplay extends Main {
                     root.getChildren().remove(datasetTable);
 
                     TableView<Integer> datasetTable = new TableView();
-                    datasetTable.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
-                    root.add(datasetTable, 0, 4, 2, 1);
+                    datasetTable.setColumnResizePolicy(TableView.UNCONSTRAINED_RESIZE_POLICY);
+                    root.add(datasetTable, 0, 4, 4, 1);
 
                     for (int i = 0; i < transform.getDataTable().getNumRow(); i++) {
                         datasetTable.getItems().add(i);
