@@ -71,12 +71,8 @@ public class DataTableDisplay {
 		  return pane;
 	  }
 	  
-	  public static void setTable(File newFile) {
-		  file = newFile;
-		  csv = new CSVReader(file.getName());
-		  csv.readALL(0);
-		  csv.readField();
-		  table = DataTableTransformer.transform(csv);
+	  public static void setTable(DataTable newTable) {
+		  table = newTable;
 		  MainScreen.centerc.getChildren().remove(MainScreen.tablec);
 		  MainScreen.tablec = displayTable();
 		  MainScreen.tablec.setMinWidth(800);
