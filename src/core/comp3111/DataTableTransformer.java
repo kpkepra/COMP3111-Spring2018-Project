@@ -1,6 +1,7 @@
 package core.comp3111;
 
 import java.util.ArrayList;
+import java.util.Map;
 
 public class DataTableTransformer {
     static CSVReader tcsv = new CSVReader();
@@ -20,8 +21,24 @@ public class DataTableTransformer {
         return toNumericCol(dt);
     }
 
+    public static ArrayList<String> reverseTransform(DataTable dt){
+        ArrayList<String> data = new ArrayList<>();
+        Map dc = dt.getDc();
+        for(Object key: dc.keySet()){
+            data.add((String)key);
+        }
+        for(Object col: dc.values()){
+            Object[] vals = ((DataColumn)col).getData();
+            for(Object val:vals){
+                if(val instanceof String)data.add((String) val);
+                else{
+                    data.add(val.toString());
+                }
+            }
+        }
+        return data;
+    }
 
-    //test in CSVReader main
     private static DataTable toNumericCol(DataTable dt){
         for(DataColumn col : dt.getDc().values()){
             if(col.isNumericCol()){
@@ -30,4 +47,12 @@ public class DataTableTransformer {
         }
         return dt;
     }
+
+//    public static void main(String[] args){
+//        CSVReader csv = new CSVReader("csvTest1.csv");
+//        csv.readField();
+//        csv.readALL(0);
+//        DataTable dt = DataTableTransformer.transform(csv);
+//        System.out.print(DataTableTransformer.reverseTransform(dt));
+//    }
 }
