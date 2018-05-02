@@ -3,6 +3,7 @@ package ui.comp3111;
 import java.io.File;
 import java.util.ArrayList;
 
+import core.comp3111.Transform;
 import core.comp3111.MyFileExtenstion.CorgiObj;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -55,6 +56,11 @@ public class Listbox {
 			public void handle(MouseEvent arg0) {
 				int idx = list.getSelectionModel().getSelectedIndex();
 				DataTableDisplay.setTable(files.get(idx));
+				MainScreen.tfDisplay = new TransformDisplay(new Transform(DataTableDisplay.getDT()));
+				
+				MainScreen.rightc.getChildren().remove(1);
+				MainScreen.filterPane = MainScreen.tfDisplay.splitFilter();
+				MainScreen.rightc.getChildren().add(1, MainScreen.filterPane);
 			}
 			
 		});
