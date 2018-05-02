@@ -87,13 +87,6 @@ public class MainScreen extends Main {
 	     centerc = new VBox(2);
 	     centerc.setAlignment(Pos.CENTER);
 	     centerc.getChildren().addAll(tablec, chartc);
-	     
-	     
-//	     hc.getChildren().addAll(bt_SampleLine, bt_SampleLine2);
-	
-//	     VBox container = new VBox(20);
-//	     container.getChildren().addAll(lbMainScreenTitle, hc, lbSampleDataTable, new Separator(), bt_SampleLineChart);
-//	     container.setAlignment(Pos.CENTER);
 	
 	     pane = new BorderPane();
 	     pane.setLeft(leftc);
