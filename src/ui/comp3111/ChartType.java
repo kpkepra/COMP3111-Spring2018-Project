@@ -2,6 +2,8 @@ package ui.comp3111;
 
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
+import javafx.geometry.Insets;
+import javafx.scene.chart.LineChart;
 import javafx.scene.control.Label;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.Toggle;
@@ -23,7 +25,6 @@ public class ChartType extends Main {
 		for (int i = 0; i < 3; i++) {
 			radios[i] = new RadioButton(radioText[i]);
 			radios[i].setToggleGroup(tg);
-			radios[i].setUserData(radioText[i]);
 		}
 		
 		radios[0].setSelected(true);
@@ -34,23 +35,22 @@ public class ChartType extends Main {
 		VBox radioBox = new VBox(radios);
 		pane.setCenter(radioBox);
 		
-		initHandlers();
 		return pane;
 	}
 	
 	static void initHandlers() {
 		tg.selectedToggleProperty().addListener(new ChangeListener<Toggle>() {
-			public void changed(ObservableValue<? extends Toggle> ov, Toggle oldT, Toggle newT) {
+			public void changed(ObservableValue<? extends Toggle> arg0, Toggle oldT, Toggle newT) {
 				if (tg.getSelectedToggle() != null) {
-					if (tg.getSelectedToggle().getUserData().toString() == radioText[0]) {
-						System.out.println("line");
+					if (tg.getSelectedToggle().getUserData().toString() == "Line") {
 						LineScreen.linePie = true;
+					    LineScreen.changeType();
+						
 					} else {
 						LineScreen.linePie = false;
+						LineScreen.changeType();
 					}
-					MainScreen.centerc.getChildren().remove(MainScreen.chartc);
-					MainScreen.chartc = LineScreen.pane();
-					MainScreen.centerc.getChildren().add(1, MainScreen.chartc);
+					MainScreen.pane.setCenter(MainScreen.chartc);
 				}
 			}
 		});
