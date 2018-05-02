@@ -1,7 +1,6 @@
 package ui.comp3111;
 
 import java.awt.TextArea;
-import java.io.Console;
 import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.util.Random;
@@ -70,6 +69,7 @@ public class LineScreen extends Main {
 	}
 	
 	static BorderPane loadSample() {
+
         // Get 2 columns
         xAxis.setLabel("X");
         yAxis.setLabel("Y");
@@ -116,54 +116,55 @@ public class LineScreen extends Main {
                 DataColumn column = new DataColumn(DataType.TYPE_STRING, content);
                 table.addCol("textCol" + i, column);
             }
-    		try {
-    			if (linePie) {
-    				lineChart = new Line(table);
-    				lcd = new LineChartDisplay(lineChart);
-    			} else {
-    				pieChart = new Pie(table);
-    				pcd = new PieChartDisplay(pieChart);
-    			}
-    			chartNode = (linePie == true ? lcd.display() : pcd.display());
-    		} catch (ChartException ex) {
-                Alert alert = new Alert(Alert.AlertType.ERROR);
-                alert.setTitle("Chart Display Error");
-                alert.setHeaderText("There was an error in displaying chart!");
-                alert.setContentText(ex.getMessage());
-                alert.getDialogPane().setMinHeight(Region.USE_PREF_SIZE);
-                alert.showAndWait();
-      		}
+            changeType();
         } catch (Exception e) {
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle("Exception Dialog");
-            alert.setHeaderText("An exception occured during runtime");
-
-            StringWriter sw = new StringWriter();
-            PrintWriter pw = new PrintWriter(sw);
-            e.printStackTrace(pw);
-            String exceptionText = sw.toString();
-
-            Label label = new Label("The exception stacktrace was:");
-
+//            Alert alert = new Alert(Alert.AlertType.ERROR);
+//            alert.setTitle("Exception Dialog");
+//            alert.setHeaderText("An exception occured during runtime");
+//
+//            StringWriter sw = new StringWriter();
+//            PrintWriter pw = new PrintWriter(sw);
+//            e.printStackTrace(pw);
+//            String exceptionText = sw.toString();
+//
+//            Label label = new Label("The exception stacktrace was:");
+//
 //            TextArea textArea = new TextArea(exceptionText);
 //            textArea.setEditable(false);
 //            textArea.setWrapText(true);
-
+//
 //            textArea.setMaxWidth(Double.MAX_VALUE);
 //            textArea.setMaxHeight(Double.MAX_VALUE);
 //            GridPane.setVgrow(textArea, Priority.ALWAYS);
 //            GridPane.setHgrow(textArea, Priority.ALWAYS);
-
-            GridPane expContent = new GridPane();
-            expContent.setMaxWidth(Double.MAX_VALUE);
-            expContent.add(label, 0, 0);
+//
+//            GridPane expContent = new GridPane();
+//            expContent.setMaxWidth(Double.MAX_VALUE);
+//            expContent.add(label, 0, 0);
 //            expContent.add(textArea, 0, 1);
-
-        // Set expandable Exception into the dialog pane.
-            alert.getDialogPane().setExpandableContent(expContent);
-            alert.showAndWait();
+//
+//        // Set expandable Exception into the dialog pane.
+//            alert.getDialogPane().setExpandableContent(expContent);
+//            alert.showAndWait();
         }
 		return chartNode;
+	}
+	
+	public static void changeType() {
+		try {
+			lineChart = new Line(table);
+			lcd = new LineChartDisplay(lineChart);
+			pieChart = new Pie(table);
+			pcd = new PieChartDisplay(pieChart);
+			chartNode = (linePie ? lcd.display() : pcd.display());
+		} catch (ChartException ex) {
+          Alert alert = new Alert(Alert.AlertType.ERROR);
+          alert.setTitle("Chart Display Error");
+          alert.setHeaderText("There was an error in displaying chart!");
+          alert.setContentText(ex.getMessage());
+          alert.getDialogPane().setMinHeight(Region.USE_PREF_SIZE);
+          alert.showAndWait();
+      }
 	}
 	
     static void initHandlers() {
