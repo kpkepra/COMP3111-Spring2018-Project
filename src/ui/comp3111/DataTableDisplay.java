@@ -6,14 +6,11 @@ import java.util.Objects;
 import core.comp3111.CSVReader;
 import core.comp3111.DataColumn;
 import core.comp3111.DataTable;
-import core.comp3111.DataTableException;
 import core.comp3111.DataTableTransformer;
 import core.comp3111.DataType;
 import javafx.beans.property.ReadOnlyFloatWrapper;
 import javafx.beans.property.ReadOnlyStringWrapper;
-import javafx.scene.Scene;
 import javafx.scene.control.*;
-import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
 
 public class DataTableDisplay {
@@ -28,12 +25,12 @@ public class DataTableDisplay {
 		  pane = new Pane();
 		  datasetTable = new TableView();
 		  datasetTable.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
+		  table.printTable();
 		  
-		  if (table.getNumRow() > 0 && table.getNumCol() > 0) {
 			  for (int i = 0; i < table.getNumRow(); i++) {
 			      datasetTable.getItems().add(i);
 			  }
-//			
+			  
 			  for (String colName : table.getColNames()) {
 			      DataColumn dataColumn = table.getCol(colName);
 			      Object[] data = dataColumn.getData();
@@ -56,13 +53,12 @@ public class DataTableDisplay {
 			          column.setCellValueFactory(cellData -> {
 			              Integer rowIndex = cellData.getValue();
 			
-			              return new ReadOnlyFloatWrapper(((Number)data[rowIndex]).floatValue());
+			              return new ReadOnlyFloatWrapper(Float.valueOf(data[rowIndex].toString()));
 			          });
 			          column.prefWidthProperty().bind(datasetTable.widthProperty().divide(table.getNumCol()));
 			          datasetTable.getColumns().add(column);
 			      }
 			  }
-		  }
 		  
 		  pane.getChildren().addAll(datasetTable);
 		

@@ -66,7 +66,7 @@ public class Pie extends Chart{
                 Object[] colData = data.getCol(colName).getData();
 
                 for (Object val : colData) {
-                    if (((Number)val).floatValue() < 0.0) {
+                    if (Double.valueOf(val.toString()) < 0.0) {
                     	allPositive = false;
                     	break;
                     }
