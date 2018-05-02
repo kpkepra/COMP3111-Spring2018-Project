@@ -53,7 +53,7 @@ public class Pie extends Chart implements Serializable {
                 Object[] colData = data.getCol(colName).getData();
 
                 for (Object val : colData) {
-                    if ((Float.valueOf((String)val)) < 0.0) allPositive = false;
+                    if ((Double.valueOf((String)val)) < 0.0) allPositive = false;
                 }
                 if (allPositive) numCols.add(colName);
             }

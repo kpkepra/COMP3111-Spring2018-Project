@@ -12,6 +12,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
 
@@ -67,7 +68,7 @@ public class TransformDisplay extends Main {
         root.add(numberField1, 0, 2);
         root.add(numberField2, 1, 2);
 
-        TableView<Integer> datasetTable = new DataTableDisplay(transform.getDataTable()).displayTable();
+        Pane datasetTable = new DataTableDisplay(transform.getDataTable()).displayTable();
 
         root.add(datasetTable, 0, 4, 2, 1);
 
@@ -300,7 +301,7 @@ public class TransformDisplay extends Main {
         });
 
         selectFilter.add(new Label("Select column as filter base: "), 0, 1);
-        selectFilter.add(columnCombo, 0, 2);
+        selectFilter.add(columnCombo, 0, 3);
 
         String[] operators = {"<", "<=", ">", ">=", "==", "!="};
 
