@@ -25,6 +25,7 @@ public class TransformDisplay extends Main {
     private static Button filterButton;
     private static TextField numberField;
     private static ComboBox columnCombo, operatorCombo;
+    private boolean save;
 
     public TransformDisplay(Transform tf) {
         transform = tf;
@@ -245,7 +246,7 @@ public class TransformDisplay extends Main {
         saveButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent e) {
-                transform.setSave(true);
+                save = true;
                 stage.hide();
             }
         });
@@ -255,7 +256,7 @@ public class TransformDisplay extends Main {
         replaceButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent e) {
-                transform.setSave(false);
+                save = false;
                 stage.hide();
             }
         });
@@ -388,12 +389,10 @@ public class TransformDisplay extends Main {
             public void handle(ActionEvent e) {
                 try {
                     transform.setNumberFilter(numberField.getText());
-                    HashMap<String, DataColumn> tempTable = transform.filterData();
 
 //                    selectFilter.getChildren().remove(datasetTable);
 
-                    DataTable temp = new DataTable();
-                    temp.setDc(tempTable);
+                    DataTable temp = transform.filterData();
 
 //                    TableView datasetTable = displayTable(temp);
 //                    selectFilter.add(datasetTable, 0, 0, 3, 1);
