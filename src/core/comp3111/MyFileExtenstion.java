@@ -7,7 +7,6 @@ public class MyFileExtenstion {
     public static class CorgiObj implements Serializable{
         private DataTable dt;
         private ArrayList <Chart> charts;
-        private String name;
         public CorgiObj(){
             dt = new DataTable();
             charts = new ArrayList<>();
@@ -23,12 +22,6 @@ public class MyFileExtenstion {
         public ArrayList<Chart> getCharts() {
             return charts;
         }
-        public void setName(String fileName) {
-        	name = fileName;
-        }
-        public String getName() { 
-        	return name;
-        }
     }
 
     public CorgiObj loadCorgi(String fileName) throws IOException,ClassNotFoundException{
@@ -37,7 +30,6 @@ public class MyFileExtenstion {
             FileInputStream fileIn = new FileInputStream(fileName);
             ObjectInputStream in = new ObjectInputStream(fileIn);
             corgi = (CorgiObj) in.readObject();
-            corgi.setName(fileName);
             in.close();
             fileIn.close();
         }

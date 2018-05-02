@@ -5,8 +5,6 @@ import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.Separator;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
@@ -18,8 +16,8 @@ public class MainScreen extends Main {
 	private static Button bt_SampleLineChart;
 	public static BorderPane pane;
 	public static VBox leftc, centerc, rightc;
-	public static HBox hc;
-	public static Pane impexp, listView, typePane, filterPane, chartc, tablec;
+	public static HBox hc, tablec;
+	public static Pane impexp, listView, typePane, filterPane, chartc;
 	
 	private static Button 
 		bt_Transform;
@@ -70,7 +68,9 @@ public class MainScreen extends Main {
 	     rightc.setMaxWidth(240);
 	     rightc.setStyle("-fx-background-color: blue");
 	     
-	     tablec = DataTableDisplay.displayTable();
+	     tablec = new HBox(20);
+	     tablec.setAlignment(Pos.CENTER);
+	     tablec.getChildren().addAll(lb_Table);
 	     tablec.setMinWidth(800);
 	     tablec.setMaxWidth(800);
 	     tablec.setMinHeight(300);
