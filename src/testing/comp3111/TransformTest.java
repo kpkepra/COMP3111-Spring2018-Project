@@ -127,7 +127,7 @@ class TransformTest {
         transform.setNumberFilter("3.00");
         transform.setOperatorFilter("<=");
 
-        Object[] filtered = transform.filterData().get("column").getData();
+        Object[] filtered = transform.filterData().getCol("column").getData();
         Object[] original = dataTable.getCol("column").getData();
 
         boolean testEqual = true;
@@ -145,7 +145,7 @@ class TransformTest {
         transform.setNumberFilter("2.99");
         transform.setOperatorFilter("<=");
 
-        Object[] filtered = transform.filterData().get("column").getData();
+        Object[] filtered = transform.filterData().getCol("column").getData();
         Object[] original = new Object[]{1, 2};
 
         boolean testEqual = true;
@@ -163,7 +163,7 @@ class TransformTest {
         transform.setNumberFilter("3.01");
         transform.setOperatorFilter("<");
 
-        Object[] filtered = transform.filterData().get("column").getData();
+        Object[] filtered = transform.filterData().getCol("column").getData();
         Object[] original = dataTable.getCol("column").getData();
 
         boolean testEqual = true;
@@ -181,7 +181,7 @@ class TransformTest {
         transform.setNumberFilter("3.00");
         transform.setOperatorFilter("<");
 
-        Object[] filtered = transform.filterData().get("column").getData();
+        Object[] filtered = transform.filterData().getCol("column").getData();
         Object[] original = new Object[]{1, 2};
 
         boolean testEqual = true;
@@ -199,7 +199,7 @@ class TransformTest {
         transform.setNumberFilter("1.00");
         transform.setOperatorFilter(">=");
 
-        Object[] filtered = transform.filterData().get("column").getData();
+        Object[] filtered = transform.filterData().getCol("column").getData();
         Object[] original = dataTable.getCol("column").getData();
 
         boolean testEqual = true;
@@ -217,7 +217,7 @@ class TransformTest {
         transform.setNumberFilter("1.01");
         transform.setOperatorFilter(">=");
 
-        Object[] filtered = transform.filterData().get("column").getData();
+        Object[] filtered = transform.filterData().getCol("column").getData();
         Object[] original = new Object[]{2, 3};
 
         boolean testEqual = true;
@@ -235,7 +235,7 @@ class TransformTest {
         transform.setNumberFilter("0.99");
         transform.setOperatorFilter(">");
 
-        Object[] filtered = transform.filterData().get("column").getData();
+        Object[] filtered = transform.filterData().getCol("column").getData();
         Object[] original = dataTable.getCol("column").getData();
 
         boolean testEqual = true;
@@ -253,7 +253,7 @@ class TransformTest {
         transform.setNumberFilter("1.00");
         transform.setOperatorFilter(">");
 
-        Object[] filtered = transform.filterData().get("column").getData();
+        Object[] filtered = transform.filterData().getCol("column").getData();
         Object[] original = new Object[]{2, 3};
 
         boolean testEqual = true;
@@ -271,7 +271,7 @@ class TransformTest {
         transform.setNumberFilter("0.99");
         transform.setOperatorFilter("==");
 
-        Object[] filtered = transform.filterData().get("column").getData();
+        Object[] filtered = transform.filterData().getCol("column").getData();
         Object[] original = new Object[0];
 
         boolean testEqual = true;
@@ -289,7 +289,7 @@ class TransformTest {
         transform.setNumberFilter("1.00");
         transform.setOperatorFilter("==");
 
-        Object[] filtered = transform.filterData().get("column").getData();
+        Object[] filtered = transform.filterData().getCol("column").getData();
         Object[] original = new Object[]{1};
 
         boolean testEqual = true;
@@ -307,7 +307,7 @@ class TransformTest {
         transform.setNumberFilter("0.99");
         transform.setOperatorFilter("!=");
 
-        Object[] filtered = transform.filterData().get("column").getData();
+        Object[] filtered = transform.filterData().getCol("column").getData();
         Object[] original = dataTable.getCol("column").getData();
 
         boolean testEqual = true;
@@ -325,7 +325,7 @@ class TransformTest {
         transform.setNumberFilter("1.00");
         transform.setOperatorFilter("!=");
 
-        Object[] filtered = transform.filterData().get("column").getData();
+        Object[] filtered = transform.filterData().getCol("column").getData();
         Object[] original = new Object[]{2, 3};
 
         boolean testEqual = true;
@@ -411,31 +411,5 @@ class TransformTest {
         }
 
         assertEquals(true, testEquality);
-    }
-
-    @Test
-    void testGetDc() throws DataTableException {
-        assertEquals(true, transform.getDc().equals(dataTable.getDc()));
-    }
-
-    @Test
-    void testSetDc() throws DataTableException {
-        HashMap<String, DataColumn> tempMap = new HashMap<String, DataColumn>();
-        tempMap.put("column", testDataColumn);
-        transform.setDc(tempMap);
-
-        assertEquals(true, tempMap.equals(transform.getDc()));
-    }
-
-    @Test
-    void testSave_False() throws TransformException {
-        transform.setSave(false);
-        assertEquals(false, transform.getSave());
-    }
-
-    @Test
-    void testSave_True() throws TransformException {
-        transform.setSave(true);
-        assertEquals(true, transform.getSave());
     }
 }

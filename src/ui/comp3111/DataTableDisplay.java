@@ -23,7 +23,7 @@ public class DataTableDisplay {
 	
 	  public static Pane displayTable() {
 		  pane = new Pane();
-		  datasetTable = new TableView();
+		  datasetTable = new TableView()<<<<<<< dev-kevin;
 		  datasetTable.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
 		  table.printTable();
 		  
