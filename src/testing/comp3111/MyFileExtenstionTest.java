@@ -11,7 +11,7 @@ import static org.junit.jupiter.api.Assertions.*;
 class MyFileExtenstionTest {
 
     @Test
-    void saveAndLoadCorgi() throws ChartException, IOException, ClassNotFoundException{
+    void saveAndLoadCorgi() throws ChartException, IOException, ClassNotFoundException,DataTableException{
         CSVReader ch = new CSVReader("resources/csvTest1.csv");
         CSVReader ch_rowprob  = new CSVReader("resources/csvTest6.csv");
         ch.readALL(0);
