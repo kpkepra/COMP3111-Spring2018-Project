@@ -25,7 +25,7 @@ import javafx.scene.layout.Pane;
  * @author Kevin Pratama
  * 
  */
-public class Listbox {
+public class Listbox extends Main {
 	private static Pane pane;
 	private static ObservableList<String> filenames = FXCollections.observableArrayList();
 	private static ObservableList<String> corginames = FXCollections.observableArrayList();
@@ -57,7 +57,8 @@ public class Listbox {
 	 */
 	public static void addDataset(File file) {
 		filenames.add(file.getName());
-		CSVReader csv = new CSVReader(file.getName());
+		CSVReader csv = new CSVReader("resources/" + file.getName());
+		System.out.println(file.getName());
 		csv.readALL(0);
 		csv.readField();
 		DataTable table = DataTableTransformer.transform(csv);
