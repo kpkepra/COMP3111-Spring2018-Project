@@ -1,48 +1,55 @@
 package ui.comp3111;
 
-import java.awt.TextArea;
-import java.io.Console;
-import java.io.PrintWriter;
-import java.io.StringWriter;
 import java.util.Random;
 
 import core.comp3111.*;
 import javafx.geometry.Pos;
-import javafx.scene.chart.LineChart;
 import javafx.scene.chart.NumberAxis;
-import javafx.scene.chart.XYChart;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.Separator;
 import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.GridPane;
-import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
 
+/**
+ * LineScreen - A center pane that displays the static charts : line and pie chart. The pane
+ * takes the value from table pane that is above it and translates the data into charts. Line 
+ * chart takes any two numeric columns, while pie chart takes any one numeric column and text
+ * column. Additional dropdown button is provided to change the desired columns to be displayed.
+ * 
+ * @author kp-kepra
+ *
+ */
 public class LineScreen extends Main {
     private static NumberAxis xAxis = null;
     private static NumberAxis yAxis = null;
     private static Button btLineChartBackMain = null;
     
-    static boolean linePie = true; // LINE true PIE false
-    static int numCols = 20;
-    static int textCols = 5;
-    static int row = 5;
+    /** 
+     * Boolean field to determine the type of chart to display.
+     * 
+     * If true, show the line chart. Otherwise show the pie chart.
+     */
+    public static boolean linePie = false; // LINE true PIE false
+    protected static int numCols = 20, textCols = 5, row = 5;
 
-    static DataTable table = new DataTable();
-    static Random rand = new Random();
-    static char[] base = new char[]{'A', 'B', 'C', 'D', 'E', 'F', 'G'};
+    protected static DataTable table = new DataTable();
+    protected static Random rand = new Random();
+    protected static char[] base = new char[]{'A', 'B', 'C', 'D', 'E', 'F', 'G'};
     
-    static Line lineChart;
-    static Pie pieChart;
-    static LineChartDisplay lcd;
-    static PieChartDisplay pcd;
+    protected static Line lineChart;
+    protected static Pie pieChart;
+    protected static LineChartDisplay lcd;
+    protected static PieChartDisplay pcd;
     
-    static BorderPane chartNode = null;
+    protected static BorderPane chartNode = null;
 	
+    /**
+     * Pane function. Generates and returns a pane object that displays the chart.
+     * 
+     * @return Pane object containing the line or pie chart.
+     */
 	public static Pane pane() {
 		xAxis = new NumberAxis();
         yAxis = new NumberAxis();
@@ -62,55 +69,68 @@ public class LineScreen extends Main {
 
         // Apply CSS to style the GUI components
         pane.getStyleClass().add("screen-background");
-
+        addSample();
         pane = loadSample();
-        initHandlers();
         
         return pane;
 	}
 	
+	/**
+	 * Generates random sample data. The random sample data is based on the number of 
+	 * initialized numeric columns and text columns.
+	 */
+	static void addSample() {
+		try {
+	        Random rand = new Random();
+	        char[] base = new char[]{'A', 'B', 'C', 'D', 'E', 'F', 'G'};
+	
+	        for (int i = 0; i < numCols; ++i) {
+	            Number[] content = new Number[row];
+	
+	            for (int j = 0; j < row; ++j) {
+	                int type = rand.nextInt(100) + 1;
+	
+	                if (type >= 67) content[j] = rand.nextDouble();
+	                else if (type >= 33) content[j] = rand.nextDouble();
+	                else content[j] = rand.nextDouble();
+	            }
+	
+	            DataColumn column = new DataColumn(DataType.TYPE_NUMBER, content);
+	            table.addCol("numCol" + i, column);
+	        }
+	
+	        for (int i = 0; i < textCols; ++i) {
+	            String[] content = new String[row];
+	
+	            for (int j = 0; j < row; ++j) {
+	                int length = rand.nextInt(10) + 1;
+	
+	                String word = "";
+	                for (int k = 0; k < length; ++k) {
+	                    word += base[rand.nextInt(base.length)];
+	                }
+	
+	                content[j] = word;
+	            }
+	
+	            DataColumn column = new DataColumn(DataType.TYPE_STRING, content);
+	            table.addCol("textCol" + i, column);
+	        }
+		} catch (Exception e) {
+        	System.out.println(e);
+        	e.printStackTrace();
+		}
+	}
+	
+	/**
+	 * Load data from either sample data or dataset.
+	 * 
+	 * @return Pane containing the chart Node.
+	 */
 	static BorderPane loadSample() {
         // Get 2 columns
         xAxis.setLabel("X");
         yAxis.setLabel("Y");
-		
-		try {
-            // TEST PARAMETERS
-            Random rand = new Random();
-            char[] base = new char[]{'A', 'B', 'C', 'D', 'E', 'F', 'G'};
-
-            for (int i = 0; i < numCols; ++i) {
-                Number[] content = new Number[row];
-
-                for (int j = 0; j < row; ++j) {
-                    int type = rand.nextInt(100) + 1;
-
-                    if (type >= 67) content[j] = rand.nextInt(20);
-                    else if (type >= 33) content[j] = rand.nextFloat();
-                    else content[j] = rand.nextDouble();
-                }
-
-                DataColumn column = new DataColumn(DataType.TYPE_NUMBER, content);
-                table.addCol("numCol" + i, column);
-            }
-
-            for (int i = 0; i < textCols; ++i) {
-                String[] content = new String[row];
-
-                for (int j = 0; j < row; ++j) {
-                    int length = rand.nextInt(10) + 1;
-
-                    String word = "";
-                    for (int k = 0; k < length; ++k) {
-                        word += base[rand.nextInt(base.length)];
-                    }
-
-                    content[j] = word;
-                }
-
-                DataColumn column = new DataColumn(DataType.TYPE_STRING, content);
-                table.addCol("textCol" + i, column);
-            }
     		try {
     			if (linePie) {
     				lineChart = new Line(table);
@@ -128,40 +148,12 @@ public class LineScreen extends Main {
                 alert.getDialogPane().setMinHeight(Region.USE_PREF_SIZE);
                 alert.showAndWait();
       		}
-        } catch (Exception e) {
-        	System.out.println(e);
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle("Exception Dialog");
-            alert.setHeaderText("An exception occured during runtime");
-
-            StringWriter sw = new StringWriter();
-            PrintWriter pw = new PrintWriter(sw);
-            e.printStackTrace(pw);
-            String exceptionText = sw.toString();
-
-            Label label = new Label("The exception stacktrace was:");
-
-//            TextArea textArea = new TextArea(exceptionText);
-//            textArea.setEditable(false);
-//            textArea.setWrapText(true);
-//
-//            textArea.setMaxWidth(Double.MAX_VALUE);
-//            textArea.setMaxHeight(Double.MAX_VALUE);
-//            GridPane.setVgrow(textArea, Priority.ALWAYS);
-//            GridPane.setHgrow(textArea, Priority.ALWAYS);
-
-            GridPane expContent = new GridPane();
-            expContent.setMaxWidth(Double.MAX_VALUE);
-            expContent.add(label, 0, 0);
-//            expContent.add(textArea, 0, 1);
-
-        // Set expandable Exception into the dialog pane.
-            alert.getDialogPane().setExpandableContent(expContent);
-            alert.showAndWait();
-        }
 		return chartNode;
 	}
 	
+	/**
+	 * Change the type of chart into line or pie, based on {@link LineScreen#linePie}
+	 */
 	public static void changeType() {
 		try {
 			if (linePie) {
@@ -181,11 +173,4 @@ public class LineScreen extends Main {
           alert.showAndWait();
       }
 	}
-	
-    static void initHandlers() {
-        // click handler
-        btLineChartBackMain.setOnAction(e -> {
-            Main.putSceneOnStage(0);
-        });
-    }
 }
