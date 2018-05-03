@@ -20,6 +20,14 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Objects;
 
+/**
+ * TransformDisplay - A class which can be utilized to display any form of Transformation. It stores the
+ * Transform object (transform), a boolean to indicate whether users would like to save or replace (save), String to
+ * indicate the name of file to be saved (fileName), and the general GridPane to display either of the transformation.
+ *
+ * @author apsusanto
+ *
+ */
 public class TransformDisplay extends Main {
     private Transform transform;
 
@@ -29,11 +37,24 @@ public class TransformDisplay extends Main {
 
     GridPane splitFilter;
 
+    /**
+     * Construct - Create a TransformDisplay object by giving the Transform object which will be displayed in the FX node.
+     *
+     * @param tf
+     *             - The Transform object which will be displayed.
+     *
+     */
     public TransformDisplay(Transform tf) {
         transform = tf;
     }
 
-    public GridPane splitDisplay() {
+    /**
+     * Display interface for split transformation. JavaFX Main UI can directly call this function to and
+     * put it on the scene to split any datatable.
+     *
+     * @return GridPane JavaFX node with filter transformation inside.
+     */
+    private GridPane splitDisplay() {
         transform.setPercentSplit(new float[2]);
         GridPane root = new GridPane();
         root.setHgap(10);
@@ -259,52 +280,12 @@ public class TransformDisplay extends Main {
     }
 
     /**
-     * Ask the user whether to save the new dataset or replace old one instead
+     * Display interface for filter transformation. JavaFX Main UI can directly call this function to and
+     * put it on the scene to filter any datatable.
+     *
+     * @return GridPane JavaFX node with filter transformation inside.
      */
-    private void askSaveReplace() {
-        GridPane saveReplace = new GridPane();
-        saveReplace.setHgap(10);
-        saveReplace.setVgap(10);
-        ColumnConstraints column1 = new ColumnConstraints();
-        column1.setHalignment(HPos.CENTER);
-        column1.setPercentWidth(50);
-        ColumnConstraints column2 = new ColumnConstraints();
-        column2.setHalignment(HPos.CENTER);
-        column2.setPercentWidth(50);
-        saveReplace.getColumnConstraints().addAll(column1, column2);
-        saveReplace.add(new Label("What do you want to do with the filtered dataset?"), 0, 0, 2, 1);
-
-        // Save Button
-        Button saveButton = new Button("Save");
-        saveButton.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent e) {
-                save = true;
-                stage.hide();
-            }
-        });
-
-        // Replace Button
-        Button replaceButton = new Button("Replace");
-        replaceButton.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent e) {
-                save = false;
-                stage.hide();
-            }
-        });
-
-        saveReplace.add(saveButton, 0, 1);
-        saveReplace.add(replaceButton, 1, 1);
-        Scene scene = new Scene(saveReplace);
-        stage.setScene(scene);
-        stage.show();
-    }
-
-    /**
-     * Display UI for filtering data 
-     */
-    public GridPane filterDisplay() {
+    private GridPane filterDisplay() {
         GridPane selectFilter = new GridPane();
         selectFilter.setHgap(10);
         selectFilter.setVgap(4);
@@ -428,6 +409,12 @@ public class TransformDisplay extends Main {
         return selectFilter;
     }
 
+    /**
+     * Display interface for choosing transformation method. JavaFX Main UI can directly call this function to and
+     * put it on the scene to filter any datatable.
+     *
+     * @return GridPane JavaFX node with option to choose transformation method and the transform window itself.
+     */
     public GridPane splitFilter() {
         GridPane root = new GridPane();
         root.setHgap(10);
@@ -474,6 +461,53 @@ public class TransformDisplay extends Main {
         return root;
     }
 
+    /**
+     * A function which will display an interface to ask the user whether to save the new dataset
+     * or replace old one instead.
+     */
+    private void askSaveReplace() {
+        GridPane saveReplace = new GridPane();
+        saveReplace.setHgap(10);
+        saveReplace.setVgap(10);
+        ColumnConstraints column1 = new ColumnConstraints();
+        column1.setHalignment(HPos.CENTER);
+        column1.setPercentWidth(50);
+        ColumnConstraints column2 = new ColumnConstraints();
+        column2.setHalignment(HPos.CENTER);
+        column2.setPercentWidth(50);
+        saveReplace.getColumnConstraints().addAll(column1, column2);
+        saveReplace.add(new Label("What do you want to do with the filtered dataset?"), 0, 0, 2, 1);
+
+        // Save Button
+        Button saveButton = new Button("Save");
+        saveButton.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent e) {
+                save = true;
+                stage.hide();
+            }
+        });
+
+        // Replace Button
+        Button replaceButton = new Button("Replace");
+        replaceButton.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent e) {
+                save = false;
+                stage.hide();
+            }
+        });
+
+        saveReplace.add(saveButton, 0, 1);
+        saveReplace.add(replaceButton, 1, 1);
+        Scene scene = new Scene(saveReplace);
+        stage.setScene(scene);
+        stage.show();
+    }
+
+    /**
+     * A function which will display an interface to ask the filename to save the dataset to.
+     */
     public void askFileName() {
         GridPane root = new GridPane();
         root.setHgap(10);
