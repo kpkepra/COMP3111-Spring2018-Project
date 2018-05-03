@@ -63,27 +63,29 @@ public class ChartType extends Main {
 		tg.selectedToggleProperty().addListener(new ChangeListener<Toggle>() {
 			public void changed(ObservableValue<? extends Toggle> ov, Toggle oldT, Toggle newT) {
 				if (tg.getSelectedToggle() != null) {
+					MainScreen.centerc.getChildren().remove(MainScreen.chartc);
 					if (tg.getSelectedToggle().getUserData().toString() == radioText[2]) {
-						MainScreen.centerc.getChildren().remove(MainScreen.chartc);
 						MainScreen.chartc = AnimatedScreen.pane();
-						MainScreen.centerc.getChildren().add(1, MainScreen.chartc);
 					} else {
 						if (tg.getSelectedToggle().getUserData().toString() == radioText[0]) {
 							LineScreen.linePie = true;
 						} else {
 							LineScreen.linePie = false;
 						}
-						MainScreen.centerc.getChildren().remove(MainScreen.chartc);
 						MainScreen.chartc = LineScreen.pane();
-					    MainScreen.chartc.setMinWidth(500);
-					    MainScreen.chartc.setMaxWidth(500);
-					    MainScreen.chartc.setMinHeight(400);
-					    MainScreen.chartc.setMaxHeight(400);
-						MainScreen.centerc.getChildren().add(1, MainScreen.chartc);
 					}
+				    MainScreen.chartc.setMinWidth(500);
+				    MainScreen.chartc.setMaxWidth(500);
+				    MainScreen.chartc.setMinHeight(400);
+				    MainScreen.chartc.setMaxHeight(400);
+					MainScreen.centerc.getChildren().add(1, MainScreen.chartc);
 
 				}
 			}
 		});
+	}
+	
+	static String getType() {
+		return tg.getSelectedToggle().getUserData().toString();
 	}
 }
