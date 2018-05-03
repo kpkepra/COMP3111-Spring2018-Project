@@ -44,6 +44,14 @@ public class CSVReader {
     public int getNumCol() {
         return numCol;
     }
+    
+    /**
+     * Returns the input file.
+     * @return the input file.
+     */
+    public File getFile() {
+    	return inputFile;
+    }
 
     /**
      * Returns the data(excluding the titles in CSV) of CSV file
