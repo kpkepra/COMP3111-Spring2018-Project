@@ -23,22 +23,14 @@ import javafx.scene.layout.VBox;
 public class MainScreen {
 	/**
 	 * Primary view of the Application.
-	 * @exclude
 	 */
 	public static BorderPane pane;
-
-	/**
-	 * Left-side panel of the GUI.
-	 */
-	
-	public static VBox leftc;
-	public static VBox centerc, rightc, tablec;
-	public static HBox hc;
-	public static Pane impexp, listView, typePane, filterPane, chartc;
-	public static TransformDisplay tfDisplay;
+	protected static VBox leftc, centerc, rightc, tablec;
+	protected static Pane listView, impexp, typePane, filterPane, chartc;
+	private static HBox hc;
+	protected static TransformDisplay tfDisplay;
 	
 	private Label lb_Title;
-	
 	/**
 	 * Pane function. Gets all the required nodes and layout them in the main pane. The pane is then passed
 	 * to the Main class for scene generation.
@@ -65,9 +57,9 @@ public class MainScreen {
 	     leftc = new VBox(20);
 	     leftc.setAlignment(Pos.CENTER);
 	     leftc.getChildren().addAll(impexp, listView);
-	     leftc.setStyle("-fx-background-color: blue");
-	     
+
 	     typePane = ChartType.pane();
+	     typePane.getStyleClass().add("typePane");
 	     
 	     tfDisplay = new TransformDisplay(new Transform(DataTableDisplay.getDT()));
 	     filterPane = tfDisplay.splitFilter();
@@ -76,17 +68,14 @@ public class MainScreen {
 	     rightc.getChildren().addAll(typePane, filterPane);
 	     rightc.setMinWidth(400);
 	     rightc.setMaxWidth(400);
-	     rightc.setStyle("-fx-background-color: blue");
-	     //760
+
 	     tablec = DataTableDisplay.displayTable();
 	     tablec.setMinWidth(500);
 	     tablec.setMaxWidth(500);
 	     tablec.setMinHeight(300);
 	     tablec.setMaxHeight(300);
-	     tablec.setStyle("-fx-background-color: orange");
 
 	     chartc = LineScreen.pane();
-	     chartc.setStyle("-fx-background-color: red");
 	     chartc.setMinWidth(500);
 	     chartc.setMaxWidth(500);
 	     chartc.setMinHeight(400);
@@ -102,7 +91,6 @@ public class MainScreen {
 	     lb_Title.getStyleClass().add("menu-title");
 	     pane.getStyleClass().add("screen-background");
 	     
-	     initHandlers();
 	     return pane;
 	}
 }
