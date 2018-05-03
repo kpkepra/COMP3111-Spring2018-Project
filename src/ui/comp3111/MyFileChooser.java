@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import core.comp3111.CSVReader;
 import core.comp3111.Chart;
 import core.comp3111.DataTable;
+import core.comp3111.DataTableException;
 import core.comp3111.MyFileExtenstion;
 import core.comp3111.MyFileExtenstion.CorgiObj;
 import javafx.event.ActionEvent;
@@ -74,7 +75,11 @@ public class MyFileChooser extends Main {
                     public void handle(final ActionEvent e) {
                         File file = fileChooser.showOpenDialog(stage);
                         if (file != null) {
-                            openFile(file);
+                            try {
+								openFile(file);
+							} catch (DataTableException e1) {
+								e1.printStackTrace();
+							}
                         }
                     }
                 });
@@ -91,7 +96,7 @@ public class MyFileChooser extends Main {
         		});
     }
     
-    static void openFile(File file) {
+    static void openFile(File file) throws DataTableException {
 
             String extension;
             String fileName = file.getName();
