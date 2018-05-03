@@ -57,7 +57,7 @@ public class MainScreen {
 	     leftc = new VBox(20);
 	     leftc.setAlignment(Pos.CENTER);
 	     leftc.getChildren().addAll(impexp, listView);
-	     
+
 	     typePane = ChartType.pane();
 	     
 	     tfDisplay = new TransformDisplay(new Transform(DataTableDisplay.getDT()));
