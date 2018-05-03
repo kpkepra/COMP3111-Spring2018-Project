@@ -22,17 +22,14 @@ public class DataTableTransformer {
      *      and store the .csv file content in its data and fields variables.
      * @return the transformed dataTable
      */
-    public static DataTable transform(CSVReader csv){
+    public static DataTable transform(CSVReader csv) throws DataTableException{
         tcsv = csv;
         DataTable dt = new DataTable();
         ArrayList<String> fields = csv.getFields();
         for(int i = 0; i < csv.getNumCol();i++) {
             DataColumn col = new DataColumn(DataType.TYPE_STRING,csv.getCol(i).toArray());
-            try {
-                dt.addCol(fields.get(i), col);
-            }catch (DataTableException dte){
-                System.out.println("Some row has wrong number of columns");
-            }
+            dt.addCol(fields.get(i), col);
+
         }
         return toNumericCol(dt);
     }
