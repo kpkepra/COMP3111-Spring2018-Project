@@ -12,15 +12,33 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
 
-import java.io.Serializable;
-
-public class PieChartDisplay extends ChartDisplay implements Serializable {
+/**
+ * PieChartDisplay - A subclass of ChartDisplay. This class can be utilized to display a pie chart on a JavaFX
+ * interface. It stores pie chart object which has the data contained in (pieChart).
+ *
+ * @author apsusanto
+ *
+ */
+public class PieChartDisplay extends ChartDisplay{
     private Pie piechart;
 
+    /**
+     * Construct - Create a PieChartDisplay object by giving the Line object which will be displayed in the FXnode.
+     *
+     * @param ch
+     *             - The Pie object which will be plotted.
+     *
+     */
     public PieChartDisplay(Pie ch) {
         piechart = ch;
     }
 
+    /**
+     * Displays the JavaFX node containing a chart inside. In addition, the node also includes an
+     * option to select the desired categories and pie number.
+     *
+     * @return A BorderPane consisting of the chart and options.
+     */
     public BorderPane display() {
         BorderPane root = new BorderPane();
         PieChart chart = getChart(piechart.getText(), piechart.getNum());
@@ -77,6 +95,12 @@ public class PieChartDisplay extends ChartDisplay implements Serializable {
         return root;
     }
 
+    /**
+     * Displays the JavaFX node containing a chart inside. In addition, the node also includes an
+     * option to select the desired categories and pie number.
+     *
+     * @return A BorderPane consisting of the chart and options.
+     */
     private PieChart getChart(String text, String num) {
         PieChart temp = new PieChart();
 

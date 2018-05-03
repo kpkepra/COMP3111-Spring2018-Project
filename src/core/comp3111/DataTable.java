@@ -78,7 +78,7 @@ public class DataTable implements Serializable {
      *
      * @param colName
      *            - The column name. It should be a unique identifier
-     * @throws DataTableException.
+     * @throws DataTableException
      *             It throws DataTableException if the column does not exist
      */
     public void removeCol(String colName) throws DataTableException {
