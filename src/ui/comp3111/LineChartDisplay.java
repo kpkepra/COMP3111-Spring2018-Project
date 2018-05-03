@@ -1,5 +1,7 @@
 package ui.comp3111;
 
+import java.util.Objects;
+
 import core.comp3111.ChartException;
 import core.comp3111.Line;
 import javafx.beans.value.ChangeListener;
@@ -49,40 +51,44 @@ public class LineChartDisplay {
         root.setMargin(chart, new Insets(12,12,12,12));
 
         ComboBox xcombo = comboAxis();
+        ComboBox ycombo = comboAxis();
+        
+        xcombo.setValue(linechart.getX());
+        ycombo.setValue(linechart.getY());
+        
         xcombo.valueProperty().addListener(new ChangeListener<String>() {
             @Override
             public void changed(ObservableValue observableValue, String old_val, String new_val) {
-                root.getChildren().remove(chart);
-                try {
-                    linechart.setX(new_val);
-                } catch (ChartException e) {
-                    xcombo.setValue(old_val);
-                    root.setCenter(chart);
-                    root.setMargin(chart, new Insets(12,12,12,12));
-                    return;
-                }
-                LineChart chart = getChart(linechart.getX(), linechart.getY());
-                root.setCenter(chart);
-                root.setMargin(chart, new Insets(12,12,12,12));
+	        	if (Objects.equals(new_val, linechart.getY())) {
+	        		xcombo.setValue(old_val);
+	        	}
+	            else {
+	            	root.getChildren().remove(chart);
+	                
+	                linechart.setX(new_val);
+	            
+	                LineChart chart = getChart(linechart.getX(), linechart.getY());
+	                root.setCenter(chart);
+	                root.setMargin(chart, new Insets(12,12,12,12));
+	            }
             }
         });
 
-        ComboBox ycombo = comboAxis();
         ycombo.valueProperty().addListener(new ChangeListener<String>() {
             @Override
             public void changed(ObservableValue observableValue, String old_val, String new_val) {
-                root.getChildren().remove(chart);
-                try {
-                    linechart.setY(new_val);
-                } catch (ChartException e) {
-                    ycombo.setValue(old_val);
-                    root.setCenter(chart);
-                    root.setMargin(chart, new Insets(12,12,12,12));
-                    return;
+                if (Objects.equals(new_val, linechart.getX())) {
+                	ycombo.setValue(old_val);
                 }
-                LineChart chart = getChart(linechart.getX(), linechart.getY());
-                root.setCenter(chart);
-                root.setMargin(chart, new Insets(12,12,12,12));
+                else {
+	                root.getChildren().remove(chart);
+	                
+	                linechart.setY(new_val);
+	            
+	                LineChart chart = getChart(linechart.getX(), linechart.getY());
+	                root.setCenter(chart);
+	                root.setMargin(chart, new Insets(12,12,12,12));
+                }
             }
         });
 
