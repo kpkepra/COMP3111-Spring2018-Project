@@ -75,6 +75,10 @@ public class ChartType extends Main {
 						}
 						MainScreen.centerc.getChildren().remove(MainScreen.chartc);
 						MainScreen.chartc = LineScreen.pane();
+					    MainScreen.chartc.setMinWidth(500);
+					    MainScreen.chartc.setMaxWidth(500);
+					    MainScreen.chartc.setMinHeight(400);
+					    MainScreen.chartc.setMaxHeight(400);
 						MainScreen.centerc.getChildren().add(1, MainScreen.chartc);
 					}
 
