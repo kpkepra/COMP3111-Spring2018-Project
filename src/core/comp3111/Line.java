@@ -69,7 +69,7 @@ public class Line extends Chart {
 
     /**
      * Get the String object which contains the name of the column that will be used for the X axis of the chart.
-     *
+     *throws DataTableException
      * @return String The x-axis column name
      */
     public String getX() { return x; }
@@ -95,7 +95,7 @@ public class Line extends Chart {
      *             - The x-axis column name
      */
     public void setX(String input) {
-        if (numCols.contains(input)) x = input;
+        if (numCols.contains(input) && !Objects.equals(input, y)) x = input;
     }
 
     /**
@@ -104,5 +104,7 @@ public class Line extends Chart {
      * @param input
      *             - The y-axis column name
      */
-    public void setY(String input) { if (numCols.contains(input)) y = input; }
+    public void setY(String input) {
+        if (numCols.contains(input)) y = input;
+    }
 }
