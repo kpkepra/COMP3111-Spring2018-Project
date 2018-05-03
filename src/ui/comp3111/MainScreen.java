@@ -68,7 +68,7 @@ public class MainScreen {
 	     rightc.getChildren().addAll(typePane, filterPane);
 	     rightc.setMinWidth(400);
 	     rightc.setMaxWidth(400);
-
+	     
 	     tablec = DataTableDisplay.displayTable();
 	     tablec.setMinWidth(500);
 	     tablec.setMaxWidth(500);
