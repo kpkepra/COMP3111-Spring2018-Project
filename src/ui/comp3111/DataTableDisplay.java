@@ -1,7 +1,6 @@
 package ui.comp3111;
 import java.util.Objects;
 
-import core.comp3111.CSVReader;
 import core.comp3111.DataColumn;
 import core.comp3111.DataTable;
 import core.comp3111.DataType;
