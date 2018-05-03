@@ -3,29 +3,70 @@
  * @author cspeter
  */
 
-.menu-title {
-	-fx-font-size: 25;
-}
 .menu-button {
 	 -fx-pref-width:200;
 	 -fx-pref-height:40;
 }
 
 .screen-background {
-	-fx-background-color: black;
 	-fx-background-image: url("images/bg.png");
-	-fx-text-stroke: white;
-
+	-fx-text-fill: white;
 }
+
 
 .filter-gridpane {
 	-fx-font: 16 arial;
 }
 
-.typePane{
-	-fx-font-size: 24;
-	-fx-text-fill: white;
-	-fx-text-stroke: #ffdfb4;
-	-fx-text-stroke-width: 3;
+.label {
+    -fx-font-size: 12pt;
+    -fx-font-family: "Helvetica";
+    -fx-text-fill: white;
+    -fx-opacity: 1;
+}
+
+.radio-button {
+    -fx-font-size: 10pt;
+    -fx-font-family: "Helvetica";
+    -fx-text-fill: white;
+    -fx-opacity: 1;
+}
+
+.radio-button .dot {
+   -fx-padding: 3px;
+}
+
+.radio-button .radio{
+   -fx-padding: 2px;
+}
+
+
+.chart-pie-label-line {
+    -fx-stroke: rgb(136, 244, 245);
+    -fx-fill: rgb(136, 244, 245);
+}
+
+.chart-pie-label { /*this is what you need for labels*/
+    -fx-fill: rgb(136, 244, 245);
+    -fx-font-size: 1.2em;
+}
+
+.chart-legend-item{
+    -fx-text-fill: black;
+}
+
+.menu-title {
+	-fx-font-size: 30;
+	-fx-text-fill: rgb(255, 238, 205);
+	-fx-font-weight: bold;
+	-fx-font-family:"Courier New";
+	-fx-padding: 5px;
+}
+
+.list-view {
+    -fx-background-color:rgba(255, 238, 205, 0.5);
+}
+
+.list-view:focused{
 
 }
