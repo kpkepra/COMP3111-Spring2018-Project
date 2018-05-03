@@ -12,6 +12,7 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
 
+public class PieChartDisplay extends ChartDisplay {
 /**
  * PieChartDisplay - A subclass of ChartDisplay. This class can be utilized to display a pie chart on a JavaFX
  * interface. It stores pie chart object which has the data contained in (pieChart).
@@ -19,7 +20,6 @@ import javafx.scene.layout.GridPane;
  * @author apsusanto
  *
  */
-public class PieChartDisplay extends ChartDisplay{
     private Pie piechart;
 
     /**
@@ -108,7 +108,7 @@ public class PieChartDisplay extends ChartDisplay{
         Object[] textData =  piechart.getData().getCol(piechart.getText()).getData();
 
         for (int i = 0 ; i < piechart.getData().getNumRow(); ++i) {
-            PieChart.Data slice = new PieChart.Data((String)textData[i], ((Number)numData[i]).floatValue());
+            PieChart.Data slice = new PieChart.Data((String)textData[i], ((Number)numData[i]).doubleValue());
             temp.getData().add(slice);
         }
         return temp;

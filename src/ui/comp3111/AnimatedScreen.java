@@ -20,7 +20,7 @@ import javafx.util.Duration;
  * Animated Chart - A pie chart that takes the data from current dataset and displays it. Hover animations are implemented in this
  * feature. 
  * 
- * @author Kevin Pratama
+ * @author kp-kepra
  */
 public class AnimatedScreen extends Main {
 
@@ -50,8 +50,9 @@ public class AnimatedScreen extends Main {
     
     /**
      * Runs the animation handler. Enables hovering animation when user's cursor moves to any of the pie slices.
+     * The animation uses a TranslateTransition object and offset based on each pie slice's orientation and position.
      */
-    private static void setupAnimation() {
+    public static void setupAnimation() {
     	tg = new boolean[pcData.size()];
     	for (int i = 0; i < pcData.size(); i++) {
     		tg[i] = false;
@@ -107,7 +108,6 @@ public class AnimatedScreen extends Main {
      * 
      * @return Pane object containing the animated pie chart.
      */
-    
     public static Pane pane() {
     	initialize();
     	System.out.println(chart.getData());
