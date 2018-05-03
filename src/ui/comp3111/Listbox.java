@@ -22,7 +22,7 @@ import javafx.scene.layout.Pane;
  * feature into .corgi files. Selecting any item of the list will display the table for filtering 
  * and chart displays.
  * 
- * @author Kevin Pratama
+ * @author kp-kepra
  * 
  */
 public class Listbox extends Main {
