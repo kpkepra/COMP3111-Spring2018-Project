@@ -2,6 +2,8 @@ package core.comp3111;
 
 import javafx.scene.layout.BorderPane;
 
+import java.io.Serializable;
+
 /**
  * Chart - An abstract object which can be implemented in either Line or Pie form. The subclasses of this object can be
  * used to create a chart in the application. It stores the table which will be used in the chart (data).
@@ -9,7 +11,7 @@ import javafx.scene.layout.BorderPane;
  * @author apsusanto
  *
  */
-public abstract class Chart{
+public abstract class Chart implements Serializable {
     protected DataTable data;
 
     /**
@@ -30,5 +32,12 @@ public abstract class Chart{
      * @param input
      *             - The new DataTable which will replace the current table of the chart.
      */
-    public void setData(DataTable input) { data = input; }
+    public void setData(DataTable input) {
+        DataTable temp = data;
+        data = input;
+
+        if (!isLegal()) {
+            data = temp;
+        }
+    }
 }
