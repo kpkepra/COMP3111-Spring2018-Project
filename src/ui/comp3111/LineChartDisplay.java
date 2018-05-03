@@ -14,13 +14,33 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
 
+/**
+ * LineChartDisplay - A subclass of ChartDisplay. This class can be utilized to display a line chart on a JavaFX
+ * interface. It stores line chart object which has the data contained in (lineChart).
+ *
+ * @author apsusanto
+ *
+ */
 public class LineChartDisplay {
     Line linechart;
 
+    /**
+     * Construct - Create a LineChartDisplay object by giving the Line object which will be displayed in the FXnode.
+     *
+     * @param line
+     *             - The Line object which will be plotted.
+     *
+     */
     public LineChartDisplay(Line line) {
         linechart = line;
     }
 
+    /**
+     * Displays the JavaFX node containing a chart inside. In addition, the node also includes an
+     * option to select the desired axis of the chart.
+     *
+     * @return A BorderPane consisting of the chart and options.
+     */
     public BorderPane display() {
         BorderPane root = new BorderPane();
         LineChart chart = getChart(linechart.getX(), linechart.getY());
@@ -76,6 +96,16 @@ public class LineChartDisplay {
         return root;
     }
 
+    /**
+     * Helper function to return a JavaFX node containing only the chart.
+     *
+     * @param xname
+     *             - a String object which is the name of the column to be used as the x-axis of the LineChart.
+     * @param xname
+     *             - a String object which is the name of the column to be used as the x-axis of the LineChart.
+     *
+     * @return A JavaFX LineChart which is the chart plotted.
+     */
     private LineChart getChart(String xname, String yname) {
         NumberAxis xAxis = new NumberAxis();
         xAxis.setLabel(xname);
@@ -99,6 +129,11 @@ public class LineChartDisplay {
         return lineChart;
     }
 
+    /**
+     * Helper function to return a JavaFX node to select the axis.
+     *
+     * @return A JavaFX ComboBox which contains all of the numeric columns to be chosen as axis.
+     */
     private ComboBox comboAxis() {
         ComboBox combo = new ComboBox();
 
