@@ -38,7 +38,6 @@ public class MainScreen {
 	public static TransformDisplay tfDisplay;
 	
 	private Label lb_Title;
-	
 	/**
 	 * Pane function. Gets all the required nodes and layout them in the main pane. The pane is then passed
 	 * to the Main class for scene generation.
@@ -77,7 +76,7 @@ public class MainScreen {
 	     rightc.setMinWidth(400);
 	     rightc.setMaxWidth(400);
 	     rightc.setStyle("-fx-background-color: blue");
-	     //760
+	     
 	     tablec = DataTableDisplay.displayTable();
 	     tablec.setMinWidth(500);
 	     tablec.setMaxWidth(500);
@@ -102,7 +101,6 @@ public class MainScreen {
 	     lb_Title.getStyleClass().add("menu-title");
 	     pane.getStyleClass().add("screen-background");
 	     
-	     initHandlers();
 	     return pane;
 	}
 }
