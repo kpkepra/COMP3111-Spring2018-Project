@@ -16,16 +16,16 @@ import ui.comp3111.Listbox;
 public class MyFileExtenstion {
 
     /**
-     * CorgiObj - CorgiObj is an inner class of myFileExtension
+     * CorgiObj - CorgiObj is an inner cla                                                                                                                                                                                                                  ss of myFileExtension
      * stores the DataTables and Charts that the users want to save together
      * in the .corgi file
      * the name variable store the name of .corgi file
      */
     public static class CorgiObj implements Serializable{
         private ArrayList<DataTable> dts;
-        private ArrayList <Chart> charts;
-        private String name;
-        public CorgiObj(){
+            private ArrayList <Chart> charts;
+            private String name;
+            public CorgiObj(){
             dts = new ArrayList<>();
             charts = new ArrayList<>();
         }
