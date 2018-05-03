@@ -23,19 +23,12 @@ import javafx.scene.layout.VBox;
 public class MainScreen {
 	/**
 	 * Primary view of the Application.
-	 * @exclude
 	 */
 	public static BorderPane pane;
-
-	/**
-	 * Left-side panel of the GUI.
-	 */
-	
-	public static VBox leftc;
-	public static VBox centerc, rightc, tablec;
-	public static HBox hc;
-	public static Pane impexp, listView, typePane, filterPane, chartc;
-	public static TransformDisplay tfDisplay;
+	protected static VBox leftc, centerc, rightc, tablec;
+	protected static Pane listView, impexp, typePane, filterPane, chartc;
+	private static HBox hc;
+	protected static TransformDisplay tfDisplay;
 	
 	private Label lb_Title;
 	/**
