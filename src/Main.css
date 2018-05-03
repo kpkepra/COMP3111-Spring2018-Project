@@ -2,15 +2,24 @@
  * Define rules to style the GUI components
  * @author cspeter
  */
-/*.button {
-  -fx-background-color: transparent;
- -fx-padding:0.35em 1.2em;
- -fx-border-color:#FFFFFF;
- -fx-margin:0 0.3em 0.3em 0;
- -fx-border-radius:0.12em;
- -fx-text-fill:#FFFFFF;
- -fx-alignment:center;
-}*/
+.button {
+     -fx-pref-width:150;
+     -fx-pref-height:40;
+     -fx-border-color: #4b6cd8;
+     -fx-padding: 15 15 15 15;
+     -fx-background-color:
+        linear-gradient(from 0% 93% to 0% 100%, #108eb8 0%, #1b10b8 100%),
+        #ff1200,
+        #e8eaf2,
+        radial-gradient(center 50% 50%, radius 100%, #108eb8, #1b10b8);
+     -fx-effect: dropshadow( gaussian , rgba(0,0,0,0.75) , 4,0,0,1 );
+     -fx-font-size: 15;
+    -fx-font-weight: bold;
+    -fx-text-fill: white;
+    -fx-text-stroke: #ffdfb4;
+    -fx-text-stroke-width: 3;
+    -fx-font-family: "Cambria";
+}
 
 .screen-background {
 	-fx-background-image: url("images/bg.png");
@@ -84,3 +93,38 @@
     -fx-background-color: #0093ff;
     -fx-text-fill: white;
 }
+
+.splitfilter_btn{
+    -fx-pref-width:80;
+    -fx-pref-height:30;
+    -fx-padding: 3 5 3 5;
+    -fx-border-color: #b83911;
+    -fx-background-color:
+        linear-gradient(from 0% 93% to 0% 100%, #f10400 0%, #6b0000 100%),
+        #ff1200,
+        #ffd59a,
+        radial-gradient(center 50% 50%, radius 100%, #f10400, #6b0000);
+     -fx-effect: dropshadow( gaussian , rgba(0,0,0,0.75) , 4,0,0,1 );
+    -fx-text-fill: white;
+    -fx-text-stroke: #ffdfb4;
+    -fx-text-stroke-width: 3;
+    -fx-font-family: "Cambria";
+
+}
+
+.table-view{
+    -fx-background-color: transparent;
+}
+
+.table-view > .column-header-background {
+    -fx-background-color: transparent;
+}
+
+.table-view > .column-header-background > .filler {
+    -fx-background-color: transparent;
+}
+
+.table-view .column-header .label {
+     -fx-text-fill: black;
+}
+

@@ -98,6 +98,7 @@ public class TransformDisplay extends Main {
         root.add(datasetTable, 0, 4, 2, 1);
 
         Button splitButton = new Button("Split");
+        splitButton.getStyleClass().add("splitfilter_btn");
         splitButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent e) {
@@ -354,7 +355,7 @@ public class TransformDisplay extends Main {
 //        selectFilter.getStyleClass().add("filter-gridpane");
         
         Button filterButton = new Button("Filter");
-
+        filterButton.getStyleClass().add("splitfilter_btn");
         filterButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent e) {
