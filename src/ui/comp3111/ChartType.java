@@ -35,12 +35,12 @@ public class ChartType extends Main {
      */
 	public static Pane pane() {
 		lb_title = new Label("Chart Type");
-		
 		tg = new ToggleGroup();		
 		for (int i = 0; i < 3; i++) {
 			radios[i] = new RadioButton(radioText[i]);
 			radios[i].setToggleGroup(tg);
 			radios[i].setUserData(radioText[i]);
+			radios[i].getStyleClass().add("typePane");
 		}
 		
 		radios[0].setSelected(true);

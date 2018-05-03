@@ -103,7 +103,7 @@ public class PieChartDisplay extends ChartDisplay {
      */
     private PieChart getChart(String text, String num) {
         PieChart temp = new PieChart();
-
+        temp.getStyleClass().add("black_font");
         Object[] numData =  piechart.getData().getCol(piechart.getNum()).getData();
         Object[] textData =  piechart.getData().getCol(piechart.getText()).getData();
 
@@ -111,6 +111,8 @@ public class PieChartDisplay extends ChartDisplay {
             PieChart.Data slice = new PieChart.Data((String)textData[i], ((Number)numData[i]).doubleValue());
             temp.getData().add(slice);
         }
+        temp.getData().forEach(d->
+                d.getNode().getStyleClass().add("black_font"));
         return temp;
     }
 
