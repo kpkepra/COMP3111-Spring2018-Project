@@ -1,20 +1,16 @@
 package ui.comp3111;
-import java.io.File;
 import java.util.Objects;
 
 import core.comp3111.CSVReader;
 import core.comp3111.DataColumn;
 import core.comp3111.DataTable;
-import core.comp3111.DataTableTransformer;
 import core.comp3111.DataType;
 import javafx.beans.property.ReadOnlyFloatWrapper;
 import javafx.beans.property.ReadOnlyStringWrapper;
 import javafx.scene.control.*;
-import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 
 public class DataTableDisplay {
-	  private static File file;
 	  private static DataTable table = new DataTable();
 	  private static CSVReader csv;
 	  private static VBox pane;
