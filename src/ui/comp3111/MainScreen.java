@@ -42,6 +42,7 @@ public class MainScreen {
 	public Pane pane() {	     
 	     // Layout the UI components
 		 lb_Title = new Label("CORGI3111");
+		 lb_Title.getStyleClass().add("menu-title");
 	     hc = new HBox(20);
 	     hc.setAlignment(Pos.CENTER);
 	     hc.getChildren().addAll(lb_Title);
@@ -59,7 +60,6 @@ public class MainScreen {
 	     leftc.getChildren().addAll(impexp, listView);
 
 	     typePane = ChartType.pane();
-	     typePane.getStyleClass().add("typePane");
 	     
 	     tfDisplay = new TransformDisplay(new Transform(DataTableDisplay.getDT()));
 	     filterPane = tfDisplay.splitFilter();
