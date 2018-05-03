@@ -2,6 +2,7 @@ package ui.comp3111;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.concurrent.atomic.AtomicInteger;
 
 import core.comp3111.*;
 import core.comp3111.MyFileExtenstion.CorgiObj;
@@ -85,10 +86,27 @@ public class Listbox extends Main {
 		corginames.add(corgi.getName());
 		corgis.add(corgi);
 		ArrayList<DataTable> dts = corgi.getDts();
+		ArrayList<Chart> cts = corgi.getCharts();
+		AtomicInteger i = new AtomicInteger(1);
 		dts.forEach(dt -> {
-			filenames.add(corgi.getName());
+			filenames.add(corgi.getName() + " - Dataset" + i.getAndIncrement());
 			tables.add(dt);
 		});
+		
+		//Charts
+		if (cts.get(0) instanceof Pie || cts.get(0) instanceof Line) {
+			LineScreen.setChart(cts.get(0), dts.get(corgi.getIndex()));
+		} else {
+			// Assign to animated chart
+		}
+		
+		// Tables
+		DataTableDisplay.setTable(corgi.getDts().get(corgi.getIndex()));
+		
+		MainScreen.tfDisplay = new TransformDisplay(new Transform(DataTableDisplay.getDT()));
+		MainScreen.rightc.getChildren().remove(1);
+		MainScreen.filterPane = MainScreen.tfDisplay.splitFilter();
+		MainScreen.rightc.getChildren().add(1, MainScreen.filterPane);
 	}
 	
 	/**
@@ -97,6 +115,13 @@ public class Listbox extends Main {
 	 * @return An ArrayList containing DataTable items loaded in the list.
 	 */
 	public static ArrayList<DataTable> getTables() { return tables; }
+	
+	/**
+	 * Returns the index of current table
+	 * 
+	 * @return the index of current table
+	 */
+	public static int getIndex() { return list.getSelectionModel().getSelectedIndex(); }
 	
 	/**
 	 * Initialize all of the EventHandler functions when user's actions are made in this class.
@@ -109,10 +134,12 @@ public class Listbox extends Main {
 				DataTable table = tables.get(list.getSelectionModel().getSelectedIndex());
 				DataTableDisplay.setTable(table);
 				LineScreen.loadData(table);
-				
-				MainScreen.centerc.getChildren().remove(MainScreen.chartc);
-				MainScreen.chartc = LineScreen.pane();
-				MainScreen.centerc.getChildren().add(1, MainScreen.chartc);
+				AnimatedScreen.loadData(table);
+				if (ChartType.getType() == "Animated Pie") {
+					AnimatedScreen.refresh();
+				} else {
+					LineScreen.refresh();
+				}
 				
 				MainScreen.tfDisplay = new TransformDisplay(new Transform(DataTableDisplay.getDT()));
 				MainScreen.rightc.getChildren().remove(1);

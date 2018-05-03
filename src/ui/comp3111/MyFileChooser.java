@@ -105,7 +105,7 @@ public class MyFileChooser extends Main {
                 extension = fileName.substring(i + 1);
                 if (extension.equals("csv")) {
                     System.out.println("-----"+fileName);
-            		CSVReader csv = new CSVReader("resources/" + file.getName());
+            		CSVReader csv = new CSVReader("resources/" + fileName);
             		OpenCSV.openCSV(csv);
                 } else if (extension.equals("corgi")) {
                     MyFileExtenstion mf = new MyFileExtenstion();
@@ -113,6 +113,7 @@ public class MyFileChooser extends Main {
                         CorgiObj corgi = mf.loadCorgi(fileName);
                         Listbox.addCorgi(corgi);
                     }catch(IOException ioe){
+                    	ioe.printStackTrace();
                         System.out.println("IO Exception in FileExtension");
                     }
                     catch(ClassNotFoundException efe) {
@@ -127,12 +128,15 @@ public class MyFileChooser extends Main {
     static void saveFile(File file) {
     	String fileName = file.getName();
     	ArrayList<DataTable> dt = Listbox.getTables();
+    	int idx = Listbox.getIndex();
     	
     	ArrayList<Chart> ct = new ArrayList<Chart>();
-    	CorgiObj corgi = new CorgiObj(dt, ct);
+    	ct.add(LineScreen.getChart());
+    	CorgiObj corgi = new CorgiObj(dt, ct, idx);
+    	System.out.println(corgi.getIndex());
     	MyFileExtenstion mf = new MyFileExtenstion();
     	try {
-			mf.saveCorgi(fileName, corgi);
+			mf.saveCorgi("resources/" + fileName, corgi);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
