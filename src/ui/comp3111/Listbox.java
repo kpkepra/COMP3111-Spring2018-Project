@@ -25,7 +25,7 @@ import javafx.scene.layout.Pane;
  * @author Kevin Pratama
  * 
  */
-public class Listbox {
+public class Listbox extends Main {
 	private static Pane pane;
 	private static ObservableList<String> filenames = FXCollections.observableArrayList();
 	private static ObservableList<String> corginames = FXCollections.observableArrayList();
