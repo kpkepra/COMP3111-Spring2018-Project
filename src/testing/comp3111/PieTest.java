@@ -282,4 +282,34 @@ class PieTest {
 
         assertEquals("numCol1", testPie.getNum());
     }
+
+    @Test
+    void testSetNum_Equals_NotEqual() throws DataTableException, ChartException {
+        dataTable.addCol("numCol1", numCol1);
+        dataTable.addCol("textCol1", textCol1);
+
+        DataTable testingDataTable = new DataTable();
+        testingDataTable.addCol("numCol2", numCol2);
+        testingDataTable.addCol("textCol2", textCol2);
+
+        testPie = new Pie(dataTable);
+        Pie testingPie = new Pie(testingDataTable);
+
+        assertNotEquals(testingPie, testPie);
+    }
+
+    @Test
+    void testSetNum_Equals_Equal() throws DataTableException, ChartException {
+        dataTable.addCol("numCol1", numCol1);
+        dataTable.addCol("textCol1", textCol1);
+
+        DataTable testingDataTable = new DataTable();
+        testingDataTable.addCol("numCol1", numCol1);
+        testingDataTable.addCol("textCol1", textCol1);
+
+        testPie = new Pie(dataTable);
+        Pie testingPie = new Pie(testingDataTable);
+
+        assertEquals(testPie, testingPie);
+    }
 }

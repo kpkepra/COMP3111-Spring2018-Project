@@ -82,9 +82,10 @@ public class DataColumn implements Serializable {
 	// attributes
 	private Object[] data;
 	private String typeName;
-	public void printCol(){
-	 	System.out.println(Arrays.asList(data));
-	}
+
+//	public void printCol(){
+//	 	System.out.println(Arrays.asList(data));
+//	}
 
 
 
