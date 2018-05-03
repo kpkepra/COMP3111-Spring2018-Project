@@ -13,7 +13,7 @@ import java.util.Objects;
  * @author apsusanto
  *
  */
-public class Pie extends Chart implements Serializable{
+public class Pie extends Chart{
     private ArrayList<String> textCols;
     private ArrayList<String> numCols;
     private String num;
