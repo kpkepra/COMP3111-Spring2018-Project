@@ -10,11 +10,11 @@ import java.util.Arrays;
 
 class CSVReaderTest {
     CSVReader csv = new CSVReader();
-    CSVReader csv_Test1 = new CSVReader("csvTest1.csv");
-    CSVReader csv_Test2 = new CSVReader("csvTest2.csv");
+    CSVReader csv_Test1 = new CSVReader("resoures/csvTest1.csv");
+    CSVReader csv_Test2 = new CSVReader("resoures/csvTest2.csv");
     CSVReader csv_Test3 = new CSVReader("notExisting.csv");
-    CSVReader csv_Test4 = new CSVReader("csvTest4.csv");
-    CSVReader csv_Test5 = new CSVReader("csvTest5.csv");
+    CSVReader csv_Test4 = new CSVReader("resoures/csvTest4.csv");
+    CSVReader csv_Test5 = new CSVReader("resoures/csvTest5.csv");
 
     @Test
     public void getNumCol() {
