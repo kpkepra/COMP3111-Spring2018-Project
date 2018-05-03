@@ -12,24 +12,44 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 
-public class MainScreen extends Pane {
+/**
+ * MainScreen - Primary Pane class in the GUI Application. All panes and nodes are generated in the main Pane
+ * and passed to the Main class to generate the JavaFX Scene. MainScreen class uses BorderPane object to put 
+ * all the nodes in bordered layout (center, left, right, top).
+ * 
+ * @author kp-kepra
+ *
+ */
+public class MainScreen {
+	/**
+	 * Primary view of the Application.
+	 * @exclude
+	 */
 	public static BorderPane pane;
-	public static VBox leftc, centerc, rightc, tablec;
+
+	/**
+	 * Left-side panel of the GUI.
+	 */
+	
+	public static VBox leftc;
+	public static VBox centerc, rightc, tablec;
 	public static HBox hc;
 	public static Pane impexp, listView, typePane, filterPane, chartc;
-	
 	public static TransformDisplay tfDisplay;
 	
 	private Label lb_Title;
 	
-	public MainScreen() {
-		super();
-		lb_Title = new Label("CORGI3111");
-		
-	}	
-	
+	/**
+	 * Pane function. Gets all the required nodes and layout them in the main pane. The pane is then passed
+	 * to the Main class for scene generation.
+	 * Contains : Import/Export, Datasets-Charts lists, Table Display, Chart Display, Chart Type Selector, 
+	 * Filter/Transformation.
+	 * 
+	 * @return Pane object containing the main view of the GUI layout.
+	 */
 	public Pane pane() {	     
 	     // Layout the UI components
+		 lb_Title = new Label("CORGI3111");
 	     hc = new HBox(20);
 	     hc.setAlignment(Pos.CENTER);
 	     hc.getChildren().addAll(lb_Title);
@@ -85,8 +105,4 @@ public class MainScreen extends Pane {
 	     initHandlers();
 	     return pane;
 	}
-	
-    static void initHandlers() {
-    	
-    }
 }
