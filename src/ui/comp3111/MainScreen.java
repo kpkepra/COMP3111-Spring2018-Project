@@ -39,7 +39,7 @@ public class MainScreen {
 	     // Layout the UI components
 		 lb_Title = new Label("CORGI3111");
 	     hc = new HBox(20);
-	     hc.setAlignment(Pos.CENTER);
+	     hc.setAlignment(Pos.CENTER_LEFT);
 	     hc.getChildren().addAll(lb_Title);
 	     
 	     impexp = MyFileChooser.pane();
