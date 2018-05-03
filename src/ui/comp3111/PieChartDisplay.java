@@ -14,7 +14,7 @@ import javafx.scene.layout.GridPane;
 
 import java.io.Serializable;
 
-public class PieChartDisplay extends ChartDisplay implements Serializable {
+public class PieChartDisplay extends ChartDisplay {
     private Pie piechart;
 
     public PieChartDisplay(Pie ch) {
