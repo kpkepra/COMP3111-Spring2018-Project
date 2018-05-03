@@ -3,10 +3,7 @@ package ui.comp3111;
 import java.io.File;
 import java.util.ArrayList;
 
-import core.comp3111.CSVReader;
-import core.comp3111.DataTable;
-import core.comp3111.DataTableTransformer;
-import core.comp3111.Transform;
+import core.comp3111.*;
 import core.comp3111.MyFileExtenstion.CorgiObj;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -55,13 +52,14 @@ public class Listbox extends Main {
 	 * @param file
 	 * 				- a java.io.File item.
 	 */
-	public static void addDataset(File file) {
+	public static void addDataset(File file)throws DataTableException {
 		filenames.add(file.getName());
 		CSVReader csv = new CSVReader("resources/" + file.getName());
 		System.out.println(file.getName());
 		csv.readALL(0);
 		csv.readField();
 		DataTable table = DataTableTransformer.transform(csv);
+
 		tables.add(table);
 		
 	}
