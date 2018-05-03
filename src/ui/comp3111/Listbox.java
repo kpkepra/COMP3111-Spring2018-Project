@@ -73,7 +73,6 @@ public class Listbox extends Main {
 	 * @param table
 	 * 				- a DataTable item.
 	 */
-	
 	public static void addDataset(DataTable table) {
 		filenames.add(table.toString());
 		tables.add(table);
