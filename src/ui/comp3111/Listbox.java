@@ -15,18 +15,29 @@ import javafx.scene.control.ListView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 
+/**
+ * Listbox - A left-pane listview that displays all of the loaded datasets, either from .corgi 
+ * extension or .csv extension. Once the user-selected file is loaded, Listbox will load all 
+ * datasets contained in the file. It will also send all the dataset information for export/save
+ * feature into .corgi files. Selecting any item of the list will display the table for filtering 
+ * and chart displays.
+ * 
+ * @author Kevin Pratama
+ * 
+ */
 public class Listbox {
 	private static Pane pane;
-	
-	// Datasets and Corgis to internal memory
 	private static ObservableList<String> filenames = FXCollections.observableArrayList();
 	private static ObservableList<String> corginames = FXCollections.observableArrayList();
 	private static ArrayList<DataTable> tables = new ArrayList<DataTable>();
 	private static ArrayList<CorgiObj> corgis = new ArrayList<CorgiObj>();
-	
-	// List for Display
 	private static ListView<String> list = new ListView<String>();
 	
+	/**
+	 * Pane function. Generates and returns a list pane for multiple datasets and charts display.
+	 * 
+	 * @return Pane object that shows all datasets and charts hosted.
+	 */
 	public static Pane pane() {
 		list.setItems(filenames);
 		
@@ -37,8 +48,12 @@ public class Listbox {
 		return pane;
 	}
 	
-	/* addDataset
-	 * Adds one dataset to the list
+	/**
+	 * Overloaded addDataset function. Accepts file input, loads all the DataTable items inside and add
+	 * them into ArrayList containing DataTable items.
+	 * 
+	 * @param file
+	 * 				- a java.io.File item.
 	 */
 	public static void addDataset(File file) {
 		filenames.add(file.getName());
@@ -50,13 +65,26 @@ public class Listbox {
 		
 	}
 	
+	/**
+	 * Overloaded addDataset function. Accepts DataTable as input and adds it into ArrayList containing
+	 * DataTable items.
+	 * 
+	 * @param table
+	 * 				- a DataTable item.
+	 */
+	
 	public static void addDataset(DataTable table) {
 		filenames.add(table.toString());
 		tables.add(table);
 	}
 	
-	/* addCorgi
-	 * Adds one file extension to the list
+	/**
+	 * Adds a Corgi obj (.corgi file) and loads all of the DataTable and Chart items. The items are then
+	 * added into the ArrayLists containing DataTable and CorgiObj items respectively.
+	 * 
+	 * @param corgi
+	 * 				- a CorgiObj item.
+	 * 
 	 */
 	public static void addCorgi(CorgiObj corgi) {
 		corginames.add(corgi.getName());
@@ -68,10 +96,17 @@ public class Listbox {
 		});
 	}
 	
-	public static ArrayList<DataTable> getTables() {
-		return tables;
-	}
+	/**
+	 * Returns all the tables loaded in the list.
+	 * 
+	 * @return An ArrayList containing DataTable items loaded in the list.
+	 */
+	public static ArrayList<DataTable> getTables() { return tables; }
 	
+	/**
+	 * Initialize all of the EventHandler functions when user's actions are made in this class.
+	 * 
+	 */
 	static void initHandlers() {
 		list.setOnMouseClicked(new EventHandler<MouseEvent>() {
 			@Override
