@@ -5,17 +5,11 @@
  */
 package ui.comp3111;
 
-import java.net.URL;
 import java.util.ArrayList;
-import java.util.ResourceBundle;
-import java.util.concurrent.atomic.AtomicInteger;
 
-import javafx.animation.Interpolator;
 import javafx.animation.TranslateTransition;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.fxml.FXML;
-import javafx.fxml.Initializable;
 import javafx.geometry.Bounds;
 import javafx.scene.chart.PieChart;
 import javafx.scene.input.MouseEvent;
@@ -23,18 +17,22 @@ import javafx.scene.layout.Pane;
 import javafx.util.Duration;
 
 /**
- *
- * @author gail
+ * Animated Chart - A pie chart that takes the data from current dataset and displays it. Hover animations are implemented in this
+ * feature. 
+ * 
+ * @author Kevin Pratama
  */
-public class AnimatedScreen {
+public class AnimatedScreen extends Main {
 
 	private static Pane pane;
     private static PieChart chart;
     private static boolean[] tg;
-//    private Rectangle rectangle;
     private static ObservableList<PieChart.Data> pcData;
     private static ArrayList<String> nameID = new ArrayList<String>();
 
+    /**
+     * Initializes the animated chart.
+     */
     public static void initialize() {
         // Add data to the observable list
     	chart = new PieChart();
@@ -49,7 +47,10 @@ public class AnimatedScreen {
         chart.setTitle("Smart Phone Sales 2011");
         setupAnimation();
     }
-
+    
+    /**
+     * Runs the animation handler. Enables hovering animation when user's cursor moves to any of the pie slices.
+     */
     private static void setupAnimation() {
     	tg = new boolean[pcData.size()];
     	for (int i = 0; i < pcData.size(); i++) {
@@ -100,6 +101,12 @@ public class AnimatedScreen {
             });
         });
     }
+    
+    /**
+     * Pane function. Generates and returns a pane object that displays the animated chart.
+     * 
+     * @return Pane object containing the animated pie chart.
+     */
     
     public static Pane pane() {
     	initialize();
