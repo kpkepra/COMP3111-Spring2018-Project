@@ -57,7 +57,8 @@ public class Listbox {
 	 */
 	public static void addDataset(File file) {
 		filenames.add(file.getName());
-		CSVReader csv = new CSVReader(file.getName());
+		CSVReader csv = new CSVReader("resources/" + file.getName());
+		System.out.println(file.getName());
 		csv.readALL(0);
 		csv.readField();
 		DataTable table = DataTableTransformer.transform(csv);
