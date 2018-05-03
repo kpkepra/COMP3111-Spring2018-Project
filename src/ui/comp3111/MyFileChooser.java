@@ -6,15 +6,11 @@ import java.util.ArrayList;
 import core.comp3111.CSVReader;
 import core.comp3111.Chart;
 import core.comp3111.DataTable;
-import core.comp3111.DataTableTransformer;
 import core.comp3111.MyFileExtenstion;
-import core.comp3111.Transform;
 import core.comp3111.MyFileExtenstion.CorgiObj;
-import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
@@ -31,7 +27,6 @@ public class MyFileChooser extends Main {
     private static Button openButton, saveButton;
     
     private static FileChooser fileChooser;
-    private static CSVReader csv;
     private static Pane pane;
     private static GridPane inputGridPane;
     
@@ -43,8 +38,8 @@ public class MyFileChooser extends Main {
     public static Pane pane() {
     	// FileChooser
     	fileChooser = new FileChooser();
-    	openButton = new Button("Open From File");
-    	saveButton = new Button("Save to File");
+    	openButton = new Button("Open File");
+    	saveButton = new Button("Save File");
     	
     	initHandlers();
     	
@@ -53,7 +48,8 @@ public class MyFileChooser extends Main {
     	GridPane.setConstraints(openButton, 0, 0);
     	inputGridPane.setHgap(6);
     	inputGridPane.setVgap(6);
-    	inputGridPane.getChildren().addAll(openButton, saveButton);
+    	inputGridPane.add(openButton, 0, 0);
+    	inputGridPane.add(saveButton, 0, 1);
     	
     	// Pane
     	pane = new VBox(12);
