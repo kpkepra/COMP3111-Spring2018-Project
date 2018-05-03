@@ -57,7 +57,6 @@ public class MainScreen {
 	     leftc = new VBox(20);
 	     leftc.setAlignment(Pos.CENTER);
 	     leftc.getChildren().addAll(impexp, listView);
-	     leftc.setStyle("-fx-background-color: blue");
 	     
 	     typePane = ChartType.pane();
 	     
@@ -68,17 +67,14 @@ public class MainScreen {
 	     rightc.getChildren().addAll(typePane, filterPane);
 	     rightc.setMinWidth(400);
 	     rightc.setMaxWidth(400);
-	     rightc.setStyle("-fx-background-color: blue");
 	     
 	     tablec = DataTableDisplay.displayTable();
 	     tablec.setMinWidth(500);
 	     tablec.setMaxWidth(500);
 	     tablec.setMinHeight(300);
 	     tablec.setMaxHeight(300);
-	     tablec.setStyle("-fx-background-color: orange");
 
 	     chartc = LineScreen.pane();
-	     chartc.setStyle("-fx-background-color: red");
 	     chartc.setMinWidth(500);
 	     chartc.setMaxWidth(500);
 	     chartc.setMinHeight(400);
