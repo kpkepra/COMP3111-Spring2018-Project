@@ -24,6 +24,7 @@ public class MyFileExtenstion {
     public static class CorgiObj implements Serializable{
         private ArrayList<DataTable> dts;
         private ArrayList <Chart> charts;
+        private int displayIndex;
         private String name;
         public CorgiObj(){
             dts = new ArrayList<>();
@@ -39,9 +40,10 @@ public class MyFileExtenstion {
          * @param charts
          *      - The ArrayList of charts that will be stored in .corgi file
          */
-        public CorgiObj(ArrayList<DataTable> dts,ArrayList<Chart> charts){
+        public CorgiObj(ArrayList<DataTable> dts, ArrayList<Chart> charts, int i){
             this.dts = dts;
             this.charts = charts;
+            this.displayIndex = i;
         }
 
         /**
@@ -58,6 +60,14 @@ public class MyFileExtenstion {
          */
         public ArrayList<Chart> getCharts() {
             return charts;
+        }
+        
+        /**
+         * Returns the current index of displayed table
+         * @return the current index of displayed table
+         */
+        public int getIndex() {
+        	return displayIndex;
         }
 
         /**
@@ -88,7 +98,7 @@ public class MyFileExtenstion {
     public CorgiObj loadCorgi(String fileName) throws IOException,ClassNotFoundException{
         CorgiObj corgi = new CorgiObj();
         try {
-            FileInputStream fileIn = new FileInputStream(fileName);
+            FileInputStream fileIn = new FileInputStream("resources/" + fileName);
             ObjectInputStream in = new ObjectInputStream(fileIn);
             corgi = (CorgiObj) in.readObject();
             corgi.setName(fileName);

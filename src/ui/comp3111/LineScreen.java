@@ -31,9 +31,9 @@ public class LineScreen extends Main {
      * 
      * If true, show the line chart. Otherwise show the pie chart.
      */
-    public static boolean linePie = false; // LINE true PIE false
+    public static boolean linePie = true; // LINE true PIE false
     protected static int numCols = 20, textCols = 5, row = 5;
-
+    
     protected static DataTable table = new DataTable();
     protected static Random rand = new Random();
     protected static char[] base = new char[]{'A', 'B', 'C', 'D', 'E', 'F', 'G'};
@@ -69,8 +69,8 @@ public class LineScreen extends Main {
 
         // Apply CSS to style the GUI components
         pane.getStyleClass().add("screen-background");
-//        addSample();
         pane = generateChart();
+        
         
         return pane;
 	}
@@ -148,6 +148,38 @@ public class LineScreen extends Main {
 		}		
 
 		return chartNode;
+	}
+	
+	static void setChart(Chart ct, DataTable dt) {
+		// Table
+		table = dt;
+		
+		// Chart
+		if (ct instanceof Pie) {
+			pieChart = (Pie) ct;
+			pcd = new PieChartDisplay(pieChart);
+		} else {
+			lineChart = (Line) ct;
+			lcd = new LineChartDisplay(lineChart);
+		}
+		chartNode = (linePie == true ? lcd.display() : pcd.display());
+		
+		refresh();
+		System.out.println("refresh");
+	}
+	
+	static void refresh() {
+		MainScreen.centerc.getChildren().remove(MainScreen.chartc);
+		MainScreen.chartc = LineScreen.pane();
+	    MainScreen.chartc.setMinWidth(500);
+	    MainScreen.chartc.setMaxWidth(500);
+	    MainScreen.chartc.setMinHeight(400);
+	    MainScreen.chartc.setMaxHeight(400);
+		MainScreen.centerc.getChildren().add(1, MainScreen.chartc);
+	}
+	
+	static Chart getChart() {
+		return (linePie == true ? lineChart : pieChart);
 	}
 	
 	/**
