@@ -17,7 +17,6 @@ import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.Objects;
 
 /**
