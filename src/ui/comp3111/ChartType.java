@@ -8,14 +8,31 @@ import javafx.scene.control.Toggle;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.layout.*;
 
+/**
+ * ChartType - A class that displays a group of radio buttons to choose the chart type to display.
+ * The feature provides three radio buttons : line, pie, and animated pie chart. When any button
+ * is clicked, the displayed chart will change to that type.
+ * 
+ * @author kp-kepra
+ *
+ */
 public class ChartType extends Main {
 	private static Label lb_title;
-	private static BorderPane pane;
+	
+	/**
+	 * Pane object that contains the radio button group for selecting chart type.
+	 */
+	public static BorderPane pane;
 	
 	private static ToggleGroup tg;
-	private static String[] radioText = {"Line", "Pie", "Animated Line"};
+	private static String[] radioText = {"Line", "Pie", "Animated Pie"};
 	private static RadioButton[] radios = new RadioButton[3];
 	
+    /**
+     * Pane function. Generates and returns a pane object that displays the chart type selectors.
+     * 
+     * @return Pane object containing radio button group to change chart type.
+     */
 	public static Pane pane() {
 		lb_title = new Label("Chart Type");
 		
@@ -38,6 +55,10 @@ public class ChartType extends Main {
 		return pane;
 	}
 	
+	/**
+	 * InitHandlers function. Initializes the radio button group handler to detect if there is user
+	 * input on selecting the radio buttons.
+	 */
 	static void initHandlers() {
 		tg.selectedToggleProperty().addListener(new ChangeListener<Toggle>() {
 			public void changed(ObservableValue<? extends Toggle> ov, Toggle oldT, Toggle newT) {
