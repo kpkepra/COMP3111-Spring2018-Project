@@ -65,7 +65,7 @@ public class MainScreen {
 	     leftc = new VBox(20);
 	     leftc.setAlignment(Pos.CENTER);
 	     leftc.getChildren().addAll(impexp, listView);
-	     leftc.setStyle("-fx-background-color: blue");
+//	     leftc.setStyle("-fx-background-color: blue");
 	     
 	     typePane = ChartType.pane();
 	     
@@ -76,17 +76,17 @@ public class MainScreen {
 	     rightc.getChildren().addAll(typePane, filterPane);
 	     rightc.setMinWidth(400);
 	     rightc.setMaxWidth(400);
-	     rightc.setStyle("-fx-background-color: blue");
+//	     rightc.setStyle("-fx-background-color: blue");
 	     //760
 	     tablec = DataTableDisplay.displayTable();
 	     tablec.setMinWidth(500);
 	     tablec.setMaxWidth(500);
 	     tablec.setMinHeight(300);
 	     tablec.setMaxHeight(300);
-	     tablec.setStyle("-fx-background-color: orange");
+//	     tablec.setStyle("-fx-background-color: orange");
 
 	     chartc = LineScreen.pane();
-	     chartc.setStyle("-fx-background-color: red");
+//	     chartc.setStyle("-fx-background-color: red");
 	     chartc.setMinWidth(500);
 	     chartc.setMaxWidth(500);
 	     chartc.setMinHeight(400);
@@ -102,7 +102,6 @@ public class MainScreen {
 	     lb_Title.getStyleClass().add("menu-title");
 	     pane.getStyleClass().add("screen-background");
 	     
-	     initHandlers();
 	     return pane;
 	}
 }
