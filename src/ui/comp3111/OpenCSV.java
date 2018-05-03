@@ -20,6 +20,8 @@ public class OpenCSV {
                     @Override
                     public void handle(final ActionEvent e) {
                         csv.readALL(0);
+                		csv.readField();
+                        Listbox.addDataset(csv, csv.getFile().getName());
                         System.out.println("fill with 0");
                         stage.close();
                         System.out.println(csv.getData());
@@ -31,6 +33,8 @@ public class OpenCSV {
                     @Override
                     public void handle(final ActionEvent e) {
                         csv.readALL(1);
+                		csv.readField();
+                        Listbox.addDataset(csv, csv.getFile().getName());
                         System.out.println("fill with mean");
                         stage.close();
                         System.out.println(csv.getData());
@@ -42,6 +46,8 @@ public class OpenCSV {
                     @Override
                     public void handle(final ActionEvent e) {
                         csv.readALL(2);
+                		csv.readField();
+                        Listbox.addDataset(csv, csv.getFile().getName());
                         System.out.println("fill with median");
                         stage.close();
                         System.out.println(csv.getData());
