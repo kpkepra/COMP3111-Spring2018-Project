@@ -7,12 +7,22 @@ package ui.comp3111;
 
 import java.util.ArrayList;
 
+import core.comp3111.ChartException;
+import core.comp3111.DataTable;
+import core.comp3111.Pie;
 import javafx.animation.TranslateTransition;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.geometry.Bounds;
+import javafx.geometry.HPos;
+import javafx.geometry.Insets;
 import javafx.scene.chart.PieChart;
+import javafx.scene.control.ComboBox;
+import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.ColumnConstraints;
+import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 import javafx.util.Duration;
 
@@ -24,28 +34,54 @@ import javafx.util.Duration;
  */
 public class AnimatedScreen extends Main {
 
-	private static Pane pane;
-    private static PieChart chart;
+	private static BorderPane pane;
+    private static PieChart chart = new PieChart();
     private static boolean[] tg;
-    private static ObservableList<PieChart.Data> pcData;
+    private static DataTable table = new DataTable();
+    private static Pie pie;
     private static ArrayList<String> nameID = new ArrayList<String>();
 
     /**
      * Initializes the animated chart.
      */
     public static void initialize() {
-        // Add data to the observable list
-    	chart = new PieChart();
-        pcData = FXCollections.observableArrayList();
-        pcData.add(new PieChart.Data("Nokia", 77.3));
-        pcData.add(new PieChart.Data("RIM", 51.1));
-        pcData.add(new PieChart.Data("Apple", 93.2));
-        pcData.add(new PieChart.Data("HTC", 43.5));
-        pcData.add(new PieChart.Data("Samsung", 94.0));
-        pcData.add(new PieChart.Data("Others", 132.3));
-        chart.setData(pcData);
-        chart.setTitle("Smart Phone Sales 2011");
+    	try {
+			pie = new Pie(table);
+			chart = getChart(pie.getText(), pie.getNum());
+		} catch (ChartException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
         setupAnimation();
+    }
+    
+    public static void loadData(DataTable dt) {
+    	table = dt;
+    }
+    
+    public static void refresh() {
+		MainScreen.centerc.getChildren().remove(MainScreen.chartc);
+		MainScreen.chartc = pane();
+		MainScreen.chartc.setMinWidth(500);
+		MainScreen.chartc.setMaxWidth(500);
+		MainScreen.chartc.setMinHeight(400);
+		MainScreen.chartc.setMaxHeight(400);
+		MainScreen.centerc.getChildren().add(1, MainScreen.chartc);
+    }
+    
+    private static PieChart getChart(String text, String num) {
+    	PieChart temp = new PieChart();
+    	temp.getStyleClass().add("black_font");
+        Object[] numData =  pie.getData().getCol(pie.getNum()).getData();
+        Object[] textData =  pie.getData().getCol(pie.getText()).getData();
+
+        for (int i = 0 ; i < pie.getData().getNumRow(); ++i) {
+            PieChart.Data slice = new PieChart.Data((String)textData[i], ((Number)numData[i]).doubleValue());
+            temp.getData().add(slice);
+        }
+        temp.getData().forEach(d->
+                d.getNode().getStyleClass().add("black_font"));
+        return temp;
     }
     
     /**
@@ -53,14 +89,13 @@ public class AnimatedScreen extends Main {
      * The animation uses a TranslateTransition object and offset based on each pie slice's orientation and position.
      */
     public static void setupAnimation() {
-    	tg = new boolean[pcData.size()];
-    	for (int i = 0; i < pcData.size(); i++) {
+    	tg = new boolean[chart.getData().size()];
+    	for (int i = 0; i < chart.getData().size(); i++) {
     		tg[i] = false;
     	}
     	
-        pcData.stream().forEach(pieData -> {
+        chart.getData().stream().forEach(pieData -> {
         	nameID.add(pieData.getName());
-            System.out.println(pieData.getName() + ": " + pieData.getPieValue());
             pieData.getNode().addEventHandler(MouseEvent.MOUSE_ENTERED, event -> {
             	Bounds b1 = pieData.getNode().getBoundsInLocal();
                 double newX = (b1.getWidth()) / 2 + b1.getMinX();
@@ -108,11 +143,60 @@ public class AnimatedScreen extends Main {
      * 
      * @return Pane object containing the animated pie chart.
      */
-    public static Pane pane() {
+    public static BorderPane pane() {
     	initialize();
-    	System.out.println(chart.getData());
-    	pane = new Pane();
-    	pane.getChildren().add(chart);
+    	pane = new BorderPane();
+    	pane.setCenter(chart);
+    	pane.setMargin(chart, new Insets(12,12,12,12));
+
+    	ComboBox textCombo = new ComboBox();
+        for (String colName : pie.getTextCols()) textCombo.getItems().add(colName);
+
+        textCombo.valueProperty().addListener(new ChangeListener<String>() {
+            @Override
+            public void changed(ObservableValue observableValue, String old_val, String new_val) {
+                pane.getChildren().remove(chart);
+                pie.setText(new_val);
+                PieChart chart = getChart(pie.getText(), pie.getNum());
+                pane.setCenter(chart);
+                pane.setMargin(chart, new Insets(12,12,12,12));
+            }
+        });
+
+        ComboBox numCombo = new ComboBox();
+        for (String colName : pie.getNumCols()) numCombo.getItems().add(colName);
+
+        numCombo.valueProperty().addListener(new ChangeListener<String>() {
+            @Override
+            public void changed(ObservableValue observableValue, String old_val, String new_val) {
+                pane.getChildren().remove(chart);
+                pie.setNum(new_val);
+                PieChart chart = getChart(pie.getText(), pie.getNum());
+                pane.setCenter(chart);
+                pane.setMargin(chart, new Insets(12,12,12,12));
+            }
+        });
+
+        GridPane selectAxis = new GridPane();
+        Label textLabel = new Label("Select text column for categories: ");
+        Label numLabel = new Label("Select numeric column for pie data: ");
+        textLabel.setStyle("-fx-font: 16 arial;");
+        numLabel.setStyle("-fx-font: 16 arial;");
+
+        selectAxis.add(textLabel, 0, 0);
+        selectAxis.add(textCombo, 0, 1);
+        selectAxis.add(numLabel, 1, 0);
+        selectAxis.add(numCombo, 1, 1);
+
+        ColumnConstraints column1 = new ColumnConstraints();
+        column1.setPercentWidth(50);
+        column1.setHalignment(HPos.CENTER);
+        ColumnConstraints column2 = new ColumnConstraints();
+        column2.setHalignment(HPos.CENTER);
+        column2.setPercentWidth(50);
+        selectAxis.getColumnConstraints().addAll(column1, column2);
+        pane.setBottom(selectAxis);
+    	
     	return pane;
     }
 
