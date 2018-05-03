@@ -1,7 +1,7 @@
 package ui.comp3111;
 
 import core.comp3111.CSVReader;
-import core.comp3111.DataTable;
+
 import core.comp3111.DataTableException;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -23,7 +23,11 @@ public class OpenCSV {
                     public void handle(final ActionEvent e) {
                         csv.readALL(0);
                 		csv.readField();
-                        Listbox.addDataset(csv, csv.getFile().getName());
+                		try {
+                            Listbox.addDataset(csv, csv.getFile().getName());
+                        }catch(DataTableException dte){
+                		    //TODO
+                        }
                         System.out.println("fill with 0");
                         stage.close();
                         System.out.println(csv.getData());
@@ -36,7 +40,11 @@ public class OpenCSV {
                     public void handle(final ActionEvent e) {
                         csv.readALL(1);
                 		csv.readField();
-                        Listbox.addDataset(csv, csv.getFile().getName());
+                		try {
+                            Listbox.addDataset(csv, csv.getFile().getName());
+                        }catch(DataTableException dte){
+
+                        }
                         System.out.println("fill with mean");
                         stage.close();
                         System.out.println(csv.getData());
@@ -49,7 +57,11 @@ public class OpenCSV {
                     public void handle(final ActionEvent e) {
                         csv.readALL(2);
                 		csv.readField();
-                        Listbox.addDataset(csv, csv.getFile().getName());
+                		try {
+                            Listbox.addDataset(csv, csv.getFile().getName());
+                        }catch(DataTableException dte){
+
+                        }
                         System.out.println("fill with median");
                         stage.close();
                         System.out.println(csv.getData());
