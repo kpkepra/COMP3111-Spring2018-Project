@@ -46,22 +46,19 @@ public class Listbox extends Main {
 	}
 	
 	/**
-	 * Overloaded addDataset function. Accepts file input, loads all the DataTable items inside and add
+	 * Overloaded addDataset function. Accepts csv, loads all the DataTable items inside and add
 	 * them into ArrayList containing DataTable items.
 	 * 
-	 * @param file
-	 * 				- a java.io.File item.
+	 * @param csv
+	 * 				- a CSVReader object.
+	 * 
+	 * @param name
+	 * 				- name of the dataset.
 	 */
-	public static void addDataset(File file)throws DataTableException {
-		filenames.add(file.getName());
-		CSVReader csv = new CSVReader("resources/" + file.getName());
-		System.out.println(file.getName());
-		csv.readALL(0);
-		csv.readField();
+	public static void addDataset(CSVReader csv, String name) throws DataTableException {
+		filenames.add(name);
 		DataTable table = DataTableTransformer.transform(csv);
-
 		tables.add(table);
-		
 	}
 	
 	/**
@@ -111,6 +108,11 @@ public class Listbox extends Main {
 			public void handle(MouseEvent arg0) {
 				DataTable table = tables.get(list.getSelectionModel().getSelectedIndex());
 				DataTableDisplay.setTable(table);
+				LineScreen.loadData(table);
+				
+				MainScreen.centerc.getChildren().remove(MainScreen.chartc);
+				MainScreen.chartc = LineScreen.pane();
+				MainScreen.centerc.getChildren().add(1, MainScreen.chartc);
 				
 				MainScreen.tfDisplay = new TransformDisplay(new Transform(DataTableDisplay.getDT()));
 				MainScreen.rightc.getChildren().remove(1);
