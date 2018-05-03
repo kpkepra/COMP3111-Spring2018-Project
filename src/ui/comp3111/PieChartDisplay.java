@@ -12,8 +12,6 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
 
-import java.io.Serializable;
-
 public class PieChartDisplay extends ChartDisplay {
     private Pie piechart;
 
@@ -84,7 +82,7 @@ public class PieChartDisplay extends ChartDisplay {
         Object[] textData =  piechart.getData().getCol(piechart.getText()).getData();
 
         for (int i = 0 ; i < piechart.getData().getNumRow(); ++i) {
-            PieChart.Data slice = new PieChart.Data((String)textData[i], ((Number)numData[i]).floatValue());
+            PieChart.Data slice = new PieChart.Data((String)textData[i], ((Number)numData[i]).doubleValue());
             temp.getData().add(slice);
         }
         return temp;
