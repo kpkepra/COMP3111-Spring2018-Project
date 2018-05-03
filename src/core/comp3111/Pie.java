@@ -1,6 +1,5 @@
 package core.comp3111;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Objects;
 
