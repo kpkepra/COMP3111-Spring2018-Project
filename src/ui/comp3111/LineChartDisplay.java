@@ -1,5 +1,6 @@
 package ui.comp3111;
 
+import core.comp3111.ChartException;
 import core.comp3111.Line;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -52,7 +53,14 @@ public class LineChartDisplay {
             @Override
             public void changed(ObservableValue observableValue, String old_val, String new_val) {
                 root.getChildren().remove(chart);
-                linechart.setX(new_val);
+                try {
+                    linechart.setX(new_val);
+                } catch (ChartException e) {
+                    xcombo.setValue(old_val);
+                    root.setCenter(chart);
+                    root.setMargin(chart, new Insets(12,12,12,12));
+                    return;
+                }
                 LineChart chart = getChart(linechart.getX(), linechart.getY());
                 root.setCenter(chart);
                 root.setMargin(chart, new Insets(12,12,12,12));
@@ -64,7 +72,14 @@ public class LineChartDisplay {
             @Override
             public void changed(ObservableValue observableValue, String old_val, String new_val) {
                 root.getChildren().remove(chart);
-                linechart.setY(new_val);
+                try {
+                    linechart.setY(new_val);
+                } catch (ChartException e) {
+                    ycombo.setValue(old_val);
+                    root.setCenter(chart);
+                    root.setMargin(chart, new Insets(12,12,12,12));
+                    return;
+                }
                 LineChart chart = getChart(linechart.getX(), linechart.getY());
                 root.setCenter(chart);
                 root.setMargin(chart, new Insets(12,12,12,12));
