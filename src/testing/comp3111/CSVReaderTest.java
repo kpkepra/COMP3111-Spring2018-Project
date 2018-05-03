@@ -10,11 +10,11 @@ import java.util.Arrays;
 
 class CSVReaderTest {
     CSVReader csv = new CSVReader();
-    CSVReader csv_Test1 = new CSVReader("resoures/csvTest1.csv");
-    CSVReader csv_Test2 = new CSVReader("resoures/csvTest2.csv");
+    CSVReader csv_Test1 = new CSVReader("resources/csvTest1.csv");
+    CSVReader csv_Test2 = new CSVReader("resources/csvTest2.csv");
     CSVReader csv_Test3 = new CSVReader("notExisting.csv");
-    CSVReader csv_Test4 = new CSVReader("resoures/csvTest4.csv");
-    CSVReader csv_Test5 = new CSVReader("resoures/csvTest5.csv");
+    CSVReader csv_Test4 = new CSVReader("resources/csvTest4.csv");
+    CSVReader csv_Test5 = new CSVReader("resources/csvTest5.csv");
 
     @Test
     public void getNumCol() {
@@ -59,7 +59,7 @@ class CSVReaderTest {
         String [] names_ = {"Adrian","Kepra","Judy","Jenny"};
         names.addAll(Arrays.asList(names_));
         csv_Test1.readALL(0);
-        Assertions.assertEquals(csv_Test1.getCol(0),names);
+        Assertions.assertEquals(names,csv_Test1.getCol(0));
 
     }
 

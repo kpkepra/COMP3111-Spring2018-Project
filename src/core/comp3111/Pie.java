@@ -124,8 +124,7 @@ public class Pie extends Chart implements Serializable{
     @Override
     public boolean equals(Object o){
         Pie pie = (Pie) o;
-        if (!pie.data.equals(pie.data)) return false;
+        if (!pie.data.equals(data)) return false;
         return true;
     }
-
 }
