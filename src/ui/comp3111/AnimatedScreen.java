@@ -50,6 +50,7 @@ public class AnimatedScreen extends Main {
     
     /**
      * Runs the animation handler. Enables hovering animation when user's cursor moves to any of the pie slices.
+     * The animation uses a TranslateTransition object and offset based on each pie slice's orientation and position.
      */
     public static void setupAnimation() {
     	tg = new boolean[pcData.size()];
