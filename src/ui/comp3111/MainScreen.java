@@ -2,11 +2,7 @@ package ui.comp3111;
 
 import core.comp3111.*;
 import javafx.geometry.Pos;
-import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.control.Separator;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
@@ -59,6 +55,7 @@ public class MainScreen {
 	     leftc.getChildren().addAll(impexp, listView);
 
 	     typePane = ChartType.pane();
+	     typePane.getStyleClass().add("typePane");
 	     
 	     tfDisplay = new TransformDisplay(new Transform(DataTableDisplay.getDT()));
 	     filterPane = tfDisplay.splitFilter();
@@ -67,7 +64,7 @@ public class MainScreen {
 	     rightc.getChildren().addAll(typePane, filterPane);
 	     rightc.setMinWidth(400);
 	     rightc.setMaxWidth(400);
-
+	     
 	     tablec = DataTableDisplay.displayTable();
 	     tablec.setMinWidth(500);
 	     tablec.setMaxWidth(500);

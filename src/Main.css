@@ -1,4 +1,4 @@
-/* JavaFX CSS 
+/* JavaFX CSS
  * Define rules to style the GUI components
  * @author cspeter
  */
@@ -13,8 +13,19 @@
 
 .screen-background {
 	-fx-background-color: black;
+	-fx-background-image: url("images/bg.png");
+	-fx-text-stroke: white;
+
 }
 
 .filter-gridpane {
 	-fx-font: 16 arial;
+}
+
+.typePane{
+	-fx-font-size: 24;
+	-fx-text-fill: white;
+	-fx-text-stroke: #ffdfb4;
+	-fx-text-stroke-width: 3;
+
 }
