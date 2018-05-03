@@ -33,8 +33,7 @@ public class DataTableDisplay {
 		  pane = new VBox();
 		  datasetTable = new TableView();
 		  datasetTable.setColumnResizePolicy(TableView.UNCONSTRAINED_RESIZE_POLICY);
-		  table.printTable();
-		  
+
 			  for (int i = 0; i < table.getNumRow(); i++) {
 			      datasetTable.getItems().add(i);
 			  }
