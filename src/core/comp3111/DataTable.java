@@ -151,13 +151,13 @@ public class DataTable implements Serializable {
     /**
      * Debugging method - prints DataTable
      */
-    public void printTable() {
-        for (String colName : getColNames()) {
-            System.out.println("Column " + colName);
-            DataColumn column  = getCol(colName);
-            for (int i = 0; i < getNumRow(); ++i) System.out.println(column.getData()[i]);
-        }
-    }
+//    public void printTable() {
+//        for (String colName : getColNames()) {
+//            System.out.println("Column " + colName);
+//            DataColumn column  = getCol(colName);
+//            for (int i = 0; i < getNumRow(); ++i) System.out.println(column.getData()[i]);
+//        }
+//    }
 
     /**
      * Retrieve the DataTable map
@@ -189,7 +189,16 @@ public class DataTable implements Serializable {
         boolean testEquality = true;
         DataTable other = (DataTable) o;
         for (String key : dc.keySet()) {
-            if (!Arrays.equals(dc.get(key).getData(), other.dc.get(key).getData())) testEquality = false;
+            if (other.dc.containsKey(key)) {
+                if (!Arrays.equals(dc.get(key).getData(), other.dc.get(key).getData())) {
+                    testEquality = false;
+                    break;
+                }
+            }
+            else {
+                testEquality = false;
+                break;
+            }
         }
         return testEquality;
     }
