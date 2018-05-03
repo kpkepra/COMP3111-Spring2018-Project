@@ -12,10 +12,8 @@ import javafx.scene.layout.VBox;
 
 public class DataTableDisplay {
 	  private static DataTable table = new DataTable();
-	  private static CSVReader csv;
 	  private static VBox pane;
 	  private static TableView datasetTable;
-	  private static TableColumn firstNameCol, lastNameCol, emailCol;
 	  
 	  public DataTableDisplay(DataTable dt) {
 		  table = dt;
