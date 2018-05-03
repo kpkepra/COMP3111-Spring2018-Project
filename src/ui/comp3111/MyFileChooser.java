@@ -38,8 +38,8 @@ public class MyFileChooser extends Main {
     public static Pane pane() {
     	// FileChooser
     	fileChooser = new FileChooser();
-    	openButton = new Button("Open From File");
-    	saveButton = new Button("Save to File");
+    	openButton = new Button("Open File");
+    	saveButton = new Button("Save File");
     	
     	initHandlers();
     	
@@ -48,7 +48,8 @@ public class MyFileChooser extends Main {
     	GridPane.setConstraints(openButton, 0, 0);
     	inputGridPane.setHgap(6);
     	inputGridPane.setVgap(6);
-    	inputGridPane.getChildren().addAll(openButton, saveButton);
+    	inputGridPane.add(openButton, 0, 0);
+    	inputGridPane.add(saveButton, 0, 1);
     	
     	// Pane
     	pane = new VBox(12);
