@@ -363,8 +363,8 @@ public class TransformDisplay extends Main {
         numberField.textProperty().addListener(new ChangeListener<String>() {
             @Override
             public void changed(ObservableValue observableValue, String old_val, String new_val) {
-                if (!new_val.matches("\\d*")) {
-                    numberField.setText(new_val.replaceAll("[^\\d]", ""));
+                if (!new_val.matches("[\\d,\\.]*")) {
+                    numberField.setText(new_val.replaceAll("[^\\d, ^\\.]", ""));
                 }
             }
         });
@@ -480,11 +480,8 @@ public class TransformDisplay extends Main {
         root.setVgap(10);
         ColumnConstraints column1 = new ColumnConstraints();
         column1.setHalignment(HPos.CENTER);
-        column1.setPercentWidth(50);
-        ColumnConstraints column2 = new ColumnConstraints();
-        column2.setHalignment(HPos.CENTER);
-        column2.setPercentWidth(50);
-        root.getColumnConstraints().addAll(column1, column2);
+        column1.setPercentWidth(100);
+        root.getColumnConstraints().addAll(column1);
         root.add(new Label("What is the file name you would like to save as?"), 0, 0);
 
         TextField nameField = new TextField();

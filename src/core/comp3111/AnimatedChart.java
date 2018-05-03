@@ -8,7 +8,6 @@ import java.util.ArrayList;
  */
 
 public class AnimatedChart extends Chart implements Serializable {
-	private 
 	private ArrayList<String> numCols;
 	private String x;
 	private String y;
