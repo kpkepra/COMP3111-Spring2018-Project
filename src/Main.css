@@ -2,16 +2,15 @@
  * Define rules to style the GUI components
  * @author cspeter
  */
-.button {
-  /*-fx-background-color: transparent;
+/*.button {
+  -fx-background-color: transparent;
  -fx-padding:0.35em 1.2em;
  -fx-border-color:#FFFFFF;
-  -fx-font-family:'Roboto';
  -fx-margin:0 0.3em 0.3em 0;
  -fx-border-radius:0.12em;
  -fx-text-fill:#FFFFFF;
- -fx-alignment:center;*/
-}
+ -fx-alignment:center;
+}*/
 
 .screen-background {
 	-fx-background-image: url("images/bg.png");
