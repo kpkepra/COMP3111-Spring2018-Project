@@ -13,7 +13,7 @@ class CSVWriterTest {
     public void writeAndClose() {
         try
         {
-            CSVWriter cw = new CSVWriter("csvTest1_w.csv");
+            CSVWriter cw = new CSVWriter("resources/csvTest1_w.csv");
             ArrayList<String> words = new ArrayList<>();
             words.add("Name");
             words.add("Judy");

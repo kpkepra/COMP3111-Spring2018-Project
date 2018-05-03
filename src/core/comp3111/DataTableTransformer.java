@@ -34,7 +34,6 @@ public class DataTableTransformer {
                 System.out.println("Some row has wrong number of columns");
             }
         }
-        dt.printTable();
         return toNumericCol(dt);
     }
 
