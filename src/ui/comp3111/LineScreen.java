@@ -178,27 +178,4 @@ public class LineScreen extends Main {
       		}
 		return chartNode;
 	}
-	
-	/**
-	 * Change the type of chart into line or pie, based on {@link LineScreen#linePie}
-	 */
-	public static void changeType() {
-		try {
-			if (linePie) {
-				lineChart = new Line(table);
-                lcd = new LineChartDisplay(lineChart);
-			} else {
-				pieChart = new Pie(table);
-				pcd = new PieChartDisplay(pieChart);
-			}
-			chartNode = (linePie ? lcd.display() : pcd.display());
-		} catch (ChartException ex) {
-          Alert alert = new Alert(Alert.AlertType.ERROR);
-          alert.setTitle("Chart Display Error");
-          alert.setHeaderText("There was an error in displaying chart!");
-          alert.setContentText(ex.getMessage());
-          alert.getDialogPane().setMinHeight(Region.USE_PREF_SIZE);
-          alert.showAndWait();
-      }
-	}
 }
