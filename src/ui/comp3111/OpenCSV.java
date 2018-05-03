@@ -1,6 +1,8 @@
 package ui.comp3111;
 
 import core.comp3111.CSVReader;
+import core.comp3111.DataTable;
+import core.comp3111.DataTableException;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
@@ -12,7 +14,7 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
 public class OpenCSV {
-    public static void openCSV(CSVReader csv){
+    public static void openCSV(CSVReader csv) throws DataTableException {
         Stage stage = new Stage();
         Button btFillWithZero = new Button("Fill Empty Data With 0");
         btFillWithZero.setOnAction(
