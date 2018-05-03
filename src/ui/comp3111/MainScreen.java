@@ -59,6 +59,7 @@ public class MainScreen {
 	     leftc.getChildren().addAll(impexp, listView);
 
 	     typePane = ChartType.pane();
+	     typePane.getStyleClass().add("typePane");
 	     
 	     tfDisplay = new TransformDisplay(new Transform(DataTableDisplay.getDT()));
 	     filterPane = tfDisplay.splitFilter();
