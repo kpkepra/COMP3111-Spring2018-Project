@@ -35,15 +35,5 @@ class MyFileExtenstionTest {
         assertEquals(corl.getCharts().get(0),chart);
         corgi.setName("corgi_1");
         assertEquals(corgi.getName(),"corgi_1");
-//            String [] fields = ch.getFields().
-//                    toArray(new String[ch.getFields().size()]);
-//            String [] data = ch.getData().
-//                    toArray(new String[ch.getData().size()]);
-//            int fl = fields.length;
-//            int dl = data.length;
-//            String [] result = new String[fl+dl];
-//            System.arraycopy(fields, 0, result, 0, fl);
-//            System.arraycopy(data, 0, result, fl, dl);
-//            assertEquals(new ArrayList<>(Arrays.asList(result)),dt_reverse);
     }
 }

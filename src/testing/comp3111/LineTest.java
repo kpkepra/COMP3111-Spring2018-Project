@@ -246,4 +246,69 @@ class LineTest {
 
         assertEquals("numCol4", testLine.getY());
     }
+
+
+    @Test
+    void testGetData() throws DataTableException, ChartException {
+        DataColumn numCol1 = new DataColumn(DataType.TYPE_NUMBER, new Number[]{1,2,3});
+        DataColumn numCol2 = new DataColumn(DataType.TYPE_NUMBER, new Number[]{10.5, 13.4, 7});
+        DataColumn numCol3 = new DataColumn(DataType.TYPE_STRING, new String[]{"a", "b", "c"});
+        DataColumn numCol4 = new DataColumn(DataType.TYPE_NUMBER, new Number[]{-3, -22, -1.37});
+
+        dataTable.addCol("numCol1", numCol1);
+        dataTable.addCol("numCol2", numCol2);
+        dataTable.addCol("numCol3", numCol3);
+        dataTable.addCol("numCol4", numCol4);
+
+        testLine = new Line(dataTable);
+
+        assertEquals(dataTable, testLine.getData());
+    }
+
+    @Test
+    void testSetData_Legal() throws DataTableException, ChartException {
+        DataColumn numCol1 = new DataColumn(DataType.TYPE_NUMBER, new Number[]{1,2,3});
+        DataColumn numCol2 = new DataColumn(DataType.TYPE_NUMBER, new Number[]{10.5, 13.4, 7});
+        DataColumn numCol3 = new DataColumn(DataType.TYPE_STRING, new String[]{"a", "b", "c"});
+        DataColumn numCol4 = new DataColumn(DataType.TYPE_NUMBER, new Number[]{-3, -22, -1.37});
+
+        dataTable.addCol("numCol1", numCol1);
+        dataTable.addCol("numCol2", numCol2);
+        dataTable.addCol("numCol3", numCol3);
+        dataTable.addCol("numCol4", numCol4);
+
+        testLine = new Line(dataTable);
+
+        DataTable newDataTable = new DataTable();
+        newDataTable.addCol("numCol1", new DataColumn(DataType.TYPE_NUMBER, new Number[]{-3.5, -221, -1.372}));
+        newDataTable.addCol("numCol2", new DataColumn(DataType.TYPE_NUMBER, new Number[]{123,123,123,}));
+
+        testLine.setData(newDataTable);
+
+        assertEquals(newDataTable, testLine.getData());
+    }
+
+    @Test
+    void testSetData_Illegal() throws DataTableException, ChartException {
+        DataColumn numCol1 = new DataColumn(DataType.TYPE_NUMBER, new Number[]{1,2,3});
+        DataColumn numCol2 = new DataColumn(DataType.TYPE_NUMBER, new Number[]{10.5, 13.4, 7});
+        DataColumn numCol3 = new DataColumn(DataType.TYPE_STRING, new String[]{"a", "b", "c"});
+        DataColumn numCol4 = new DataColumn(DataType.TYPE_NUMBER, new Number[]{-3, -22, -1.37});
+
+        dataTable.addCol("numCol1", numCol1);
+        dataTable.addCol("numCol2", numCol2);
+        dataTable.addCol("numCol3", numCol3);
+        dataTable.addCol("numCol4", numCol4);
+
+        testLine = new Line(dataTable);
+
+        DataTable newDataTable = new DataTable();
+        newDataTable.addCol("numCol1", new DataColumn(DataType.TYPE_NUMBER, new Number[]{-3.5, -221, -1.372}));
+        newDataTable.addCol("textCol", new DataColumn(DataType.TYPE_STRING, new String[]{"A","B","C"}));
+
+        testLine.setData(newDataTable);
+
+        assertNotEquals(newDataTable, testLine.getData());
+        assertEquals(dataTable, testLine.getData());
+    }
 }
