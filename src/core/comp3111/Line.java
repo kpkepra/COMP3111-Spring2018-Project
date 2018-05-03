@@ -94,8 +94,7 @@ public class Line extends Chart {
      * @param input
      *             - The x-axis column name
      */
-    public void setX(String input) throws ChartException {
-        if (Objects.equals(input, y)) throw new ChartException("Cannot use the same column for both axis!");
+    public void setX(String input) {
         if (numCols.contains(input) && !Objects.equals(input, y)) x = input;
     }
 
@@ -105,8 +104,7 @@ public class Line extends Chart {
      * @param input
      *             - The y-axis column name
      */
-    public void setY(String input) throws ChartException {
-        if (Objects.equals(input, x)) throw new ChartException("Cannot use the same column for both axis!");
+    public void setY(String input) {
         if (numCols.contains(input)) y = input;
     }
 }
