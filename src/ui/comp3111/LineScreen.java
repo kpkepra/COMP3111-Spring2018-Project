@@ -69,8 +69,8 @@ public class LineScreen extends Main {
 
         // Apply CSS to style the GUI components
         pane.getStyleClass().add("screen-background");
-        addSample();
-        pane = loadSample();
+//        addSample();
+        pane = generateChart();
         
         return pane;
 	}
@@ -122,8 +122,36 @@ public class LineScreen extends Main {
 		}
 	}
 	
+	static void loadData(DataTable dt) {
+		table = dt;
+	}
+	
+	static BorderPane generateChart() {
+		xAxis.setLabel("X");
+		yAxis.setLabel("Y");
+		
+		if (table.getNumCol() > 0 && table.getNumRow() > 0) {
+			try {
+				if (linePie) {
+					lineChart = new Line(table);
+					lcd = new LineChartDisplay(lineChart);
+				} else {
+					pieChart = new Pie(table);
+					pcd = new PieChartDisplay(pieChart);
+				}
+				chartNode = (linePie == true ? lcd.display() : pcd.display());
+			} catch (ChartException ex) {
+				System.out.println(ex);
+			}
+		} else {
+			chartNode = new BorderPane();
+		}		
+
+		return chartNode;
+	}
+	
 	/**
-	 * Load data from either sample data or dataset.
+	 * Load data from either sample data.
 	 * 
 	 * @return Pane containing the chart Node.
 	 */

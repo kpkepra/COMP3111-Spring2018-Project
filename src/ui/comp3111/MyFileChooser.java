@@ -75,7 +75,6 @@ public class MyFileChooser extends Main {
                         File file = fileChooser.showOpenDialog(stage);
                         if (file != null) {
                             openFile(file);
-                            System.out.println(file.getName());
                         }
                     }
                 });
@@ -101,9 +100,8 @@ public class MyFileChooser extends Main {
                 extension = fileName.substring(i + 1);
                 if (extension.equals("csv")) {
                     System.out.println("-----"+fileName);
-                    CSVReader readerCSV = new CSVReader(fileName);
-                    OpenCSV.openCSV(readerCSV);
-                    Listbox.addDataset(file);
+            		CSVReader csv = new CSVReader("resources/" + file.getName());
+            		OpenCSV.openCSV(csv);
                 } else if (extension.equals("corgi")) {
                     MyFileExtenstion mf = new MyFileExtenstion();
                     try {
