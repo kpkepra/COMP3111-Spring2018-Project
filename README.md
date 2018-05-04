@@ -7,7 +7,7 @@
 
 ## Member 1 Name: SUSANTO, Adrian Prawira
 - Member 1 ITSC email apsusanto@connect.ust.hk
-- Member 1 Features   2,5
+- Member 1 Features  2,5
 - Member 1 Best 3 commits URLs
     - https://github.com/KP-Kepra/COMP3111-Spring2018-Project/commit/821546aa366e3959dbc7d45e97519756adf4c722
     Code refactor of Chart and its subclasses, where initially everything, including function and UI, were within one big class. It has since moved, so that UI is on ChartDisplay and its subclasses, while functional is under Chart and its subclasses.

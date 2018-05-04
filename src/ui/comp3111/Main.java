@@ -14,7 +14,7 @@ public class Main extends Application {
     // Attributes: Scene and Stage
 	private MainScreen Screen;
     protected static final int SCENE_NUM = 5;
-    private static final String[] SCENE_TITLES = { "COMP3111 Chart - [Team Name]", "Sample Line Chart Screen", "Animated Chart" };
+    private static final String[] SCENE_TITLES = { "COMP3111 Chart - CORGI3111", "Sample Line Chart Screen", "Animated Chart" };
     protected static Stage stage = null;
     public static Scene[] scenes = null;
 
