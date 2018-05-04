@@ -52,6 +52,7 @@ public class MainScreen {
 	     filterPane = new TransformDisplay(new Transform(DataTableDisplay.getDT())).splitFilter();
 	     rightc.setMinWidth(300);
 	     rightc.setMaxWidth(300);
+	     rightc.setAlignment(Pos.TOP_CENTER);
 	     rightc.getChildren().addAll(typePane, filterPane);
 
 	     centerc = new VBox(2);
