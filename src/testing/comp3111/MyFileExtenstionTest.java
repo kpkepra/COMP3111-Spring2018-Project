@@ -20,13 +20,13 @@ class MyFileExtenstionTest {
         ch_rowprob.readALL(0);
         DataTable dt  = DataTableTransformer.transform(ch);
         ArrayList<String> dt_reverse = DataTableTransformer.reverseTransform(dt);
-        DataTable dt2  = DataTableTransformer.transform(ch_rowprob);
+        assertThrows(DataTableException.class, () -> {DataTableTransformer.transform(ch_rowprob);});
         Chart chart = new Pie(dt);
         ArrayList<Chart> charts = new ArrayList<>();
         charts.add(chart);
         ArrayList<DataTable> dts = new ArrayList<>();
         dts.add(dt);
-        MyFileExtenstion.CorgiObj corgi = new MyFileExtenstion.CorgiObj(dts,charts);
+        MyFileExtenstion.CorgiObj corgi = new MyFileExtenstion.CorgiObj(dts,charts, 0);
         MyFileExtenstion mfe = new MyFileExtenstion();
         mfe.saveCorgi("resources/extensionTest.corgi",corgi);
         MyFileExtenstion.CorgiObj corlFileNotFound = mfe.loadCorgi("resources/extensionTest_.corgi");
@@ -35,5 +35,6 @@ class MyFileExtenstionTest {
         assertEquals(corl.getCharts().get(0),chart);
         corgi.setName("corgi_1");
         assertEquals(corgi.getName(),"corgi_1");
+        assertEquals(corgi.getIndex(),0);
     }
 }
