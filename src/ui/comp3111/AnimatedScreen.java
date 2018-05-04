@@ -227,16 +227,12 @@ public class AnimatedScreen extends Main {
      * Updates the GUI Window to load the animated pie chart with its newest state.
      */
     public static void refresh() {
-    	MainScreen.chartc = new Pane();
     	MainScreen.chartc = pane();
-		if (MainScreen.centerc.getChildren().contains(MainScreen.chartc)) { 
-			MainScreen.centerc.getChildren().remove(MainScreen.chartc);
-		}
 		MainScreen.chartc.setMinWidth(500);
 		MainScreen.chartc.setMaxWidth(500);
 		MainScreen.chartc.setMinHeight(400);
 		MainScreen.chartc.setMaxHeight(400);
-		MainScreen.centerc.getChildren().add(1, MainScreen.chartc);
+		MainScreen.centerc.getChildren().set(1, MainScreen.chartc);
     }
 
 }

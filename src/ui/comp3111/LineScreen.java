@@ -145,13 +145,10 @@ public class LineScreen extends Main {
 	 */
 	public static void refresh() throws ChartException{
 		MainScreen.chartc = pane();
-		if (MainScreen.centerc.getChildren().contains(MainScreen.chartc)) {
-			MainScreen.centerc.getChildren().remove(MainScreen.chartc);
-		}
 		MainScreen.chartc.setMinWidth(400);
 		MainScreen.chartc.setMaxWidth(400);
 		MainScreen.chartc.setMinHeight(350);
 		MainScreen.chartc.setMaxHeight(350);
-		MainScreen.centerc.getChildren().add(1, MainScreen.chartc);
+		MainScreen.centerc.getChildren().set(1, MainScreen.chartc);
 	}
 }

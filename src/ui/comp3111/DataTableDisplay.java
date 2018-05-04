@@ -92,15 +92,12 @@ public class DataTableDisplay {
 	 * Updates the GUI Window to load the DataTable display with its newest state.
 	 */
 	public static void refresh() {
-		if (MainScreen.centerc.getChildren().contains(MainScreen.tablec)) { 
-			MainScreen.centerc.getChildren().remove(MainScreen.tablec);
-		}
 		MainScreen.tablec = displayTable();
 		MainScreen.tablec.setMinWidth(375);
 		MainScreen.tablec.setMaxWidth(375);
 		MainScreen.tablec.setMinHeight(200);
 		MainScreen.tablec.setMaxHeight(200);
-		MainScreen.centerc.getChildren().add(0, MainScreen.tablec);
+		MainScreen.centerc.getChildren().set(0, MainScreen.tablec);
 	}
 	
 	/**
