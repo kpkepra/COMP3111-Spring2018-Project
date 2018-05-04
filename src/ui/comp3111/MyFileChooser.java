@@ -99,18 +99,18 @@ public class MyFileChooser extends Main {
     static void openFile(File file) throws DataTableException {
 
             String extension;
-            String fileName = file.getName();
-            int i = fileName.lastIndexOf('.');
+            String filePath = file.getAbsolutePath();
+            int i = filePath.lastIndexOf('.');
             if (i > 0) {
-                extension = fileName.substring(i + 1);
+                extension = filePath.substring(i + 1);
                 if (extension.equals("csv")) {
-                    System.out.println("-----"+fileName);
-            		CSVReader csv = new CSVReader("resources/" + fileName);
+                    System.out.println("-----"+filePath);
+            		CSVReader csv = new CSVReader(filePath);
             		OpenCSV.openCSV(csv);
                 } else if (extension.equals("corgi")) {
                     MyFileExtenstion mf = new MyFileExtenstion();
                     try {
-                        CorgiObj corgi = mf.loadCorgi(fileName);
+                        CorgiObj corgi = mf.loadCorgi(filePath);
                         Listbox.addCorgi(corgi);
                     }catch(IOException ioe){
                     	ioe.printStackTrace();
