@@ -26,7 +26,7 @@ class MyFileExtenstionTest {
         charts.add(chart);
         ArrayList<DataTable> dts = new ArrayList<>();
         dts.add(dt);
-        MyFileExtenstion.CorgiObj corgi = new MyFileExtenstion.CorgiObj(dts,charts);
+        MyFileExtenstion.CorgiObj corgi = new MyFileExtenstion.CorgiObj(dts,charts, 0);
         MyFileExtenstion mfe = new MyFileExtenstion();
         mfe.saveCorgi("resources/extensionTest.corgi",corgi);
         MyFileExtenstion.CorgiObj corlFileNotFound = mfe.loadCorgi("resources/extensionTest_.corgi");
