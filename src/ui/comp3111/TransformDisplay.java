@@ -117,23 +117,25 @@ public class TransformDisplay extends Main {
                         public void handle(WindowEvent we) {
                             if (save == 1) {
                                 stage = new Stage();
-                                askFileName();
+                                askFileName("first dataset");
 
                                 stage.setOnHiding(new EventHandler<WindowEvent>() {
                                     public void handle(WindowEvent we) {
                                         try {
                                             if (fileName != null) {
-                                                CSVWriter csvWriter = new CSVWriter(fileName + ".csv");
-                                                ArrayList<String> array = new DataTableTransformer().reverseTransform(newTables[0]);
-                                                csvWriter.writeArray(array, newTables[0].getNumCol());
-                                                csvWriter.close();
+                                                if (!Objects.equals(fileName, "")) {
+                                                    CSVWriter csvWriter = new CSVWriter("resources/" + fileName + ".csv");
+                                                    ArrayList<String> array = new DataTableTransformer().reverseTransform(newTables[0]);
+                                                    csvWriter.writeArray(array, newTables[0].getNumCol());
+                                                    csvWriter.close();
+                                                }
                                                 stage = new Stage();
-                                                askFileName();
+                                                askFileName("second dataset");
                                                 stage.setOnHiding(new EventHandler<WindowEvent>() {
                                                     public void handle(WindowEvent we) {
                                                         try {
-                                                            if (fileName != null) {
-                                                                CSVWriter csvWriter = new CSVWriter(fileName + ".csv");
+                                                            if (fileName != null && !Objects.equals(fileName, "")) {
+                                                                CSVWriter csvWriter = new CSVWriter("resources/" + fileName + ".csv");
                                                                 ArrayList<String> array = new DataTableTransformer().reverseTransform(newTables[1]);
                                                                 csvWriter.writeArray(array, newTables[1].getNumCol());
                                                                 csvWriter.close();
@@ -280,7 +282,7 @@ public class TransformDisplay extends Main {
                     dataset1.prefHeightProperty().bind(newPane.heightProperty().divide(2));
                     dataset2.prefHeightProperty().bind(newPane.heightProperty().divide(2));
 
-                    askSaveReplace();
+                    askSaveReplace("datasets");
                 }
                 catch (Exception ex) {
                     ex.printStackTrace();
@@ -389,15 +391,17 @@ public class TransformDisplay extends Main {
                         public void handle(WindowEvent we) {
                             if (save == 1) {
                                 stage = new Stage();
-                                askFileName();
+                                askFileName("dataset");
 
                                 stage.setOnHiding(new EventHandler<WindowEvent>() {
                                     public void handle(WindowEvent we) {
                                         try {
-                                            CSVWriter csvWriter = new CSVWriter(fileName + ".csv");
-                                            ArrayList<String> array = new DataTableTransformer().reverseTransform(newTable);
-                                            csvWriter.writeArray(array, newTable.getNumCol());
-                                            csvWriter.close();
+                                            if (fileName != null  && !Objects.equals(fileName, "")) {
+                                                CSVWriter csvWriter = new CSVWriter("resources/" + fileName + ".csv");
+                                                ArrayList<String> array = new DataTableTransformer().reverseTransform(newTable);
+                                                csvWriter.writeArray(array, newTable.getNumCol());
+                                                csvWriter.close();
+                                            }
                                         } catch (Exception e) {
                                             e.printStackTrace();
                                         }
@@ -419,7 +423,7 @@ public class TransformDisplay extends Main {
                         }
                     });
 
-                    askSaveReplace();
+                    askSaveReplace("filtered dataset");
                 }
                 catch (Exception ex) {
                     ex.printStackTrace();
@@ -488,7 +492,7 @@ public class TransformDisplay extends Main {
      * A function which will display an interface to ask the user whether to save the new dataset
      * or replace old one instead.
      */
-    private void askSaveReplace() {
+    private void askSaveReplace(String file) {
         GridPane saveReplace = new GridPane();
         saveReplace.setHgap(10);
         saveReplace.setVgap(10);
@@ -499,7 +503,7 @@ public class TransformDisplay extends Main {
         column2.setHalignment(HPos.CENTER);
         column2.setPercentWidth(50);
         saveReplace.getColumnConstraints().addAll(column1, column2);
-        saveReplace.add(new Label("What do you want to do with the filtered dataset?"), 0, 0, 2, 1);
+        saveReplace.add(new Label("What do you want to do with the "+ file +"?"), 0, 0, 2, 1);
 
         // Save Button
         Button saveButton = new Button("Save");
@@ -531,7 +535,7 @@ public class TransformDisplay extends Main {
     /**
      * A function which will display an interface to ask the filename to save the dataset to.
      */
-    public void askFileName() {
+    public void askFileName(String file) {
         GridPane root = new GridPane();
         root.setHgap(10);
         root.setVgap(10);
@@ -539,7 +543,7 @@ public class TransformDisplay extends Main {
         column1.setHalignment(HPos.CENTER);
         column1.setPercentWidth(100);
         root.getColumnConstraints().addAll(column1);
-        root.add(new Label("What is the file name you would like to save as?"), 0, 0);
+        root.add(new Label("What should we save the " + file + " as?"), 0, 0);
 
         TextField nameField = new TextField();
         root.add(nameField, 0, 1);
@@ -560,9 +564,4 @@ public class TransformDisplay extends Main {
         stage.setScene(scene);
         stage.show();
     }
-    
-    public void refresh() {
-    	
-    }
-
 }
