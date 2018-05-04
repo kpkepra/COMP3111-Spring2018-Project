@@ -95,11 +95,11 @@ public class Listbox extends Main {
 		});
 		
 		//Charts
+		ChartType.setType(corgi.getIndex());
 		if (cts.get(0) instanceof Pie || cts.get(0) instanceof Line) {
-			ChartType.setType(corgi.getIndex());
 			LineScreen.setChart(cts.get(0), dts.get(corgi.getIndex()));
 		} else {
-			// Assign to animated chart
+//			AnimatedScreen.setChart()
 		}
 		
 		// Tables
