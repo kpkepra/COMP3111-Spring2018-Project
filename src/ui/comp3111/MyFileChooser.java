@@ -137,7 +137,12 @@ public class MyFileChooser extends Main {
     	int idx = Listbox.getIndex();
     	
     	ArrayList<Chart> ct = new ArrayList<Chart>();
-    	ct.add(LineScreen.getChart());
+    	if (ChartType.getType() == "Animated Pie") {
+    		ct.add(AnimatedScreen.getChart());
+    	} else {
+    		ct.add(LineScreen.getChart());
+    	}
+    	
     	CorgiObj corgi = new CorgiObj(dt, ct, idx);
     	System.out.println(corgi.getIndex());
     	MyFileExtenstion mf = new MyFileExtenstion();
