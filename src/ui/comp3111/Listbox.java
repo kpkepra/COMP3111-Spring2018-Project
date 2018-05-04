@@ -158,22 +158,19 @@ public class Listbox extends Main {
 					
 					DataTableDisplay.refresh();
 					if (ChartType.getType() == "Animated Pie") {
-						AnimatedScreen.refresh();
+							AnimatedScreen.refresh();
 					} else {
 						try {
 							LineScreen.refresh();
 						} catch (RuntimeException e) {
+							LineScreen.linePie = !LineScreen.linePie;
 							try {
-								LineScreen.linePie = !LineScreen.linePie;
-								if (Objects.equals(ChartType.getType(), "Line")) ChartType.setType(1);
-								else if (Objects.equals(ChartType.getType(), "Pie")) ChartType.setType(0);
+								if (LineScreen.linePie == true) {
+									ChartType.setType(0);
+								} else {
+									ChartType.setType(1);
+								}
 							} catch (RuntimeException ex) {
-								Alert alert = new Alert(Alert.AlertType.ERROR);
-								alert.setTitle("Chart Fail");
-								alert.setHeaderText("Application fails to display the chart!");
-								alert.setContentText("The DataTable does not fill the requirement!");
-
-								alert.showAndWait();
 							}
 						}
 					}
