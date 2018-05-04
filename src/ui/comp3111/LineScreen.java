@@ -105,10 +105,10 @@ public class LineScreen extends Main {
 		
 		// Chart
 		if (ct instanceof Pie) {
-			pieChart = (Pie) ct;
+			pieChart = (ct != null ? (Pie) ct : new Pie(table));
 			pcd = new PieChartDisplay(pieChart);
 		} else {
-			lineChart = (Line) ct;
+			lineChart = (ct != null ? (Line) ct : new Line(table));
 			lcd = new LineChartDisplay(lineChart);
 		}
 		chartNode = (linePie == true ? lcd.display() : pcd.display());
