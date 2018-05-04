@@ -24,6 +24,8 @@ public class ChartType extends Main {
 	private static ToggleGroup tg;
 	private static String[] radioText = {"Line", "Pie", "Animated Pie"};
 	private static RadioButton[] radios = new RadioButton[3];
+
+	private static boolean change = false;
 	
     /**
      * Pane function. Generates and returns a pane object that displays the chart type selectors.
@@ -81,18 +83,23 @@ public class ChartType extends Main {
 							LineScreen.refresh();
 						} catch (RuntimeException e) {
 							LineScreen.linePie = !LineScreen.linePie;
-							if (tg.getSelectedToggle().getUserData().toString() == radioText[0]) {
-								radios[1].setSelected(true);
-							}
-							else {
-								radios[0].setSelected(true);
-							}
-							Alert alert = new Alert(Alert.AlertType.ERROR);
-							alert.setTitle("Chart Fail");
-							alert.setHeaderText("Application fails to display the chart!");
-							alert.setContentText("The DataTable does not fill the requirement!");
+							if (!change) {
+								if (tg.getSelectedToggle().getUserData().toString() == radioText[0]) {
+									change = true;
+									radios[1].setSelected(true);
+								}
+								else {
+									change = true;
+									radios[0].setSelected(true);
+								}
+								Alert alert = new Alert(Alert.AlertType.ERROR);
+								alert.setTitle("Chart Fail");
+								alert.setHeaderText("Application fails to display the chart!");
+								alert.setContentText("The DataTable does not fill the requirement!");
 
-							alert.showAndWait();
+								alert.showAndWait();
+								change = false;
+							}
 						}
 					}
 
