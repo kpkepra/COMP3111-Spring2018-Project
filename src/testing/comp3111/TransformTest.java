@@ -1,3 +1,5 @@
+package testing.comp3111;
+
 import core.comp3111.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
