@@ -48,42 +48,41 @@ public class DataTableDisplay {
 	 * @return VBox The FX node which is ready to be displayed.
 	 */
 	public static VBox displayTable() {
-	  pane = new VBox();
-	  datasetTable = new TableView();
-	  datasetTable.setColumnResizePolicy(TableView.UNCONSTRAINED_RESIZE_POLICY);
+		pane = new VBox();
+		datasetTable = new TableView();
 
-		  for (int i = 0; i < table.getNumRow(); i++) {
-			  datasetTable.getItems().add(i);
-		  }
+		for (int i = 0; i < table.getNumRow(); i++) {
+		  datasetTable.getItems().add(i);
+		}
 
-		  for (String colName : table.getColNames()) {
-			  DataColumn dataColumn = table.getCol(colName);
-			  Object[] data = dataColumn.getData();
+		for (String colName : table.getColNames()) {
+			DataColumn dataColumn = table.getCol(colName);
+			Object[] data = dataColumn.getData();
 
-			  if (Objects.equals(dataColumn.getTypeName(), DataType.TYPE_STRING)) {
-				  TableColumn<Integer, String> column = new TableColumn<>(colName);
+			if (Objects.equals(dataColumn.getTypeName(), DataType.TYPE_STRING)) {
+				TableColumn<Integer, String> column = new TableColumn<>(colName);
 
-				  column.setCellValueFactory(cellData -> {
-					  Integer rowIndex = cellData.getValue();
+				column.setCellValueFactory(cellData -> {
+				  Integer rowIndex = cellData.getValue();
 
-					  return new ReadOnlyStringWrapper((String) data[rowIndex]);
+				  return new ReadOnlyStringWrapper((String) data[rowIndex]);
 
-				  });
-				  column.prefWidthProperty().bind(datasetTable.widthProperty().divide(table.getNumCol()));
-				  datasetTable.getColumns().add(column);
-			  }
-			  if (Objects.equals(dataColumn.getTypeName(), DataType.TYPE_NUMBER)) {
-				  TableColumn<Integer, Number> column = new TableColumn<>(colName);
+				});
+				column.prefWidthProperty().bind(datasetTable.widthProperty().divide(table.getNumCol()));
+				datasetTable.getColumns().add(column);
+			}
+			if (Objects.equals(dataColumn.getTypeName(), DataType.TYPE_NUMBER)) {
+				TableColumn<Integer, Number> column = new TableColumn<>(colName);
 
-				  column.setCellValueFactory(cellData -> {
-					  Integer rowIndex = cellData.getValue();
+				column.setCellValueFactory(cellData -> {
+				  Integer rowIndex = cellData.getValue();
 
-					  return new ReadOnlyFloatWrapper(Float.valueOf(data[rowIndex].toString()));
-				  });
-				  column.prefWidthProperty().bind(datasetTable.widthProperty().divide(table.getNumCol()));
-				  datasetTable.getColumns().add(column);
-			  }
-		  }
+				  return new ReadOnlyFloatWrapper(Float.valueOf(data[rowIndex].toString()));
+				});
+				column.prefWidthProperty().bind(datasetTable.widthProperty().divide(table.getNumCol()));
+				datasetTable.getColumns().add(column);
+			}
+		}
 
 	  pane.getChildren().addAll(datasetTable);
 	  return pane;
@@ -95,14 +94,14 @@ public class DataTableDisplay {
 	 * 			   - the new DataTable to be displayed in the JavaFX UI.
 	 */
 	public static void setTable(DataTable newTable) {
-		  table = newTable;
-		  MainScreen.centerc.getChildren().remove(MainScreen.tablec);
-		  MainScreen.tablec = displayTable();
-		  MainScreen.tablec.setMinWidth(375);
-		  MainScreen.tablec.setMaxWidth(375);
-		  MainScreen.tablec.setMinHeight(250);
-		  MainScreen.tablec.setMaxHeight(250);
-		  MainScreen.tablec.setStyle("-fx-background-color: orange");
-		  MainScreen.centerc.getChildren().add(0, MainScreen.tablec);
-	  }
+		table = newTable;
+		MainScreen.centerc.getChildren().remove(MainScreen.tablec);
+		MainScreen.tablec = displayTable();
+		MainScreen.tablec.setMinWidth(375);
+		MainScreen.tablec.setMaxWidth(375);
+		MainScreen.tablec.setMinHeight(250);
+		MainScreen.tablec.setMaxHeight(250);
+		MainScreen.tablec.setStyle("-fx-background-color: orange");
+		MainScreen.centerc.getChildren().add(0, MainScreen.tablec);
+		}
 }
