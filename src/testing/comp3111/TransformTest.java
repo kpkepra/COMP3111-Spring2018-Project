@@ -78,6 +78,23 @@ class TransformTest {
         assertEquals(9, newTables[0].getNumRow());
         assertEquals(1, newTables[1].getNumRow());
     }
+    
+    @Test
+    void testRandomSplit_LoopTest() throws TransformException, DataTableException {
+    	for (int i = 0; i < 5; ++i) {
+	    	dataTable = new DataTable();
+	        testDataColumn = new DataColumn(DataType.TYPE_NUMBER, new Double[]{1d,2d,3d,4d,5d,6d,7d,8d,9d,10d});
+	        dataTable.addCol("column", testDataColumn);
+	
+	        transform.setDataTable(dataTable);
+	        transform.setPercentSplit(new float[]{50f, 50f});
+	
+	        DataTable[] newTables = transform.randomSplit();
+	
+	        assertEquals(5, newTables[0].getNumRow());
+	        assertEquals(5, newTables[1].getNumRow());
+    	}
+    }
 
     @Test
     void testFilterData_NullColumn() throws TransformException, DataTableException {
