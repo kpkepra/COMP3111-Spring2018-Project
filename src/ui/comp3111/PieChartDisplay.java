@@ -47,6 +47,7 @@ public class PieChartDisplay extends ChartDisplay {
 
         ComboBox textCombo = new ComboBox();
         for (String colName : piechart.getTextCols()) textCombo.getItems().add(colName);
+        textCombo.setValue(piechart.getText());
 
         textCombo.valueProperty().addListener(new ChangeListener<String>() {
             @Override
@@ -62,6 +63,7 @@ public class PieChartDisplay extends ChartDisplay {
         ComboBox numCombo = new ComboBox();
         for (String colName : piechart.getNumCols()) numCombo.getItems().add(colName);
 
+        numCombo.setValue(piechart.getNum());
         numCombo.valueProperty().addListener(new ChangeListener<String>() {
             @Override
             public void changed(ObservableValue observableValue, String old_val, String new_val) {
