@@ -9,6 +9,7 @@ import core.comp3111.MyFileExtenstion.CorgiObj;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.EventHandler;
+import javafx.scene.control.Alert;
 import javafx.scene.control.ListView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
@@ -57,9 +58,18 @@ public class Listbox extends Main {
 	 * 				- name of the dataset.
 	 */
 	public static void addDataset(CSVReader csv, String name) throws DataTableException {
-		filenames.add(name);
-		DataTable table = DataTableTransformer.transform(csv);
-		tables.add(table);
+		try {
+			DataTable table = DataTableTransformer.transform(csv);
+			filenames.add(name);
+			tables.add(table);
+		} catch (RuntimeException e) {
+			Alert alert = new Alert(Alert.AlertType.ERROR);
+			alert.setTitle("CSV Read Fail");
+			alert.setHeaderText("Application fails to read the CSV!");
+			alert.setContentText("The CSV file is invalid!");
+
+			alert.showAndWait();
+		}
 	}
 	
 	/**
