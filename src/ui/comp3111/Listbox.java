@@ -131,20 +131,22 @@ public class Listbox extends Main {
 		list.setOnMouseClicked(new EventHandler<MouseEvent>() {
 			@Override
 			public void handle(MouseEvent arg0) {
-				DataTable table = tables.get(list.getSelectionModel().getSelectedIndex());
-				DataTableDisplay.setTable(table);
-				LineScreen.loadData(table);
-				AnimatedScreen.loadData(table);
-				if (ChartType.getType() == "Animated Pie") {
-					AnimatedScreen.refresh();
-				} else {
-					LineScreen.refresh();
+				if (list.getSelectionModel().getSelectedIndex() != -1) {
+					DataTable table = tables.get(list.getSelectionModel().getSelectedIndex());
+					DataTableDisplay.setTable(table);
+					LineScreen.loadData(table);
+					AnimatedScreen.loadData(table);
+					if (ChartType.getType() == "Animated Pie") {
+						AnimatedScreen.refresh();
+					} else {
+						LineScreen.refresh();
+					}
+					
+					MainScreen.tfDisplay = new TransformDisplay(new Transform(DataTableDisplay.getDT()));
+					MainScreen.rightc.getChildren().remove(1);
+					MainScreen.filterPane = MainScreen.tfDisplay.splitFilter();
+					MainScreen.rightc.getChildren().add(1, MainScreen.filterPane);
 				}
-				
-				MainScreen.tfDisplay = new TransformDisplay(new Transform(DataTableDisplay.getDT()));
-				MainScreen.rightc.getChildren().remove(1);
-				MainScreen.filterPane = MainScreen.tfDisplay.splitFilter();
-				MainScreen.rightc.getChildren().add(1, MainScreen.filterPane);
 			}
 			
 		});

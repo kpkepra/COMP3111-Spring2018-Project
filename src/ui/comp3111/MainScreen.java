@@ -66,7 +66,7 @@ public class MainScreen {
 	     rightc.setMaxWidth(300);
 	     
 	     tablec = DataTableDisplay.displayTable();
-	     tablec.setMinWidth(200);
+		tablec.setMinWidth(200);
 	     tablec.setMaxWidth(200);
 	     tablec.setMinHeight(280);
 	     tablec.setMaxHeight(280);
