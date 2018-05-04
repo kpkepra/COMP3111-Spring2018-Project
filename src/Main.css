@@ -22,7 +22,7 @@
 }
 
 .screen-background {
-	-fx-background-image: url("../src/bg.png");
+	-fx-background-image: url("bg.png");
 	-fx-text-fill: white;
 }
 
