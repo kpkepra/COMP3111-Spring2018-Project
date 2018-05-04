@@ -2,6 +2,7 @@ package ui.comp3111;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Objects;
 import java.util.concurrent.atomic.AtomicInteger;
 
 import core.comp3111.*;
@@ -9,9 +10,11 @@ import core.comp3111.MyFileExtenstion.CorgiObj;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.EventHandler;
+import javafx.scene.control.Alert;
 import javafx.scene.control.ListView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
+import ui.comp3111.AnimatedScreen.AnimatedPie;
 
 /**
  * Listbox - A left-pane listview that displays all of the loaded datasets, either from .corgi 
@@ -26,9 +29,7 @@ import javafx.scene.layout.Pane;
 public class Listbox extends Main {
 	private static Pane pane;
 	private static ObservableList<String> filenames = FXCollections.observableArrayList();
-	private static ObservableList<String> corginames = FXCollections.observableArrayList();
 	private static ArrayList<DataTable> tables = new ArrayList<DataTable>();
-	private static ArrayList<CorgiObj> corgis = new ArrayList<CorgiObj>();
 	private static ListView<String> list = new ListView<String>();
 	
 	/**
@@ -57,9 +58,18 @@ public class Listbox extends Main {
 	 * 				- name of the dataset.
 	 */
 	public static void addDataset(CSVReader csv, String name) throws DataTableException {
-		filenames.add(name);
-		DataTable table = DataTableTransformer.transform(csv);
-		tables.add(table);
+		try {
+			DataTable table = DataTableTransformer.transform(csv);
+			filenames.add(name);
+			tables.add(table);
+		} catch (RuntimeException e) {
+			Alert alert = new Alert(Alert.AlertType.ERROR);
+			alert.setTitle("CSV Read Fail");
+			alert.setHeaderText("Application fails to read the CSV!");
+			alert.setContentText("The CSV file is invalid!");
+
+			alert.showAndWait();
+		}
 	}
 	
 	/**
@@ -83,8 +93,6 @@ public class Listbox extends Main {
 	 * 
 	 */
 	public static void addCorgi(CorgiObj corgi) {
-		corginames.add(corgi.getName());
-		corgis.add(corgi);
 		ArrayList<DataTable> dts = corgi.getDts();
 		ArrayList<Chart> cts = corgi.getCharts();
 		AtomicInteger i = new AtomicInteger(1);
@@ -94,18 +102,25 @@ public class Listbox extends Main {
 		});
 		
 		//Charts
-		if (cts.get(0) instanceof Pie || cts.get(0) instanceof Line) {
+		list.getSelectionModel().select(corgi.getIndex());
+		
+		if (cts.get(0) instanceof AnimatedPie) {
+			System.out.println(cts.get(0));
+			AnimatedScreen.setChart(dts.get(corgi.getIndex()));
+			ChartType.setType(2);
+		} else if (cts.get(0) instanceof Line) {
 			LineScreen.setChart(cts.get(0), dts.get(corgi.getIndex()));
-		} else {
-			// Assign to animated chart
+			ChartType.setType(0);
+		} else if (cts.get(0) instanceof Pie) {
+			LineScreen.setChart(cts.get(0), dts.get(corgi.getIndex()));
+			ChartType.setType(1);
 		}
 		
 		// Tables
 		DataTableDisplay.setTable(corgi.getDts().get(corgi.getIndex()));
 		
-		MainScreen.tfDisplay = new TransformDisplay(new Transform(DataTableDisplay.getDT()));
 		MainScreen.rightc.getChildren().remove(1);
-		MainScreen.filterPane = MainScreen.tfDisplay.splitFilter();
+		MainScreen.filterPane = new TransformDisplay(new Transform(DataTableDisplay.getDT())).splitFilter();
 		MainScreen.rightc.getChildren().add(1, MainScreen.filterPane);
 	}
 	
@@ -123,6 +138,12 @@ public class Listbox extends Main {
 	 */
 	public static int getIndex() { return list.getSelectionModel().getSelectedIndex(); }
 	
+	public static void refresh() {
+	     MainScreen.listView = Listbox.pane();
+	     MainScreen.listView.setMinWidth(200);
+	     MainScreen.listView.setMaxWidth(200);
+	}
+	
 	/**
 	 * Initialize all of the EventHandler functions when user's actions are made in this class.
 	 * 
@@ -136,15 +157,31 @@ public class Listbox extends Main {
 					DataTableDisplay.setTable(table);
 					LineScreen.loadData(table);
 					AnimatedScreen.loadData(table);
+					
+					DataTableDisplay.refresh();
 					if (ChartType.getType() == "Animated Pie") {
 						AnimatedScreen.refresh();
 					} else {
-						LineScreen.refresh();
+						try {
+							LineScreen.refresh();
+						} catch (RuntimeException e) {
+							try {
+								LineScreen.linePie = !LineScreen.linePie;
+								if (Objects.equals(ChartType.getType(), "Line")) ChartType.setType(1);
+								else if (Objects.equals(ChartType.getType(), "Pie")) ChartType.setType(0);
+							} catch (RuntimeException ex) {
+								Alert alert = new Alert(Alert.AlertType.ERROR);
+								alert.setTitle("Chart Fail");
+								alert.setHeaderText("Application fails to display the chart!");
+								alert.setContentText("The DataTable does not fill the requirement!");
+
+								alert.showAndWait();
+							}
+						}
 					}
 					
-					MainScreen.tfDisplay = new TransformDisplay(new Transform(DataTableDisplay.getDT()));
 					MainScreen.rightc.getChildren().remove(1);
-					MainScreen.filterPane = MainScreen.tfDisplay.splitFilter();
+					MainScreen.filterPane =  new TransformDisplay(new Transform(DataTableDisplay.getDT())).splitFilter();
 					MainScreen.rightc.getChildren().add(1, MainScreen.filterPane);
 				}
 			}
