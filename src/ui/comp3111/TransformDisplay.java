@@ -302,8 +302,13 @@ public class TransformDisplay extends Main {
 
                     askSaveReplace("datasets");
                 }
-                catch (Exception ex) {
-                    ex.printStackTrace();
+                catch (RuntimeException ex) {
+                    Alert alert = new Alert(Alert.AlertType.ERROR);
+                    alert.setTitle("Splitting failed!");
+                    alert.setHeaderText("Invalid parameters!");
+                    alert.setContentText("One of the parameters for splitting is invalid! Please retry with valid input!");
+
+                    alert.showAndWait();
                 }
             }
         });
@@ -392,7 +397,7 @@ public class TransformDisplay extends Main {
         filterButton.getStyleClass().add("splitfilter_btn");
         filterButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override
-            public void handle(ActionEvent e) {
+            public void handle(ActionEvent e) throws TransformException {
                 try {
                     transform.setNumberFilter(numberField.getText());
 
@@ -443,8 +448,13 @@ public class TransformDisplay extends Main {
 
                     askSaveReplace("filtered dataset");
                 }
-                catch (Exception ex) {
-                    ex.printStackTrace();
+                catch (RuntimeException ex) {
+                    Alert alert = new Alert(Alert.AlertType.ERROR);
+                    alert.setTitle("Filtering failed!");
+                    alert.setHeaderText("Invalid parameters!");
+                    alert.setContentText("One of the parameters for filtering is invalid! Please retry with valid input!");
+
+                    alert.showAndWait();
                 }
             }
         });
