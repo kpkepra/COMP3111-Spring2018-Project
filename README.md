@@ -30,6 +30,7 @@
 - https://docs.oracle.com/javafx/2/ui_controls/button.htm
 - https://docs.oracle.com/javafx/2/ui_controls/radio-button.htm
 - https://www.tutorialspoint.com/java/java_serialization.htm
+- Prof. Desmond Tsoi's lecture note on Java GUI Programming (https://course.cse.ust.hk/comp3021/notes/7-gui-programming-full.pdf) and Event-driven Programming (https://course.cse.ust.hk/comp3021/notes/8-event-driven-animations-full.pdf)
 
 ## Notes:
 - Our commits were approximately four times the amount of what it should have because two of our members accidentally had the wrong commit email,
