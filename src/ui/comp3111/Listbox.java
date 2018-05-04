@@ -84,6 +84,10 @@ public class Listbox extends Main {
 		tables.add(table);
 	}
 	
+	public static void replaceDataset(DataTable table) {
+		tables.set(getIndex(), table);
+	}
+	
 	/**
 	 * Adds a Corgi obj (.corgi file) and loads all of the DataTable and Chart items. The items are then
 	 * added into the ArrayLists containing DataTable and CorgiObj items respectively.
