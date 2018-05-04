@@ -67,10 +67,10 @@ public class AnimatedScreen extends Main {
 			MainScreen.centerc.getChildren().remove(MainScreen.chartc);
 		}
 		MainScreen.chartc = pane();
-		MainScreen.chartc.setMinWidth(500);
-		MainScreen.chartc.setMaxWidth(500);
-		MainScreen.chartc.setMinHeight(400);
-		MainScreen.chartc.setMaxHeight(400);
+		MainScreen.chartc.setMinWidth(400);
+		MainScreen.chartc.setMaxWidth(400);
+		MainScreen.chartc.setMinHeight(350);
+		MainScreen.chartc.setMaxHeight(350);
 		MainScreen.centerc.getChildren().add(1, MainScreen.chartc);
     }
     
@@ -185,8 +185,8 @@ public class AnimatedScreen extends Main {
         });
 
         GridPane selectAxis = new GridPane();
-        Label textLabel = new Label("Select text column for categories: ");
-        Label numLabel = new Label("Select numeric column for pie data: ");
+        Label textLabel = new Label("categories: ");
+        Label numLabel = new Label("column of pie");
         textLabel.setStyle("-fx-font: 16 arial;");
         numLabel.setStyle("-fx-font: 16 arial;");
 
