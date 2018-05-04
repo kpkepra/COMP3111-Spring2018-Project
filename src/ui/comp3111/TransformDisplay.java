@@ -195,6 +195,8 @@ public class TransformDisplay extends Main {
                     root.getChildren().remove(datasetTable);
 
                     VBox newPane = new VBox();
+                    newPane.setMinHeight(datasetTable.getHeight());
+                    newPane.setMaxHeight(datasetTable.getHeight());
 
                     TableView<Integer> dataset1 = new TableView();
                     dataset1.setColumnResizePolicy(TableView.UNCONSTRAINED_RESIZE_POLICY);
@@ -273,8 +275,8 @@ public class TransformDisplay extends Main {
                             dataset2.getColumns().add(column);
                         }
                     }
-//                    dataset1.prefHeightProperty().bind(newPane.heightProperty().divide(2)));
-//                    dataset2.prefHeightProperty().bind(newPane.heightProperty().divide(2));
+                    dataset1.prefHeightProperty().bind(newPane.heightProperty().divide(2));
+                    dataset2.prefHeightProperty().bind(newPane.heightProperty().divide(2));
 
                     askSaveReplace();
                 }
