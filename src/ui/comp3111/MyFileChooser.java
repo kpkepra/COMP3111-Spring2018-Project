@@ -125,6 +125,12 @@ public class MyFileChooser extends Main {
             }
     }
     
+    static void refresh() {
+    	MainScreen.impexp = MyFileChooser.pane();
+	    MainScreen.impexp.setMinWidth(200);
+	    MainScreen.impexp.setMaxWidth(200);
+    }
+    
     static void saveFile(File file) {
     	String fileName = file.getName();
     	ArrayList<DataTable> dt = Listbox.getTables();
