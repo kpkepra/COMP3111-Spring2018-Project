@@ -37,6 +37,8 @@ public class TransformDisplay extends Main {
 
     GridPane splitFilter;
 
+    private static Pane datasetTable;
+
     /**
      * Construct - Create a TransformDisplay object by giving the Transform object which will be displayed in the FX node.
      *
@@ -95,7 +97,7 @@ public class TransformDisplay extends Main {
         root.add(numberField1, 0, 2);
         root.add(numberField2, 1, 2);
 
-        Pane datasetTable = new DataTableDisplay(transform.getDataTable()).displayTable();
+        datasetTable = new DataTableDisplay(transform.getDataTable()).displayTable();
 
         root.add(datasetTable, 0, 4, 2, 1);
 
@@ -349,7 +351,7 @@ public class TransformDisplay extends Main {
         column3.setPercentWidth(33);
         selectFilter.getColumnConstraints().addAll(column1, column2, column3);
 
-        Pane datasetTable = new DataTableDisplay(transform.getDataTable()).displayTable();
+        datasetTable = new DataTableDisplay(transform.getDataTable()).displayTable();
         selectFilter.add(datasetTable, 0, 4, 3, 1);
 
         ComboBox columnCombo = new ComboBox();
@@ -393,7 +395,7 @@ public class TransformDisplay extends Main {
         numberField.textProperty().addListener(new ChangeListener<String>() {
             @Override
             public void changed(ObservableValue observableValue, String old_val, String new_val) {
-                if (!new_val.matches("[\\d,\\.]*")) {
+                if (!new_val.matches("[\\d,\\.,\\-]*")) {
                     numberField.setText(new_val.replaceAll("[^\\d, ^\\.]", ""));
                 }
             }
@@ -415,7 +417,7 @@ public class TransformDisplay extends Main {
 
                     DataTable newTable = transform.filterData();
 
-                    Pane datasetTable = new DataTableDisplay(newTable).displayTable();
+                    datasetTable = new DataTableDisplay(newTable).displayTable();
 
                     selectFilter.add(datasetTable, 0, 4, 3, 1);
 
