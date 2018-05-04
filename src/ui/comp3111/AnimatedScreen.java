@@ -60,7 +60,9 @@ public class AnimatedScreen extends Main {
     }
     
     public static void refresh() {
-		MainScreen.centerc.getChildren().remove(MainScreen.chartc);
+		if (MainScreen.centerc.getChildren().contains(MainScreen.chartc)) { 
+			MainScreen.centerc.getChildren().remove(MainScreen.chartc);
+		}
 		MainScreen.chartc = pane();
 		MainScreen.chartc.setMinWidth(500);
 		MainScreen.chartc.setMaxWidth(500);
