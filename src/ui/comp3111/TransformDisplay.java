@@ -13,6 +13,7 @@ import javafx.scene.control.*;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
+import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
 
@@ -103,6 +104,7 @@ public class TransformDisplay extends Main {
         splitButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent e) {
+                if (numberField1.getText() == null || numberField2.getText() == null) return;
                 try {
                     float[] newPercentSplit = new float[2];
                     newPercentSplit[0] = (Float.valueOf(numberField1.getText())).floatValue();
@@ -193,18 +195,23 @@ public class TransformDisplay extends Main {
 
                     root.getChildren().remove(datasetTable);
 
-                    TableView<Integer> datasetTable = new TableView();
-                    datasetTable.setColumnResizePolicy(TableView.UNCONSTRAINED_RESIZE_POLICY);
-                    root.add(datasetTable, 0, 4, 4, 1);
+                    VBox newPane = new VBox();
 
-                    for (int i = 0; i < transform.getDataTable().getNumRow(); i++) {
-                        datasetTable.getItems().add(i);
+                    TableView<Integer> dataset1 = new TableView();
+                    dataset1.setColumnResizePolicy(TableView.UNCONSTRAINED_RESIZE_POLICY);
+                    TableView<Integer> dataset2 = new TableView();
+                    dataset2.setColumnResizePolicy(TableView.UNCONSTRAINED_RESIZE_POLICY);
+
+                    for (int i = 0; i < newTables[0].getNumRow(); i++) {
+                        dataset1.getItems().add(i);
+                    }
+                    for (int i = 0; i < newTables[1].getNumRow(); i++) {
+                        dataset2.getItems().add(i);
                     }
 
-                    TableColumn dataset1 = new TableColumn("Dataset 1");
-                    TableColumn dataset2 = new TableColumn("Dataset 2");
+                    newPane.getChildren().addAll(dataset1, dataset2);
+                    root.add(newPane, 0, 4, 4, 1);
 
-                    datasetTable.getColumns().addAll(dataset1, dataset2);
 
                     for (String colName : newTables[0].getColNames()) {
                         DataColumn dataColumn = newTables[0].getCol(colName);
@@ -267,9 +274,8 @@ public class TransformDisplay extends Main {
                             dataset2.getColumns().add(column);
                         }
                     }
-
-                    dataset1.prefWidthProperty().bind(datasetTable.widthProperty().divide(2));
-                    dataset2.prefWidthProperty().bind(datasetTable.widthProperty().divide(2));
+//                    dataset1.prefHeightProperty().bind(newPane.heightProperty().divide(2)));
+//                    dataset2.prefHeightProperty().bind(newPane.heightProperty().divide(2));
 
                     askSaveReplace();
                 }
@@ -358,7 +364,7 @@ public class TransformDisplay extends Main {
         selectFilter.add(new Label("Input number to check against: "), 2, 1);
         selectFilter.add(numberField, 2, 2);
 //        selectFilter.getStyleClass().add("filter-gridpane");
-        
+
         Button filterButton = new Button("Filter");
         filterButton.getStyleClass().add("splitfilter_btn");
         filterButton.setOnAction(new EventHandler<ActionEvent>() {
@@ -417,7 +423,7 @@ public class TransformDisplay extends Main {
                 }
             }
         });
-       
+
         selectFilter.add(filterButton, 0, 3, 3, 1);
 
         return selectFilter;
