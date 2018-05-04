@@ -82,7 +82,7 @@ public class ChartType extends Main {
 						try {
 							LineScreen.refresh();
 						} catch (RuntimeException e) {
-							LineScreen.linePie = !LineScreen.linePie;
+							LineScreen.empty();
 							if (!change) {
 								if (tg.getSelectedToggle().getUserData().toString() == radioText[0]) {
 									change = true;

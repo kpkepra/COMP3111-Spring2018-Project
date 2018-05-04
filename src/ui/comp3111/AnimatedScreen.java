@@ -238,5 +238,15 @@ public class AnimatedScreen extends Main {
 			MainScreen.centerc.getChildren().set(1, MainScreen.chartc);
 		}
     }
+    
+	/**
+	 * Clears the chart into empty space.
+	 */
+	public static void empty() {
+		if (MainScreen.centerc.getChildren().size() == 2) {
+			MainScreen.centerc.getChildren().remove(MainScreen.chartc);
+		}
+		
+	}
 
 }

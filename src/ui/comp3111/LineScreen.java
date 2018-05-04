@@ -1,5 +1,6 @@
 package ui.comp3111;
 
+import java.util.Objects;
 import java.util.Random;
 
 import core.comp3111.*;
@@ -50,22 +51,14 @@ public class LineScreen extends Main {
      * 
      * @return Pane object containing the line or pie chart.
      */
-	public static Pane pane() throws ChartException{
+	public static Pane pane() throws ChartException {
 		xAxis = new NumberAxis();
         yAxis = new NumberAxis();
-
-        btLineChartBackMain = new Button("Back");
 
         xAxis.setLabel("undefined");
         yAxis.setLabel("undefined");
 
-        // Layout the UI components
-        VBox container = new VBox(20);
-        container.getChildren().addAll(btLineChartBackMain);
-        container.setAlignment(Pos.CENTER);
-
         BorderPane pane = new BorderPane();
-        pane.setCenter(container);
 
         // Apply CSS to style the GUI components
         pane.getStyleClass().add("screen-background");
@@ -87,7 +80,7 @@ public class LineScreen extends Main {
 	 * @return static chart based on the assigned DataTable table object.
 	 * @throws ChartException
 	 */
-	public static BorderPane generateChart() throws ChartException {
+	public static BorderPane generateChart() {
 		xAxis.setLabel("X");
 		yAxis.setLabel("Y");
 		
@@ -99,7 +92,9 @@ public class LineScreen extends Main {
 				pieChart = new Pie(table);
 				pcd = new PieChartDisplay(pieChart);
 			}
-			chartNode = (linePie == true ? lcd.display() : pcd.display());
+			chartNode = (linePie == true ? 
+							(lineChart == null ? new BorderPane() : lcd.display()) : 
+							(pieChart == null ? new BorderPane() : pcd.display()));
 		} else {
 			chartNode = new BorderPane();
 		}
@@ -144,6 +139,22 @@ public class LineScreen extends Main {
 	 */
 	public static void refresh() throws ChartException{
 		MainScreen.chartc = pane();
+		MainScreen.chartc.setMinWidth(400);
+		MainScreen.chartc.setMaxWidth(400);
+		MainScreen.chartc.setMinHeight(350);
+		MainScreen.chartc.setMaxHeight(350);
+		if (MainScreen.centerc.getChildren().size() < 2) {
+			MainScreen.centerc.getChildren().add(1, MainScreen.chartc);
+		} else {
+			MainScreen.centerc.getChildren().set(1, MainScreen.chartc);
+		}
+	}
+	
+	/** 
+	 * Empties the chart if requirement doesn't met.
+	 */
+	public static void empty() {
+		MainScreen.chartc = new Pane();
 		MainScreen.chartc.setMinWidth(400);
 		MainScreen.chartc.setMaxWidth(400);
 		MainScreen.chartc.setMinHeight(350);
