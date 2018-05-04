@@ -169,7 +169,7 @@ public class TransformDisplay extends Main {
                                     @Override
                                     public void handle(ActionEvent e) {
                                         // ( ͡° ͜ʖ ͡°)
-                                    	
+//                                    	newTables[0]
                                         stage.hide();
                                     }
                                 });
@@ -179,6 +179,7 @@ public class TransformDisplay extends Main {
                                     @Override
                                     public void handle(ActionEvent e) {
                                         // ( ͡° ͜ʖ ͡°)
+//                                    	newTables[1]
                                         stage.hide();
                                     }
                                 });
@@ -274,7 +275,9 @@ public class TransformDisplay extends Main {
                             dataset2.getColumns().add(column);
                         }
                     }
-//                    dataset1.prefHeightProperty().bind(newPane.heightProperty().divide(2)));
+                    dataset1.setMaxHeight(100);
+//                    dataset1.prefHeightProperty().bind(newPane.heightProperty().divide(2));
+//                    dataset1.setStyle("-fx-border-width: 0px;");
 //                    dataset2.prefHeightProperty().bind(newPane.heightProperty().divide(2));
 
                     askSaveReplace();
