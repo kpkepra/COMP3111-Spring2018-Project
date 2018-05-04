@@ -153,6 +153,7 @@ public class AnimatedScreen extends Main {
 
     	ComboBox textCombo = new ComboBox();
         for (String colName : pie.getTextCols()) textCombo.getItems().add(colName);
+        textCombo.setValue(pie.getText());
 
         textCombo.valueProperty().addListener(new ChangeListener<String>() {
             @Override
@@ -167,6 +168,7 @@ public class AnimatedScreen extends Main {
 
         ComboBox numCombo = new ComboBox();
         for (String colName : pie.getNumCols()) numCombo.getItems().add(colName);
+        numCombo.setValue(pie.getNum());
 
         numCombo.valueProperty().addListener(new ChangeListener<String>() {
             @Override
