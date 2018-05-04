@@ -61,7 +61,16 @@ public class ChartType extends Main {
 			public void changed(ObservableValue<? extends Toggle> ov, Toggle oldT, Toggle newT) {
 				if (tg.getSelectedToggle() != null) {
 					if (tg.getSelectedToggle().getUserData().toString() == radioText[2]) {
-						AnimatedScreen.refresh();
+						try {
+							AnimatedScreen.refresh();
+						} catch (RuntimeException e) {
+							Alert alert = new Alert(Alert.AlertType.ERROR);
+							alert.setTitle("Chart Fail");
+							alert.setHeaderText("Application fails to display the chart!");
+							alert.setContentText("The DataTable does not fill the requirement!");
+
+							alert.showAndWait();
+						}
 					} else {
 						if (tg.getSelectedToggle().getUserData().toString() == radioText[0]) {
 							LineScreen.linePie = true;
