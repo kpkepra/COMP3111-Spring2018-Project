@@ -44,12 +44,12 @@ public class MainScreen {
 	     hc.getChildren().addAll(lb_Title);
 	     
 	     impexp = MyFileChooser.pane();
-	     impexp.setMinWidth(240);
-	     impexp.setMaxWidth(240);
+	     impexp.setMinWidth(200);
+	     impexp.setMaxWidth(200);
 	     
 	     listView = Listbox.pane();
-	     listView.setMinWidth(240);
-	     listView.setMaxWidth(240);
+	     listView.setMinWidth(200);
+	     listView.setMaxWidth(200);
 	     
 	     leftc = new VBox(20);
 	     leftc.setAlignment(Pos.CENTER);
@@ -62,20 +62,20 @@ public class MainScreen {
 	     rightc = new VBox(20);
 	     rightc.setAlignment(Pos.CENTER);
 	     rightc.getChildren().addAll(typePane, filterPane);
-	     rightc.setMinWidth(400);
-	     rightc.setMaxWidth(400);
+	     rightc.setMinWidth(300);
+	     rightc.setMaxWidth(300);
 	     
 	     tablec = DataTableDisplay.displayTable();
-	     tablec.setMinWidth(500);
-	     tablec.setMaxWidth(500);
-	     tablec.setMinHeight(300);
-	     tablec.setMaxHeight(300);
+	     tablec.setMinWidth(200);
+	     tablec.setMaxWidth(200);
+	     tablec.setMinHeight(280);
+	     tablec.setMaxHeight(280);
 
 	     chartc = LineScreen.pane();
-	     chartc.setMinWidth(500);
-	     chartc.setMaxWidth(500);
-	     chartc.setMinHeight(400);
-	     chartc.setMaxHeight(400);
+	     chartc.setMinWidth(200);
+	     chartc.setMaxWidth(200);
+	     chartc.setMinHeight(280);
+	     chartc.setMaxHeight(280);
 	     
 	     centerc = new VBox(2);
 	     centerc.setAlignment(Pos.CENTER);
