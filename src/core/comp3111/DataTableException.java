@@ -12,7 +12,7 @@ package core.comp3111;
  *
  */
 @SuppressWarnings("serial")
-public class DataTableException extends Exception {
+public class DataTableException extends RuntimeException {
 
 	public DataTableException(String message) {
 		super("DataTableException: " + message);

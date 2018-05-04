@@ -125,13 +125,24 @@ public class MyFileChooser extends Main {
             }
     }
     
+    static void refresh() {
+    	MainScreen.impexp = MyFileChooser.pane();
+	    MainScreen.impexp.setMinWidth(200);
+	    MainScreen.impexp.setMaxWidth(200);
+    }
+    
     static void saveFile(File file) {
     	String fileName = file.getName();
     	ArrayList<DataTable> dt = Listbox.getTables();
     	int idx = Listbox.getIndex();
     	
     	ArrayList<Chart> ct = new ArrayList<Chart>();
-    	ct.add(LineScreen.getChart());
+    	if (ChartType.getType() == "Animated Pie") {
+    		ct.add(AnimatedScreen.getChart());
+    	} else {
+    		ct.add(LineScreen.getChart());
+    	}
+    	
     	CorgiObj corgi = new CorgiObj(dt, ct, idx);
     	System.out.println(corgi.getIndex());
     	MyFileExtenstion mf = new MyFileExtenstion();

@@ -50,7 +50,7 @@ public class LineScreen extends Main {
      * 
      * @return Pane object containing the line or pie chart.
      */
-	public static Pane pane() {
+	public static Pane pane() throws ChartException{
 		xAxis = new NumberAxis();
         yAxis = new NumberAxis();
 
@@ -75,77 +75,26 @@ public class LineScreen extends Main {
         return pane;
 	}
 	
-	/**
-	 * Generates random sample data. The random sample data is based on the number of 
-	 * initialized numeric columns and text columns.
-	 */
-	static void addSample() {
-		try {
-	        Random rand = new Random();
-	        char[] base = new char[]{'A', 'B', 'C', 'D', 'E', 'F', 'G'};
-	
-	        for (int i = 0; i < numCols; ++i) {
-	            Number[] content = new Number[row];
-	
-	            for (int j = 0; j < row; ++j) {
-	                int type = rand.nextInt(100) + 1;
-	
-	                if (type >= 67) content[j] = rand.nextDouble();
-	                else if (type >= 33) content[j] = rand.nextDouble();
-	                else content[j] = rand.nextDouble();
-	            }
-	
-	            DataColumn column = new DataColumn(DataType.TYPE_NUMBER, content);
-	            table.addCol("numCol" + i, column);
-	        }
-	
-	        for (int i = 0; i < textCols; ++i) {
-	            String[] content = new String[row];
-	
-	            for (int j = 0; j < row; ++j) {
-	                int length = rand.nextInt(10) + 1;
-	
-	                String word = "";
-	                for (int k = 0; k < length; ++k) {
-	                    word += base[rand.nextInt(base.length)];
-	                }
-	
-	                content[j] = word;
-	            }
-	
-	            DataColumn column = new DataColumn(DataType.TYPE_STRING, content);
-	            table.addCol("textCol" + i, column);
-	        }
-		} catch (Exception e) {
-        	System.out.println(e);
-        	e.printStackTrace();
-		}
-	}
-	
 	static void loadData(DataTable dt) {
 		table = dt;
 	}
 	
-	static BorderPane generateChart() {
+	static BorderPane generateChart() throws ChartException {
 		xAxis.setLabel("X");
 		yAxis.setLabel("Y");
 		
 		if (table.getNumCol() > 0 && table.getNumRow() > 0) {
-			try {
-				if (linePie) {
-					lineChart = new Line(table);
-					lcd = new LineChartDisplay(lineChart);
-				} else {
-					pieChart = new Pie(table);
-					pcd = new PieChartDisplay(pieChart);
-				}
-				chartNode = (linePie == true ? lcd.display() : pcd.display());
-			} catch (ChartException ex) {
-				System.out.println(ex);
+			if (linePie) {
+				lineChart = new Line(table);
+				lcd = new LineChartDisplay(lineChart);
+			} else {
+				pieChart = new Pie(table);
+				pcd = new PieChartDisplay(pieChart);
 			}
+			chartNode = (linePie == true ? lcd.display() : pcd.display());
 		} else {
 			chartNode = new BorderPane();
-		}		
+		}
 
 		return chartNode;
 	}
@@ -165,16 +114,17 @@ public class LineScreen extends Main {
 		chartNode = (linePie == true ? lcd.display() : pcd.display());
 		
 		refresh();
-		System.out.println("refresh");
 	}
 	
-	static void refresh() {
-		MainScreen.centerc.getChildren().remove(MainScreen.chartc);
-		MainScreen.chartc = LineScreen.pane();
-	    MainScreen.chartc.setMinWidth(500);
-	    MainScreen.chartc.setMaxWidth(500);
-	    MainScreen.chartc.setMinHeight(400);
-	    MainScreen.chartc.setMaxHeight(400);
+	static void refresh() throws ChartException{
+		MainScreen.chartc = pane();
+		if (MainScreen.centerc.getChildren().contains(MainScreen.chartc)) {
+			MainScreen.centerc.getChildren().remove(MainScreen.chartc);
+		}
+		MainScreen.chartc.setMinWidth(500);
+		MainScreen.chartc.setMaxWidth(500);
+		MainScreen.chartc.setMinHeight(400);
+		MainScreen.chartc.setMaxHeight(400);
 		MainScreen.centerc.getChildren().add(1, MainScreen.chartc);
 	}
 	
