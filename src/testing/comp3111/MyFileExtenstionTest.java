@@ -35,5 +35,6 @@ class MyFileExtenstionTest {
         assertEquals(corl.getCharts().get(0),chart);
         corgi.setName("corgi_1");
         assertEquals(corgi.getName(),"corgi_1");
+        assertEquals(corgi.getIndex(),0);
     }
 }
