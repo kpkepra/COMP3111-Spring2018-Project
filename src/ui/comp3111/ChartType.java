@@ -101,14 +101,26 @@ public class ChartType extends Main {
 		});
 	}
 	
+	/**
+	 * Returns the selected chart type in the radio button group.
+	 * @return the selected chart type in the radio button group.
+	 */
 	static String getType() {
 		return tg.getSelectedToggle().getUserData().toString();
 	}
 	
+	/**
+	 * Sets the selected chart type in the radio button group.
+	 * @param i
+	 * 			- the desired chart type in the radio button group.
+	 */
 	static void setType(int i) {
 		radios[i].setSelected(true);
 	}
 	
+	/** 
+	 * Updates the GUI Window to load the Chart Type pane with its newest state.
+	 */
 	public static void refresh() {
 		MainScreen.typePane = pane();
 	}

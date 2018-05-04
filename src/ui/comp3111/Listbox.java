@@ -142,12 +142,6 @@ public class Listbox extends Main {
 	 */
 	public static int getIndex() { return list.getSelectionModel().getSelectedIndex(); }
 	
-	public static void refresh() {
-	     MainScreen.listView = Listbox.pane();
-	     MainScreen.listView.setMinWidth(200);
-	     MainScreen.listView.setMaxWidth(200);
-	}
-	
 	/**
 	 * Initialize all of the EventHandler functions when user's actions are made in this class.
 	 * 
@@ -159,8 +153,8 @@ public class Listbox extends Main {
 				if (list.getSelectionModel().getSelectedIndex() != -1) {
 					DataTable table = tables.get(list.getSelectionModel().getSelectedIndex());
 					DataTableDisplay.setTable(table);
-					LineScreen.loadData(table);
-					AnimatedScreen.loadData(table);
+					LineScreen.setTable(table);
+					AnimatedScreen.setTable(table);
 					
 					DataTableDisplay.refresh();
 					if (ChartType.getType() == "Animated Pie") {
@@ -184,6 +178,7 @@ public class Listbox extends Main {
 						}
 					}
 					
+					// Update the transform table.
 					MainScreen.rightc.getChildren().remove(1);
 					MainScreen.filterPane =  new TransformDisplay(new Transform(DataTableDisplay.getDT())).splitFilter();
 					MainScreen.rightc.getChildren().add(1, MainScreen.filterPane);
@@ -191,5 +186,14 @@ public class Listbox extends Main {
 			}
 			
 		});
+	}
+	
+	/**
+	 * Updates the GUI Window to load the Listbox with its newest state.
+	 */
+	public static void refresh() {
+	     MainScreen.listView = Listbox.pane();
+	     MainScreen.listView.setMinWidth(200);
+	     MainScreen.listView.setMaxWidth(200);
 	}
 }

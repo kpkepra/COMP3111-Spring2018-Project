@@ -31,11 +31,19 @@ public class MyFileChooser extends Main {
     private static Pane pane;
     private static GridPane inputGridPane;
     
-
+    /**
+     * Returns open button.
+     * @return open button.
+     */
     public Button getOpenButton() {
         return openButton;
     }
     
+	/**
+	 * Pane function. Generates and returns import and export buttons.
+	 * 
+	 * @return Pane object that shows the import and export buttons
+	 */
     public static Pane pane() {
     	// FileChooser
     	fileChooser = new FileChooser();
@@ -68,6 +76,9 @@ public class MyFileChooser extends Main {
 
     }
 
+    /**
+     * Initialize all of the EventHandler functions when user's actions are made in this class.
+     */
     static void initHandlers() {
         openButton.setOnAction(
         		new EventHandler<ActionEvent>() {
@@ -96,6 +107,14 @@ public class MyFileChooser extends Main {
         		});
     }
     
+    /**
+     * Opens the file in either csv or corgi format.
+     * 
+     * @param file
+     * 				- File object to be loaded into the application.
+     * 
+     * @throws DataTableException
+     */
     static void openFile(File file) throws DataTableException {
 
             String extension;
@@ -125,12 +144,11 @@ public class MyFileChooser extends Main {
             }
     }
     
-    static void refresh() {
-    	MainScreen.impexp = MyFileChooser.pane();
-	    MainScreen.impexp.setMinWidth(200);
-	    MainScreen.impexp.setMaxWidth(200);
-    }
-    
+    /**
+     * Saves the file in CorgiObj format (.corgi extension)
+     * @param file
+     * 				- File object to be saved into corgi file.
+     */
     static void saveFile(File file) {
     	String fileName = file.getName();
     	ArrayList<DataTable> dt = Listbox.getTables();
@@ -151,5 +169,14 @@ public class MyFileChooser extends Main {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+    }
+    
+	/**
+	 * Updates the GUI Window to load the import/export feature with its newest state.
+	 */
+    static void refresh() {
+    	MainScreen.impexp = MyFileChooser.pane();
+	    MainScreen.impexp.setMinWidth(200);
+	    MainScreen.impexp.setMaxWidth(200);
     }
 }

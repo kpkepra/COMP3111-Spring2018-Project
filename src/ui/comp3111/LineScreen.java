@@ -75,10 +75,19 @@ public class LineScreen extends Main {
         return pane;
 	}
 	
-	static void loadData(DataTable dt) {
-		table = dt;
-	}
+	/**
+	 * Sets the DataTable table according to dt.
+	 * @param dt
+	 * 			- Desired DataTable object to be assigned.
+	 */
+	static void setTable(DataTable dt) { table = dt; }
 	
+	/**
+	 * Generates chart based on the assigned DataTable table object.
+	 * 
+	 * @return static chart based on the assigned DataTable table object.
+	 * @throws ChartException
+	 */
 	static BorderPane generateChart() throws ChartException {
 		xAxis.setLabel("X");
 		yAxis.setLabel("Y");
@@ -99,6 +108,16 @@ public class LineScreen extends Main {
 		return chartNode;
 	}
 	
+	/**
+	 * Sets the Chart and DataTable according to the desired objects.
+	 * If Chart is null, then the displayed Chart will take data from dt.
+	 * The function will then refreshes the state of the static chart display.
+	 * @param ct
+	 * 			- Desired Chart object to be displayed.
+	 * 
+	 * @param dt
+	 * 			- Desired DataTable object to be displayed.
+	 */
 	static void setChart(Chart ct, DataTable dt) {
 		// Table
 		table = dt;
@@ -116,6 +135,15 @@ public class LineScreen extends Main {
 		refresh();
 	}
 	
+	/**
+	 * Returns the pie or line chart depending on the displayed chart.
+	 * @return the pie or line chart depending on the displayed chart.
+	 */
+	static Chart getChart() { return (linePie == true ? lineChart : pieChart); }
+	
+	/** 
+	 * Updates the GUI Window to load the pie or line chart with its newest state.
+	 */
 	static void refresh() throws ChartException{
 		MainScreen.chartc = pane();
 		if (MainScreen.centerc.getChildren().contains(MainScreen.chartc)) {
@@ -126,38 +154,5 @@ public class LineScreen extends Main {
 		MainScreen.chartc.setMinHeight(400);
 		MainScreen.chartc.setMaxHeight(400);
 		MainScreen.centerc.getChildren().add(1, MainScreen.chartc);
-	}
-	
-	static Chart getChart() {
-		return (linePie == true ? lineChart : pieChart);
-	}
-	
-	/**
-	 * Load data from either sample data.
-	 * 
-	 * @return Pane containing the chart Node.
-	 */
-	static BorderPane loadSample() {
-        // Get 2 columns
-        xAxis.setLabel("X");
-        yAxis.setLabel("Y");
-    		try {
-    			if (linePie) {
-    				lineChart = new Line(table);
-    				lcd = new LineChartDisplay(lineChart);
-    			} else {
-    				pieChart = new Pie(table);
-    				pcd = new PieChartDisplay(pieChart);
-    			}
-    			chartNode = (linePie == true ? lcd.display() : pcd.display());
-    		} catch (ChartException ex) {
-                Alert alert = new Alert(Alert.AlertType.ERROR);
-                alert.setTitle("Chart Display Error");
-                alert.setHeaderText("There was an error in displaying chart!");
-                alert.setContentText(ex.getMessage());
-                alert.getDialogPane().setMinHeight(Region.USE_PREF_SIZE);
-                alert.showAndWait();
-      		}
-		return chartNode;
 	}
 }

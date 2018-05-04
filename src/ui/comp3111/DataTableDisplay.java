@@ -88,6 +88,9 @@ public class DataTableDisplay {
 	  return pane;
 	}
 	
+	/**
+	 * Updates the GUI Window to load the DataTable display with its newest state.
+	 */
 	public static void refresh() {
 		if (MainScreen.centerc.getChildren().contains(MainScreen.tablec)) { 
 			MainScreen.centerc.getChildren().remove(MainScreen.tablec);
