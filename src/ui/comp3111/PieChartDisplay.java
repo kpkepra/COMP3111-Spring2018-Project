@@ -29,9 +29,7 @@ public class PieChartDisplay extends ChartDisplay {
      *             - The Pie object which will be plotted.
      *
      */
-    public PieChartDisplay(Pie ch) {
-        piechart = ch;
-    }
+    public PieChartDisplay(Pie ch) { piechart = ch; }
 
     /**
      * Displays the JavaFX node containing a chart inside. In addition, the node also includes an

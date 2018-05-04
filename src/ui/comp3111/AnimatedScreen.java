@@ -43,41 +43,31 @@ public class AnimatedScreen extends Main {
     private static AnimatedPie pie;
     private static ArrayList<String> nameID = new ArrayList<String>();
 
+    /**
+     * AnimatedPie - Subclass of Pie function that has animation features.
+     * 
+     * @author kp-kepra
+     *
+     */
     public static class AnimatedPie extends Pie {
 
-		public AnimatedPie(DataTable dt) throws ChartException {
-			super(dt);
-		}
+		public AnimatedPie(DataTable dt) throws ChartException { super(dt); }
     }
     /**
-     * Initializes the animated chart.
+     * Initializes the animated pie chart and sets up the animation for the newly created pie chart.
      */
     public static void initialize() throws ChartException {
 		pie = new AnimatedPie(table);
-		chart = getChart(pie.getText(), pie.getNum());
-        setupAnimation();
+		chart = generateChart();
+		setupAnimation();
     }
     
-    public static void loadData(DataTable dt) {
-    	table = dt;
-    }
-    
-    public static void refresh() {
-    	MainScreen.chartc = pane();
-		if (MainScreen.centerc.getChildren().contains(MainScreen.chartc)) { 
-			MainScreen.centerc.getChildren().remove(MainScreen.chartc);
-		}
-		MainScreen.chartc = pane();
-		MainScreen.chartc.setMinWidth(400);
-		MainScreen.chartc.setMaxWidth(400);
-		MainScreen.chartc.setMinHeight(350);
-		MainScreen.chartc.setMaxHeight(350);
-		MainScreen.centerc.getChildren().add(1, MainScreen.chartc);
-    }
-    
-    private static PieChart getChart(String text, String num) {
+    /**
+     * Generates PieChart object based on the data loaded in the Pie object.
+     * @return PieChart object based on the data loaded in the Pie objec.t
+     */
+    private static PieChart generateChart() {
     	PieChart temp = new PieChart();
-    	temp.getStyleClass().add("black_font");
         Object[] numData =  pie.getData().getCol(pie.getNum()).getData();
         Object[] textData =  pie.getData().getCol(pie.getText()).getData();
 
@@ -85,8 +75,6 @@ public class AnimatedScreen extends Main {
             PieChart.Data slice = new PieChart.Data((String)textData[i], ((Number)numData[i]).doubleValue());
             temp.getData().add(slice);
         }
-        temp.getData().forEach(d->
-                d.getNode().getStyleClass().add("black_font"));
         return temp;
     }
     
@@ -99,9 +87,11 @@ public class AnimatedScreen extends Main {
     	for (int i = 0; i < chart.getData().size(); i++) {
     		tg[i] = false;
     	}
+    	nameID = new ArrayList<String>();
     	
         chart.getData().stream().forEach(pieData -> {
         	nameID.add(pieData.getName());
+        	// When user's cursor enters a pie slice.
             pieData.getNode().addEventHandler(MouseEvent.MOUSE_ENTERED, event -> {
             	Bounds b1 = pieData.getNode().getBoundsInLocal();
                 double newX = (b1.getWidth()) / 2 + b1.getMinX();
@@ -122,6 +112,7 @@ public class AnimatedScreen extends Main {
                 }
             });
             
+            // When user's cursor leaves a pie slice.
             pieData.getNode().addEventHandler(MouseEvent.MOUSE_EXITED, event -> {
             	Bounds b1 = pieData.getNode().getBoundsInLocal();
                 double newX = (b1.getWidth()) / 2 + b1.getMinX();
@@ -164,7 +155,8 @@ public class AnimatedScreen extends Main {
             public void changed(ObservableValue observableValue, String old_val, String new_val) {
                 pane.getChildren().remove(chart);
                 pie.setText(new_val);
-                PieChart chart = getChart(pie.getText(), pie.getNum());
+                chart = generateChart();
+               	setupAnimation();
                 pane.setCenter(chart);
                 pane.setMargin(chart, new Insets(12,12,12,12));
             }
@@ -179,7 +171,8 @@ public class AnimatedScreen extends Main {
             public void changed(ObservableValue observableValue, String old_val, String new_val) {
                 pane.getChildren().remove(chart);
                 pie.setNum(new_val);
-                PieChart chart = getChart(pie.getText(), pie.getNum());
+                chart = generateChart();
+                setupAnimation();
                 pane.setCenter(chart);
                 pane.setMargin(chart, new Insets(12,12,12,12));
             }
@@ -208,13 +201,42 @@ public class AnimatedScreen extends Main {
     	return pane;
     }
     
-    public static void setChart(DataTable dt) {
-		table = dt;
-		refresh();
-    }
+    /**
+     * Loads external DataTable item to to the pie chart and updates the state of the animated chart.
+     * 
+     * @param dt
+     * 			- DataTable to be loaded in the pie chart.
+     */
+    public static void setTable(DataTable dt) { table = dt; }
     
-    public static Chart getChart() {
-    	return pie;
+    /**
+     * Loads external DataTable item to to the pie chart and updates the state of the animated chart.
+     * 
+     * @param dt
+     * 			- DataTable to be loaded in the pie chart.
+     */
+    public static void setChart(DataTable dt) { table = dt; refresh(); }
+    
+    /**
+     * Returns the Animated Pie Chart object.
+     * @return the Animated Pie Chart object.
+     */
+    public static Chart getChart() { return pie; }
+    
+    /**
+     * Updates the GUI Window to load the animated pie chart with its newest state.
+     */
+    public static void refresh() {
+    	MainScreen.chartc = new Pane();
+    	MainScreen.chartc = pane();
+		if (MainScreen.centerc.getChildren().contains(MainScreen.chartc)) { 
+			MainScreen.centerc.getChildren().remove(MainScreen.chartc);
+		}
+		MainScreen.chartc.setMinWidth(500);
+		MainScreen.chartc.setMaxWidth(500);
+		MainScreen.chartc.setMinHeight(400);
+		MainScreen.chartc.setMaxHeight(400);
+		MainScreen.centerc.getChildren().add(1, MainScreen.chartc);
     }
 
 }
