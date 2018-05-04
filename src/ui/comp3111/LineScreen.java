@@ -50,7 +50,7 @@ public class LineScreen extends Main {
      * 
      * @return Pane object containing the line or pie chart.
      */
-	public static Pane pane() {
+	public static Pane pane() throws ChartException{
 		xAxis = new NumberAxis();
         yAxis = new NumberAxis();
 
@@ -126,23 +126,19 @@ public class LineScreen extends Main {
 		table = dt;
 	}
 	
-	static BorderPane generateChart() {
+	static BorderPane generateChart() throws ChartException {
 		xAxis.setLabel("X");
 		yAxis.setLabel("Y");
 		
 		if (table.getNumCol() > 0 && table.getNumRow() > 0) {
-			try {
-				if (linePie) {
-					lineChart = new Line(table);
-					lcd = new LineChartDisplay(lineChart);
-				} else {
-					pieChart = new Pie(table);
-					pcd = new PieChartDisplay(pieChart);
-				}
-				chartNode = (linePie == true ? lcd.display() : pcd.display());
-			} catch (ChartException ex) {
-				System.out.println(ex);
+			if (linePie) {
+				lineChart = new Line(table);
+				lcd = new LineChartDisplay(lineChart);
+			} else {
+				pieChart = new Pie(table);
+				pcd = new PieChartDisplay(pieChart);
 			}
+			chartNode = (linePie == true ? lcd.display() : pcd.display());
 		} else {
 			chartNode = new BorderPane();
 		}		
@@ -169,13 +165,23 @@ public class LineScreen extends Main {
 	}
 	
 	static void refresh() {
-		MainScreen.centerc.getChildren().remove(MainScreen.chartc);
-		MainScreen.chartc = LineScreen.pane();
-	    MainScreen.chartc.setMinWidth(500);
-	    MainScreen.chartc.setMaxWidth(500);
-	    MainScreen.chartc.setMinHeight(400);
-	    MainScreen.chartc.setMaxHeight(400);
-		MainScreen.centerc.getChildren().add(1, MainScreen.chartc);
+		try {
+			Pane chart = LineScreen.pane();
+			MainScreen.centerc.getChildren().remove(MainScreen.chartc);
+			MainScreen.chartc = chart;
+			MainScreen.chartc.setMinWidth(500);
+			MainScreen.chartc.setMaxWidth(500);
+			MainScreen.chartc.setMinHeight(400);
+			MainScreen.chartc.setMaxHeight(400);
+			MainScreen.centerc.getChildren().add(1, MainScreen.chartc);
+		} catch (RuntimeException e) {
+			Alert alert = new Alert(Alert.AlertType.ERROR);
+			alert.setTitle("Chart Fail");
+			alert.setHeaderText("Application fails to display the chart!");
+			alert.setContentText("The DataTable does not fill the requirement!");
+
+			alert.showAndWait();
+		}
 	}
 	
 	static Chart getChart() {
