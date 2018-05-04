@@ -2,6 +2,7 @@ package ui.comp3111;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Objects;
 import java.util.concurrent.atomic.AtomicInteger;
 
 import core.comp3111.*;
@@ -158,7 +159,22 @@ public class Listbox extends Main {
 					if (ChartType.getType() == "Animated Pie") {
 						AnimatedScreen.refresh();
 					} else {
-						LineScreen.refresh();
+						try {
+							LineScreen.refresh();
+						} catch (RuntimeException e) {
+							try {
+								LineScreen.linePie = !LineScreen.linePie;
+								if (Objects.equals(ChartType.getType(), "Line")) ChartType.setType(1);
+								else if (Objects.equals(ChartType.getType(), "Pie")) ChartType.setType(0);
+							} catch (RuntimeException ex) {
+								Alert alert = new Alert(Alert.AlertType.ERROR);
+								alert.setTitle("Chart Fail");
+								alert.setHeaderText("Application fails to display the chart!");
+								alert.setContentText("The DataTable does not fill the requirement!");
+
+								alert.showAndWait();
+							}
+						}
 					}
 					
 					MainScreen.rightc.getChildren().remove(1);
