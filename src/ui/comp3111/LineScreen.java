@@ -114,7 +114,6 @@ public class LineScreen extends Main {
 		chartNode = (linePie == true ? lcd.display() : pcd.display());
 		
 		refresh();
-		System.out.println("refresh");
 	}
 	
 	static void refresh() {
