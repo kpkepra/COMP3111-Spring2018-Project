@@ -13,6 +13,7 @@ import javafx.scene.control.*;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
+import javafx.scene.text.Font;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
 
@@ -294,14 +295,14 @@ public class TransformDisplay extends Main {
         selectFilter.setHgap(10);
         selectFilter.setVgap(4);
         ColumnConstraints column1 = new ColumnConstraints();
-        column1.setPercentWidth(50);
+        column1.setPercentWidth(33);
         column1.setHalignment(HPos.CENTER);
         ColumnConstraints column2 = new ColumnConstraints();
         column2.setHalignment(HPos.CENTER);
-        column2.setPercentWidth(25);
+        column2.setPercentWidth(33);
         ColumnConstraints column3 = new ColumnConstraints();
         column3.setHalignment(HPos.CENTER);
-        column3.setPercentWidth(25);
+        column3.setPercentWidth(33);
         selectFilter.getColumnConstraints().addAll(column1, column2, column3);
 
         Pane datasetTable = new DataTableDisplay(transform.getDataTable()).displayTable();
@@ -320,10 +321,10 @@ public class TransformDisplay extends Main {
                 transform.setColumnFilter(new_val);
             }
         });
-
         selectFilter.add(new Label("Input filter parameters:"), 0, 0, 3, 1);
-
-        selectFilter.add(new Label("Select column as filter base: "), 0, 1);
+        Label lc = new Label("filter base: ");
+        selectFilter.add(lc , 0, 1);
+        lc.setStyle("-fx-padding:0px");
         selectFilter.add(columnCombo, 0, 2);
 
         String[] operators = {"<", "<=", ">", ">=", "==", "!="};
@@ -340,7 +341,7 @@ public class TransformDisplay extends Main {
             }
         });
 
-        selectFilter.add(new Label("Select operator to filter with: "), 1, 1);
+        selectFilter.add(new Label("operator"), 1, 1);
         selectFilter.add(operatorCombo, 1, 2);
 
         TextField numberField = new TextField();
@@ -354,7 +355,7 @@ public class TransformDisplay extends Main {
             }
         });
 
-        selectFilter.add(new Label("Input number to check against: "), 2, 1);
+        selectFilter.add(new Label("Threshold"), 2, 1);
         selectFilter.add(numberField, 2, 2);
 //        selectFilter.getStyleClass().add("filter-gridpane");
         
