@@ -130,7 +130,6 @@ public class LineScreen extends Main {
 			lcd = new LineChartDisplay(lineChart);
 		}
 		chartNode = (linePie == true ? lcd.display() : pcd.display());
-		
 		refresh();
 	}
 	
@@ -149,6 +148,10 @@ public class LineScreen extends Main {
 		MainScreen.chartc.setMaxWidth(400);
 		MainScreen.chartc.setMinHeight(350);
 		MainScreen.chartc.setMaxHeight(350);
-		MainScreen.centerc.getChildren().set(1, MainScreen.chartc);
+		if (MainScreen.centerc.getChildren().size() < 2) {
+			MainScreen.centerc.getChildren().add(1, MainScreen.chartc);
+		} else {
+			MainScreen.centerc.getChildren().set(1, MainScreen.chartc);
+		}
 	}
 }

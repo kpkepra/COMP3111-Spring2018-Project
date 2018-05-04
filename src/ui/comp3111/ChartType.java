@@ -80,7 +80,7 @@ public class ChartType extends Main {
 							LineScreen.linePie = false;
 						}
 						try {
-//							LineScreen.refresh();
+							LineScreen.refresh();
 						} catch (RuntimeException e) {
 							LineScreen.linePie = !LineScreen.linePie;
 							if (!change) {
