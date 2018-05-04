@@ -94,7 +94,7 @@ public class LineScreen extends Main {
 			chartNode = (linePie == true ? lcd.display() : pcd.display());
 		} else {
 			chartNode = new BorderPane();
-		}		
+		}
 
 		return chartNode;
 	}
@@ -116,25 +116,16 @@ public class LineScreen extends Main {
 		refresh();
 	}
 	
-	static void refresh() {
-		try {
-			MainScreen.chartc = pane();
-			if (MainScreen.centerc.getChildren().contains(MainScreen.chartc)) { 
-				MainScreen.centerc.getChildren().remove(MainScreen.chartc);
-			}
-			MainScreen.chartc.setMinWidth(500);
-			MainScreen.chartc.setMaxWidth(500);
-			MainScreen.chartc.setMinHeight(400);
-			MainScreen.chartc.setMaxHeight(400);
-			MainScreen.centerc.getChildren().add(1, MainScreen.chartc);
-		} catch (RuntimeException e) {
-			Alert alert = new Alert(Alert.AlertType.ERROR);
-			alert.setTitle("Chart Fail");
-			alert.setHeaderText("Application fails to display the chart!");
-			alert.setContentText("The DataTable does not fill the requirement!");
-
-			alert.showAndWait();
+	static void refresh() throws ChartException{
+		MainScreen.chartc = pane();
+		if (MainScreen.centerc.getChildren().contains(MainScreen.chartc)) {
+			MainScreen.centerc.getChildren().remove(MainScreen.chartc);
 		}
+		MainScreen.chartc.setMinWidth(500);
+		MainScreen.chartc.setMaxWidth(500);
+		MainScreen.chartc.setMinHeight(400);
+		MainScreen.chartc.setMaxHeight(400);
+		MainScreen.centerc.getChildren().add(1, MainScreen.chartc);
 	}
 	
 	static Chart getChart() {

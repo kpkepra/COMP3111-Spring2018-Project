@@ -52,14 +52,9 @@ public class AnimatedScreen extends Main {
     /**
      * Initializes the animated chart.
      */
-    public static void initialize() {
-    	try {
-			pie = new AnimatedPie(table);
-			chart = getChart(pie.getText(), pie.getNum());
-		} catch (ChartException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+    public static void initialize() throws ChartException {
+		pie = new AnimatedPie(table);
+		chart = getChart(pie.getText(), pie.getNum());
         setupAnimation();
     }
     

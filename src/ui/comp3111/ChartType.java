@@ -2,10 +2,7 @@ package ui.comp3111;
 
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
-import javafx.scene.control.Label;
-import javafx.scene.control.RadioButton;
-import javafx.scene.control.Toggle;
-import javafx.scene.control.ToggleGroup;
+import javafx.scene.control.*;
 import javafx.scene.layout.*;
 
 /**
@@ -64,14 +61,39 @@ public class ChartType extends Main {
 			public void changed(ObservableValue<? extends Toggle> ov, Toggle oldT, Toggle newT) {
 				if (tg.getSelectedToggle() != null) {
 					if (tg.getSelectedToggle().getUserData().toString() == radioText[2]) {
-						AnimatedScreen.refresh();
+						try {
+							AnimatedScreen.refresh();
+						} catch (RuntimeException e) {
+							Alert alert = new Alert(Alert.AlertType.ERROR);
+							alert.setTitle("Chart Fail");
+							alert.setHeaderText("Application fails to display the chart!");
+							alert.setContentText("The DataTable does not fill the requirement!");
+
+							alert.showAndWait();
+						}
 					} else {
 						if (tg.getSelectedToggle().getUserData().toString() == radioText[0]) {
 							LineScreen.linePie = true;
 						} else {
 							LineScreen.linePie = false;
 						}
-						LineScreen.refresh();
+						try {
+							LineScreen.refresh();
+						} catch (RuntimeException e) {
+							LineScreen.linePie = !LineScreen.linePie;
+							if (tg.getSelectedToggle().getUserData().toString() == radioText[0]) {
+								radios[1].setSelected(true);
+							}
+							else {
+								radios[0].setSelected(true);
+							}
+							Alert alert = new Alert(Alert.AlertType.ERROR);
+							alert.setTitle("Chart Fail");
+							alert.setHeaderText("Application fails to display the chart!");
+							alert.setContentText("The DataTable does not fill the requirement!");
+
+							alert.showAndWait();
+						}
 					}
 
 				}
