@@ -267,6 +267,8 @@ public class Transform {
             case "!=":
                 ret_val = number.floatValue() != op_val.floatValue();
                 break;
+            default:
+            	break;
         }
 
         return ret_val;
