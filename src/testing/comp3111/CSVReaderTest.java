@@ -62,5 +62,9 @@ class CSVReaderTest {
         Assertions.assertEquals(names,csv_Test1.getCol(0));
 
     }
+    @Test
+    public void getFile(){
+        Assertions.assertEquals(csv_Test1.getFile().getName(),"csvTest1.csv");
+    }
 
 }

@@ -27,7 +27,7 @@ public class Main extends Application {
      */
     private void initScenes() {
         scenes = new Scene[SCENE_NUM];
-        scenes[0] = new Scene(Screen.pane(), 1280, 720);
+        scenes[0] = new Scene(Screen.pane(), 1000, 630);
         for (Scene s : scenes) {
             if (s != null)
                 // Assumption: all scenes share the same stylesheet
