@@ -7,6 +7,7 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
@@ -20,14 +21,11 @@ public class OpenCSV {
         btFillWithZero.setOnAction(
                 new EventHandler<ActionEvent>() {
                     @Override
-                    public void handle(final ActionEvent e) {
+                    public void handle(final ActionEvent e) throws DataTableException {
                         csv.readALL(0);
                 		csv.readField();
-                		try {
-                            Listbox.addDataset(csv, csv.getFile().getName());
-                        }catch(DataTableException dte){
-                		    //TODO
-                        }
+                        Listbox.addDataset(csv, csv.getFile().getName());
+
                         System.out.println("fill with 0");
                         stage.close();
                         System.out.println(csv.getData());
