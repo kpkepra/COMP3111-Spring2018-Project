@@ -78,7 +78,6 @@ public class LineScreen extends Main {
 	 * Generates chart based on the assigned DataTable table object.
 	 * 
 	 * @return static chart based on the assigned DataTable table object.
-	 * @throws ChartException
 	 */
 	public static BorderPane generateChart() {
 		xAxis.setLabel("X");
@@ -151,7 +150,7 @@ public class LineScreen extends Main {
 	}
 	
 	/** 
-	 * Empties the chart if requirement doesn't met.
+	 * Empties the chart if requirement doesn't meet.
 	 */
 	public static void empty() {
 		MainScreen.chartc = new Pane();

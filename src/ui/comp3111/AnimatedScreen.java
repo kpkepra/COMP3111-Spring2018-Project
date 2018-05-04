@@ -239,8 +239,8 @@ public class AnimatedScreen extends Main {
 		}
     }
     
-	/**
-	 * Clears the chart into empty space.
+    /** 
+	 * Empties the chart if requirement doesn't meet.
 	 */
 	public static void empty() {
         MainScreen.chartc = new Pane();
