@@ -98,7 +98,7 @@ public class MyFileExtenstion {
     public CorgiObj loadCorgi(String fileName) throws IOException,ClassNotFoundException{
         CorgiObj corgi = new CorgiObj();
         try {
-            FileInputStream fileIn = new FileInputStream("resources/" + fileName);
+            FileInputStream fileIn = new FileInputStream(fileName);
             ObjectInputStream in = new ObjectInputStream(fileIn);
             corgi = (CorgiObj) in.readObject();
             corgi.setName(fileName);
