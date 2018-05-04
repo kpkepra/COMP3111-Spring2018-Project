@@ -162,7 +162,7 @@ public class TransformDisplay extends Main {
                                 column2.setPercentWidth(50);
                                 chooseReplace.getColumnConstraints().addAll(column1, column2);
                                 chooseReplace.add(new Label("Which dataset to overwrite with?"), 0, 0, 2, 1);
-                                chooseReplace.setStyle("-fx-font: 16 arial;");
+                                chooseReplace.setStyle("-fx-font: 16 arial; -fx-padding: 5px;");
 
                                 Button button1 = new Button("Dataset 1");
                                 button1.setOnAction(new EventHandler<ActionEvent>() {
@@ -492,6 +492,7 @@ public class TransformDisplay extends Main {
         GridPane saveReplace = new GridPane();
         saveReplace.setHgap(10);
         saveReplace.setVgap(10);
+        saveReplace.setStyle("-fx-padding:15px");
         ColumnConstraints column1 = new ColumnConstraints();
         column1.setHalignment(HPos.CENTER);
         column1.setPercentWidth(50);
@@ -538,6 +539,7 @@ public class TransformDisplay extends Main {
         ColumnConstraints column1 = new ColumnConstraints();
         column1.setHalignment(HPos.CENTER);
         column1.setPercentWidth(100);
+        root.setStyle("-fx-padding:15px");
         root.getColumnConstraints().addAll(column1);
         root.add(new Label("What is the file name you would like to save as?"), 0, 0);
 
@@ -559,10 +561,6 @@ public class TransformDisplay extends Main {
         Scene scene = new Scene(root);
         stage.setScene(scene);
         stage.show();
-    }
-    
-    public void refresh() {
-    	
     }
 
 }
