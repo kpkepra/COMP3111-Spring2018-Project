@@ -140,7 +140,7 @@ public class AnimatedScreen extends Main {
      * 
      * @return Pane object containing the animated pie chart.
      */
-    public static BorderPane pane() {
+    public static BorderPane pane() throws ChartException {
     	initialize();
     	pane = new BorderPane();
     	pane.setCenter(chart);
@@ -226,7 +226,7 @@ public class AnimatedScreen extends Main {
     /**
      * Updates the GUI Window to load the animated pie chart with its newest state.
      */
-    public static void refresh() {
+    public static void refresh() throws ChartException {
 		MainScreen.chartc = pane();
 		MainScreen.chartc.setMinWidth(400);
 		MainScreen.chartc.setMaxWidth(400);

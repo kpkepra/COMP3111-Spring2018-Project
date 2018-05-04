@@ -178,7 +178,17 @@ public class TransformDisplay extends Main {
                                     		AnimatedScreen.refresh();
                                     	} else {
                                     		LineScreen.setTable(newTables[0]);
-                                    		LineScreen.refresh();
+                                    		try {
+                                                LineScreen.refresh();
+                                            }
+                                            catch (RuntimeException ex) {
+                                                Alert alert = new Alert(Alert.AlertType.ERROR);
+                                                alert.setTitle("Chart Fail");
+                                                alert.setHeaderText("Application fails to display the chart!");
+                                                alert.setContentText("The DataTable does not fill the requirement!");
+
+                                                alert.showAndWait();
+                                            }
                                     	}
                                     	
                                         stage.hide();
