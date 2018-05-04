@@ -12,7 +12,6 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
 
-public class PieChartDisplay extends ChartDisplay {
 /**
  * PieChartDisplay - A subclass of ChartDisplay. This class can be utilized to display a pie chart on a JavaFX
  * interface. It stores pie chart object which has the data contained in (pieChart).
@@ -20,6 +19,7 @@ public class PieChartDisplay extends ChartDisplay {
  * @author apsusanto
  *
  */
+public class PieChartDisplay extends ChartDisplay {
     private Pie piechart;
 
     /**
