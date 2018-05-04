@@ -13,7 +13,7 @@ import javafx.scene.control.*;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
-import javafx.scene.text.Font;
+import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
 
@@ -104,6 +104,7 @@ public class TransformDisplay extends Main {
         splitButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent e) {
+                if (numberField1.getText() == null || numberField2.getText() == null) return;
                 try {
                     float[] newPercentSplit = new float[2];
                     newPercentSplit[0] = (Float.valueOf(numberField1.getText())).floatValue();
@@ -167,7 +168,8 @@ public class TransformDisplay extends Main {
                                 button1.setOnAction(new EventHandler<ActionEvent>() {
                                     @Override
                                     public void handle(ActionEvent e) {
-                                        //TODO: REPLACE WITH TABLE 1
+                                        // ( ͡° ͜ʖ ͡°)
+//                                    	newTables[0]
                                         stage.hide();
                                     }
                                 });
@@ -176,7 +178,8 @@ public class TransformDisplay extends Main {
                                 button2.setOnAction(new EventHandler<ActionEvent>() {
                                     @Override
                                     public void handle(ActionEvent e) {
-                                        //TODO: REPLACE WITH TABLE 2
+                                        // ( ͡° ͜ʖ ͡°)
+//                                    	newTables[1]
                                         stage.hide();
                                     }
                                 });
@@ -193,18 +196,25 @@ public class TransformDisplay extends Main {
 
                     root.getChildren().remove(datasetTable);
 
-                    TableView<Integer> datasetTable = new TableView();
-                    datasetTable.setColumnResizePolicy(TableView.UNCONSTRAINED_RESIZE_POLICY);
-                    root.add(datasetTable, 0, 4, 4, 1);
+                    VBox newPane = new VBox();
+                    newPane.setMinHeight(datasetTable.getHeight());
+                    newPane.setMaxHeight(datasetTable.getHeight());
 
-                    for (int i = 0; i < transform.getDataTable().getNumRow(); i++) {
-                        datasetTable.getItems().add(i);
+                    TableView<Integer> dataset1 = new TableView();
+                    dataset1.setColumnResizePolicy(TableView.UNCONSTRAINED_RESIZE_POLICY);
+                    TableView<Integer> dataset2 = new TableView();
+                    dataset2.setColumnResizePolicy(TableView.UNCONSTRAINED_RESIZE_POLICY);
+
+                    for (int i = 0; i < newTables[0].getNumRow(); i++) {
+                        dataset1.getItems().add(i);
+                    }
+                    for (int i = 0; i < newTables[1].getNumRow(); i++) {
+                        dataset2.getItems().add(i);
                     }
 
-                    TableColumn dataset1 = new TableColumn("Dataset 1");
-                    TableColumn dataset2 = new TableColumn("Dataset 2");
+                    newPane.getChildren().addAll(dataset1, dataset2);
+                    root.add(newPane, 0, 4, 4, 1);
 
-                    datasetTable.getColumns().addAll(dataset1, dataset2);
 
                     for (String colName : newTables[0].getColNames()) {
                         DataColumn dataColumn = newTables[0].getCol(colName);
@@ -267,9 +277,8 @@ public class TransformDisplay extends Main {
                             dataset2.getColumns().add(column);
                         }
                     }
-
-                    dataset1.prefWidthProperty().bind(datasetTable.widthProperty().divide(2));
-                    dataset2.prefWidthProperty().bind(datasetTable.widthProperty().divide(2));
+                    dataset1.prefHeightProperty().bind(newPane.heightProperty().divide(2));
+                    dataset2.prefHeightProperty().bind(newPane.heightProperty().divide(2));
 
                     askSaveReplace();
                 }
@@ -358,7 +367,7 @@ public class TransformDisplay extends Main {
         selectFilter.add(new Label("Threshold"), 2, 1);
         selectFilter.add(numberField, 2, 2);
 //        selectFilter.getStyleClass().add("filter-gridpane");
-        
+
         Button filterButton = new Button("Filter");
         filterButton.getStyleClass().add("splitfilter_btn");
         filterButton.setOnAction(new EventHandler<ActionEvent>() {
@@ -396,7 +405,16 @@ public class TransformDisplay extends Main {
                                 });
                             }
                             else if (save == 2) {
-                                // TODO: REPLACE DATATABLE WITH NEW DATASET
+                            	Listbox.replaceDataset(newTable);
+                            	DataTableDisplay.setTable(newTable);
+                            	DataTableDisplay.refresh();
+                            	if (ChartType.getType() == "Animated Pie") {
+                            		AnimatedScreen.setChart(newTable);
+                            		AnimatedScreen.refresh();
+                            	} else {
+                            		LineScreen.setChart(null, newTable);
+                            		LineScreen.refresh();
+                            	}
                             }
                         }
                     });
@@ -408,7 +426,7 @@ public class TransformDisplay extends Main {
                 }
             }
         });
-       
+
         selectFilter.add(filterButton, 0, 3, 3, 1);
 
         return selectFilter;
@@ -541,6 +559,10 @@ public class TransformDisplay extends Main {
         Scene scene = new Scene(root);
         stage.setScene(scene);
         stage.show();
+    }
+    
+    public void refresh() {
+    	
     }
 
 }
