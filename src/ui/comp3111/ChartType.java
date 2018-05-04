@@ -2,10 +2,7 @@ package ui.comp3111;
 
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
-import javafx.scene.control.Label;
-import javafx.scene.control.RadioButton;
-import javafx.scene.control.Toggle;
-import javafx.scene.control.ToggleGroup;
+import javafx.scene.control.*;
 import javafx.scene.layout.*;
 
 /**
@@ -63,22 +60,41 @@ public class ChartType extends Main {
 		tg.selectedToggleProperty().addListener(new ChangeListener<Toggle>() {
 			public void changed(ObservableValue<? extends Toggle> ov, Toggle oldT, Toggle newT) {
 				if (tg.getSelectedToggle() != null) {
-					MainScreen.centerc.getChildren().remove(MainScreen.chartc);
 					if (tg.getSelectedToggle().getUserData().toString() == radioText[2]) {
-						MainScreen.chartc = AnimatedScreen.pane();
+						try {
+							AnimatedScreen.refresh();
+						} catch (RuntimeException e) {
+							Alert alert = new Alert(Alert.AlertType.ERROR);
+							alert.setTitle("Chart Fail");
+							alert.setHeaderText("Application fails to display the chart!");
+							alert.setContentText("The DataTable does not fill the requirement!");
+
+							alert.showAndWait();
+						}
 					} else {
 						if (tg.getSelectedToggle().getUserData().toString() == radioText[0]) {
 							LineScreen.linePie = true;
 						} else {
 							LineScreen.linePie = false;
 						}
-						MainScreen.chartc = LineScreen.pane();
+						try {
+							LineScreen.refresh();
+						} catch (RuntimeException e) {
+							LineScreen.linePie = !LineScreen.linePie;
+							if (tg.getSelectedToggle().getUserData().toString() == radioText[0]) {
+								radios[1].setSelected(true);
+							}
+							else {
+								radios[0].setSelected(true);
+							}
+							Alert alert = new Alert(Alert.AlertType.ERROR);
+							alert.setTitle("Chart Fail");
+							alert.setHeaderText("Application fails to display the chart!");
+							alert.setContentText("The DataTable does not fill the requirement!");
+
+							alert.showAndWait();
+						}
 					}
-				    MainScreen.chartc.setMinWidth(500);
-				    MainScreen.chartc.setMaxWidth(500);
-				    MainScreen.chartc.setMinHeight(400);
-				    MainScreen.chartc.setMaxHeight(400);
-					MainScreen.centerc.getChildren().add(1, MainScreen.chartc);
 
 				}
 			}
@@ -87,5 +103,13 @@ public class ChartType extends Main {
 	
 	static String getType() {
 		return tg.getSelectedToggle().getUserData().toString();
+	}
+	
+	static void setType(int i) {
+		radios[i].setSelected(true);
+	}
+	
+	public static void refresh() {
+		MainScreen.typePane = pane();
 	}
 }
