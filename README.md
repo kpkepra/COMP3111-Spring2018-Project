@@ -2,7 +2,7 @@
 
 ## Team Leader Name: PRATAMA, Kevin
 - Team Leader ITSC email kpratama@connect.ust.hk
-- Team Leader Features 3,6h
+- Team Leader Features 3,6
 - Team Leader Best 3 commits URLs
     - https://github.com/KP-Kepra/COMP3111-Spring2018-Project/commit/5c59c75952dbac0c6c840430582730be3c9fa72b
     - https://github.com/KP-Kepra/COMP3111-Spring2018-Project/commit/bee9b3b828cc3020b5e319dce0159d937920a57f
