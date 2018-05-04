@@ -413,10 +413,10 @@ public class TransformDisplay extends Main {
                             	DataTableDisplay.setTable(newTable);
                             	DataTableDisplay.refresh();
                             	if (ChartType.getType() == "Animated Pie") {
-                            		AnimatedScreen.setChart(newTable);
+                            		AnimatedScreen.setTable(newTable);
                             		AnimatedScreen.refresh();
                             	} else {
-                            		LineScreen.setChart(null, newTable);
+                            		LineScreen.setTable(newTable);
                             		LineScreen.refresh();
                             	}
                             }
@@ -535,6 +535,8 @@ public class TransformDisplay extends Main {
 
     /**
      * A function which will display an interface to ask the filename to save the dataset to.
+     * @param file
+     * 				- fileName to be saved.
      */
     public void askFileName(String file) {
         GridPane root = new GridPane();
