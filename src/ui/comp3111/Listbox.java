@@ -13,6 +13,7 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.ListView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
+import ui.comp3111.AnimatedScreen.AnimatedPie;
 
 /**
  * Listbox - A left-pane listview that displays all of the loaded datasets, either from .corgi 
@@ -27,9 +28,7 @@ import javafx.scene.layout.Pane;
 public class Listbox extends Main {
 	private static Pane pane;
 	private static ObservableList<String> filenames = FXCollections.observableArrayList();
-	private static ObservableList<String> corginames = FXCollections.observableArrayList();
 	private static ArrayList<DataTable> tables = new ArrayList<DataTable>();
-	private static ArrayList<CorgiObj> corgis = new ArrayList<CorgiObj>();
 	private static ListView<String> list = new ListView<String>();
 	
 	/**
@@ -93,23 +92,27 @@ public class Listbox extends Main {
 	 * 
 	 */
 	public static void addCorgi(CorgiObj corgi) {
-		corginames.add(corgi.getName());
-		corgis.add(corgi);
 		ArrayList<DataTable> dts = corgi.getDts();
 		ArrayList<Chart> cts = corgi.getCharts();
 		AtomicInteger i = new AtomicInteger(1);
 		dts.forEach(dt -> {
 			filenames.add(corgi.getName() + " - Dataset" + i.getAndIncrement());
 			tables.add(dt);
-			list.getSelectionModel().select(corgi.getIndex());
 		});
 		
 		//Charts
-		ChartType.setType(corgi.getIndex());
-		if (cts.get(0) instanceof Pie || cts.get(0) instanceof Line) {
+		list.getSelectionModel().select(corgi.getIndex());
+		
+		if (cts.get(0) instanceof AnimatedPie) {
+			System.out.println(cts.get(0));
+			AnimatedScreen.setChart(dts.get(corgi.getIndex()));
+			ChartType.setType(2);
+		} else if (cts.get(0) instanceof Line) {
 			LineScreen.setChart(cts.get(0), dts.get(corgi.getIndex()));
-		} else {
-//			AnimatedScreen.setChart()
+			ChartType.setType(0);
+		} else if (cts.get(0) instanceof Pie) {
+			LineScreen.setChart(cts.get(0), dts.get(corgi.getIndex()));
+			ChartType.setType(1);
 		}
 		
 		// Tables
