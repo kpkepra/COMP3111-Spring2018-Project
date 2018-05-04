@@ -74,6 +74,7 @@ public class Main extends Application {
      * main method - only use if running via command line
      *
      * @param args
+     * 				- args
      */
     public static void main(String[] args) {
         launch(args);

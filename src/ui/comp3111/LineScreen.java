@@ -71,7 +71,6 @@ public class LineScreen extends Main {
         pane.getStyleClass().add("screen-background");
         pane = generateChart();
         
-        
         return pane;
 	}
 	
@@ -80,7 +79,7 @@ public class LineScreen extends Main {
 	 * @param dt
 	 * 			- Desired DataTable object to be assigned.
 	 */
-	static void setTable(DataTable dt) { table = dt; }
+	public static void setTable(DataTable dt) { table = dt; }
 	
 	/**
 	 * Generates chart based on the assigned DataTable table object.
@@ -88,7 +87,7 @@ public class LineScreen extends Main {
 	 * @return static chart based on the assigned DataTable table object.
 	 * @throws ChartException
 	 */
-	static BorderPane generateChart() throws ChartException {
+	public static BorderPane generateChart() throws ChartException {
 		xAxis.setLabel("X");
 		yAxis.setLabel("Y");
 		
@@ -118,7 +117,7 @@ public class LineScreen extends Main {
 	 * @param dt
 	 * 			- Desired DataTable object to be displayed.
 	 */
-	static void setChart(Chart ct, DataTable dt) {
+	public static void setChart(Chart ct, DataTable dt) {
 		// Table
 		table = dt;
 		
@@ -139,12 +138,12 @@ public class LineScreen extends Main {
 	 * Returns the pie or line chart depending on the displayed chart.
 	 * @return the pie or line chart depending on the displayed chart.
 	 */
-	static Chart getChart() { return (linePie == true ? lineChart : pieChart); }
+	public static Chart getChart() { return (linePie == true ? lineChart : pieChart); }
 	
 	/** 
 	 * Updates the GUI Window to load the pie or line chart with its newest state.
 	 */
-	static void refresh() throws ChartException{
+	public static void refresh() throws ChartException{
 		MainScreen.chartc = pane();
 		if (MainScreen.centerc.getChildren().contains(MainScreen.chartc)) {
 			MainScreen.centerc.getChildren().remove(MainScreen.chartc);

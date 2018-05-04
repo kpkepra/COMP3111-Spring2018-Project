@@ -170,8 +170,17 @@ public class TransformDisplay extends Main {
                                 button1.setOnAction(new EventHandler<ActionEvent>() {
                                     @Override
                                     public void handle(ActionEvent e) {
-                                        // ( ͡° ͜ʖ ͡°)
-//                                    	newTables[0]
+                                    	Listbox.replaceDataset(newTables[0]);
+                                    	DataTableDisplay.setTable(newTables[0]);
+                                    	DataTableDisplay.refresh();
+                                    	if (ChartType.getType() == "Animated Pie") {
+                                    		AnimatedScreen.setTable(newTables[0]);
+                                    		AnimatedScreen.refresh();
+                                    	} else {
+                                    		LineScreen.setTable(newTables[0]);
+                                    		LineScreen.refresh();
+                                    	}
+                                    	
                                         stage.hide();
                                     }
                                 });
@@ -180,8 +189,17 @@ public class TransformDisplay extends Main {
                                 button2.setOnAction(new EventHandler<ActionEvent>() {
                                     @Override
                                     public void handle(ActionEvent e) {
-                                        // ( ͡° ͜ʖ ͡°)
-//                                    	newTables[1]
+                                    	Listbox.replaceDataset(newTables[1]);
+                                    	DataTableDisplay.setTable(newTables[1]);
+                                    	DataTableDisplay.refresh();
+                                    	if (ChartType.getType() == "Animated Pie") {
+                                    		AnimatedScreen.setTable(newTables[1]);
+                                    		AnimatedScreen.refresh();
+                                    	} else {
+                                    		LineScreen.setTable(newTables[1]);
+                                    		LineScreen.refresh();
+                                    	}
+                                    	
                                         stage.hide();
                                     }
                                 });
@@ -413,10 +431,10 @@ public class TransformDisplay extends Main {
                             	DataTableDisplay.setTable(newTable);
                             	DataTableDisplay.refresh();
                             	if (ChartType.getType() == "Animated Pie") {
-                            		AnimatedScreen.setChart(newTable);
+                            		AnimatedScreen.setTable(newTable);
                             		AnimatedScreen.refresh();
                             	} else {
-                            		LineScreen.setChart(null, newTable);
+                            		LineScreen.setTable(newTable);
                             		LineScreen.refresh();
                             	}
                             }
@@ -535,6 +553,8 @@ public class TransformDisplay extends Main {
 
     /**
      * A function which will display an interface to ask the filename to save the dataset to.
+     * @param file
+     * 				- fileName to be saved.
      */
     public void askFileName(String file) {
         GridPane root = new GridPane();
