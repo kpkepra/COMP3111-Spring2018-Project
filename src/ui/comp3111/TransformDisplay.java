@@ -170,8 +170,17 @@ public class TransformDisplay extends Main {
                                 button1.setOnAction(new EventHandler<ActionEvent>() {
                                     @Override
                                     public void handle(ActionEvent e) {
-                                        // ( ͡° ͜ʖ ͡°)
-//                                    	newTables[0]
+                                    	Listbox.replaceDataset(newTables[0]);
+                                    	DataTableDisplay.setTable(newTables[0]);
+                                    	DataTableDisplay.refresh();
+                                    	if (ChartType.getType() == "Animated Pie") {
+                                    		AnimatedScreen.setTable(newTables[0]);
+                                    		AnimatedScreen.refresh();
+                                    	} else {
+                                    		LineScreen.setTable(newTables[0]);
+                                    		LineScreen.refresh();
+                                    	}
+                                    	
                                         stage.hide();
                                     }
                                 });
@@ -180,8 +189,17 @@ public class TransformDisplay extends Main {
                                 button2.setOnAction(new EventHandler<ActionEvent>() {
                                     @Override
                                     public void handle(ActionEvent e) {
-                                        // ( ͡° ͜ʖ ͡°)
-//                                    	newTables[1]
+                                    	Listbox.replaceDataset(newTables[1]);
+                                    	DataTableDisplay.setTable(newTables[1]);
+                                    	DataTableDisplay.refresh();
+                                    	if (ChartType.getType() == "Animated Pie") {
+                                    		AnimatedScreen.setTable(newTables[1]);
+                                    		AnimatedScreen.refresh();
+                                    	} else {
+                                    		LineScreen.setTable(newTables[1]);
+                                    		LineScreen.refresh();
+                                    	}
+                                    	
                                         stage.hide();
                                     }
                                 });
