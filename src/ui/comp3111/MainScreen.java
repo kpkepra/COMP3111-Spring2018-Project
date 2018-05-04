@@ -24,7 +24,6 @@ public class MainScreen {
 	protected static VBox leftc, centerc, rightc, tablec;
 	protected static Pane listView, impexp, typePane, filterPane, chartc;
 	private static HBox hc;
-	protected static TransformDisplay tfDisplay;
 	
 	private Label lb_Title;
 	/**
@@ -43,43 +42,23 @@ public class MainScreen {
 	     hc.setAlignment(Pos.CENTER_LEFT);
 	     hc.getChildren().addAll(lb_Title);
 	     
-	     impexp = MyFileChooser.pane();
-	     impexp.setMinWidth(200);
-	     impexp.setMaxWidth(200);
-	     
-	     listView = Listbox.pane();
-	     listView.setMinWidth(200);
-	     listView.setMaxWidth(200);
-	     
 	     leftc = new VBox(20);
-	     leftc.setAlignment(Pos.CENTER);
+	     MyFileChooser.refresh();
+	     Listbox.refresh();
 	     leftc.getChildren().addAll(impexp, listView);
-
-	     typePane = ChartType.pane();
 	     
-	     tfDisplay = new TransformDisplay(new Transform(DataTableDisplay.getDT()));
-	     filterPane = tfDisplay.splitFilter();
 	     rightc = new VBox(20);
-	     rightc.setAlignment(Pos.CENTER);
-	     rightc.getChildren().addAll(typePane, filterPane);
+	     ChartType.refresh();
+	     filterPane = new TransformDisplay(new Transform(DataTableDisplay.getDT())).splitFilter();
 	     rightc.setMinWidth(300);
 	     rightc.setMaxWidth(300);
-	     
-	     tablec = DataTableDisplay.displayTable();
-		tablec.setMinWidth(200);
-	     tablec.setMaxWidth(200);
-	     tablec.setMinHeight(280);
-	     tablec.setMaxHeight(280);
+	     rightc.getChildren().addAll(typePane, filterPane);
 
-	     chartc = LineScreen.pane();
-	     chartc.setMinWidth(200);
-	     chartc.setMaxWidth(200);
-	     chartc.setMinHeight(280);
-	     chartc.setMaxHeight(280);
-	     
 	     centerc = new VBox(2);
 	     centerc.setAlignment(Pos.CENTER);
-	     centerc.getChildren().addAll(tablec, chartc);
+	     DataTableDisplay.refresh();
+	     LineScreen.refresh();
+	     
 	
 	     pane = new BorderPane(centerc, hc, rightc, null, leftc);
 	

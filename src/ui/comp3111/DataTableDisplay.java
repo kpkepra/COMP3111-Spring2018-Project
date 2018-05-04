@@ -87,6 +87,19 @@ public class DataTableDisplay {
 	  pane.getChildren().addAll(datasetTable);
 	  return pane;
 	}
+	
+	public static void refresh() {
+		if (MainScreen.centerc.getChildren().contains(MainScreen.tablec)) { 
+			MainScreen.centerc.getChildren().remove(MainScreen.tablec);
+		}
+		MainScreen.tablec = displayTable();
+		MainScreen.tablec.setMinWidth(375);
+		MainScreen.tablec.setMaxWidth(375);
+		MainScreen.tablec.setMinHeight(250);
+		MainScreen.tablec.setMaxHeight(250);
+		MainScreen.centerc.getChildren().add(0, MainScreen.tablec);
+	}
+	
 	/**
 	 * Change the displayed table.
 	 *
@@ -95,13 +108,5 @@ public class DataTableDisplay {
 	 */
 	public static void setTable(DataTable newTable) {
 		table = newTable;
-		MainScreen.centerc.getChildren().remove(MainScreen.tablec);
-		MainScreen.tablec = displayTable();
-		MainScreen.tablec.setMinWidth(375);
-		MainScreen.tablec.setMaxWidth(375);
-		MainScreen.tablec.setMinHeight(250);
-		MainScreen.tablec.setMaxHeight(250);
-		MainScreen.tablec.setStyle("-fx-background-color: orange");
-		MainScreen.centerc.getChildren().add(0, MainScreen.tablec);
-		}
+	}
 }
