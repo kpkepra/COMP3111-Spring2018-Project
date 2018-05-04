@@ -128,6 +128,5 @@ public class MyFileExtenstion {
         System.out.println("Serialized data is saved in " + fileName);
         return true;
     }
-
 }
 
