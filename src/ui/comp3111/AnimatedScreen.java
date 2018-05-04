@@ -243,10 +243,16 @@ public class AnimatedScreen extends Main {
 	 * Clears the chart into empty space.
 	 */
 	public static void empty() {
-		if (MainScreen.centerc.getChildren().size() == 2) {
-			MainScreen.centerc.getChildren().remove(MainScreen.chartc);
-		}
-		
+        MainScreen.chartc = new Pane();
+        MainScreen.chartc.setMinWidth(400);
+        MainScreen.chartc.setMaxWidth(400);
+        MainScreen.chartc.setMinHeight(350);
+        MainScreen.chartc.setMaxHeight(350);
+        if (MainScreen.centerc.getChildren().size() < 2) {
+            MainScreen.centerc.getChildren().add(1, MainScreen.chartc);
+        } else {
+            MainScreen.centerc.getChildren().set(1, MainScreen.chartc);
+        }
 	}
 
 }

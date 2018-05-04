@@ -158,7 +158,17 @@ public class Listbox extends Main {
 					
 					DataTableDisplay.refresh();
 					if (ChartType.getType() == "Animated Pie") {
+						try {
 							AnimatedScreen.refresh();
+						} catch (RuntimeException e) {
+							AnimatedScreen.empty();
+							Alert alert = new Alert(Alert.AlertType.ERROR);
+							alert.setTitle("Chart Fail");
+							alert.setHeaderText("Application fails to display the chart!");
+							alert.setContentText("The DataTable does not fill the requirement!");
+
+							alert.showAndWait();
+						}
 					} else {
 						try {
 							LineScreen.refresh();
@@ -171,6 +181,12 @@ public class Listbox extends Main {
 									ChartType.setType(1);
 								}
 							} catch (RuntimeException ex) {
+								Alert alert = new Alert(Alert.AlertType.ERROR);
+								alert.setTitle("Chart Fail");
+								alert.setHeaderText("Application fails to display the chart!");
+								alert.setContentText("The DataTable does not fill the requirement!");
+
+								alert.showAndWait();
 							}
 						}
 					}
