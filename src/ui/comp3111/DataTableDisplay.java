@@ -98,10 +98,10 @@ public class DataTableDisplay {
 		  table = newTable;
 		  MainScreen.centerc.getChildren().remove(MainScreen.tablec);
 		  MainScreen.tablec = displayTable();
-		  MainScreen.tablec.setMinWidth(500);
-		  MainScreen.tablec.setMaxWidth(500);
-		  MainScreen.tablec.setMinHeight(300);
-		  MainScreen.tablec.setMaxHeight(300);
+		  MainScreen.tablec.setMinWidth(375);
+		  MainScreen.tablec.setMaxWidth(375);
+		  MainScreen.tablec.setMinHeight(250);
+		  MainScreen.tablec.setMaxHeight(250);
 		  MainScreen.tablec.setStyle("-fx-background-color: orange");
 		  MainScreen.centerc.getChildren().add(0, MainScreen.tablec);
 	  }
