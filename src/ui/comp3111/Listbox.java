@@ -91,10 +91,12 @@ public class Listbox extends Main {
 		dts.forEach(dt -> {
 			filenames.add(corgi.getName() + " - Dataset" + i.getAndIncrement());
 			tables.add(dt);
+			list.getSelectionModel().select(corgi.getIndex());
 		});
 		
 		//Charts
 		if (cts.get(0) instanceof Pie || cts.get(0) instanceof Line) {
+			ChartType.setType(corgi.getIndex());
 			LineScreen.setChart(cts.get(0), dts.get(corgi.getIndex()));
 		} else {
 			// Assign to animated chart
@@ -103,9 +105,8 @@ public class Listbox extends Main {
 		// Tables
 		DataTableDisplay.setTable(corgi.getDts().get(corgi.getIndex()));
 		
-		MainScreen.tfDisplay = new TransformDisplay(new Transform(DataTableDisplay.getDT()));
 		MainScreen.rightc.getChildren().remove(1);
-		MainScreen.filterPane = MainScreen.tfDisplay.splitFilter();
+		MainScreen.filterPane = new TransformDisplay(new Transform(DataTableDisplay.getDT())).splitFilter();
 		MainScreen.rightc.getChildren().add(1, MainScreen.filterPane);
 	}
 	
@@ -123,6 +124,12 @@ public class Listbox extends Main {
 	 */
 	public static int getIndex() { return list.getSelectionModel().getSelectedIndex(); }
 	
+	public static void refresh() {
+	     MainScreen.listView = Listbox.pane();
+	     MainScreen.listView.setMinWidth(200);
+	     MainScreen.listView.setMaxWidth(200);
+	}
+	
 	/**
 	 * Initialize all of the EventHandler functions when user's actions are made in this class.
 	 * 
@@ -136,15 +143,16 @@ public class Listbox extends Main {
 					DataTableDisplay.setTable(table);
 					LineScreen.loadData(table);
 					AnimatedScreen.loadData(table);
+					
+					DataTableDisplay.refresh();
 					if (ChartType.getType() == "Animated Pie") {
 						AnimatedScreen.refresh();
 					} else {
 						LineScreen.refresh();
 					}
 					
-					MainScreen.tfDisplay = new TransformDisplay(new Transform(DataTableDisplay.getDT()));
 					MainScreen.rightc.getChildren().remove(1);
-					MainScreen.filterPane = MainScreen.tfDisplay.splitFilter();
+					MainScreen.filterPane =  new TransformDisplay(new Transform(DataTableDisplay.getDT())).splitFilter();
 					MainScreen.rightc.getChildren().add(1, MainScreen.filterPane);
 				}
 			}

@@ -75,53 +75,6 @@ public class LineScreen extends Main {
         return pane;
 	}
 	
-	/**
-	 * Generates random sample data. The random sample data is based on the number of 
-	 * initialized numeric columns and text columns.
-	 */
-	static void addSample() {
-		try {
-	        Random rand = new Random();
-	        char[] base = new char[]{'A', 'B', 'C', 'D', 'E', 'F', 'G'};
-	
-	        for (int i = 0; i < numCols; ++i) {
-	            Number[] content = new Number[row];
-	
-	            for (int j = 0; j < row; ++j) {
-	                int type = rand.nextInt(100) + 1;
-	
-	                if (type >= 67) content[j] = rand.nextDouble();
-	                else if (type >= 33) content[j] = rand.nextDouble();
-	                else content[j] = rand.nextDouble();
-	            }
-	
-	            DataColumn column = new DataColumn(DataType.TYPE_NUMBER, content);
-	            table.addCol("numCol" + i, column);
-	        }
-	
-	        for (int i = 0; i < textCols; ++i) {
-	            String[] content = new String[row];
-	
-	            for (int j = 0; j < row; ++j) {
-	                int length = rand.nextInt(10) + 1;
-	
-	                String word = "";
-	                for (int k = 0; k < length; ++k) {
-	                    word += base[rand.nextInt(base.length)];
-	                }
-	
-	                content[j] = word;
-	            }
-	
-	            DataColumn column = new DataColumn(DataType.TYPE_STRING, content);
-	            table.addCol("textCol" + i, column);
-	        }
-		} catch (Exception e) {
-        	System.out.println(e);
-        	e.printStackTrace();
-		}
-	}
-	
 	static void loadData(DataTable dt) {
 		table = dt;
 	}
@@ -169,8 +122,11 @@ public class LineScreen extends Main {
 	}
 	
 	static void refresh() {
-		MainScreen.centerc.getChildren().remove(MainScreen.chartc);
-		MainScreen.chartc = LineScreen.pane();
+		if (MainScreen.centerc.getChildren().contains(MainScreen.chartc)) { 
+			MainScreen.centerc.getChildren().remove(MainScreen.chartc);
+		}
+			
+		MainScreen.chartc = pane();
 	    MainScreen.chartc.setMinWidth(500);
 	    MainScreen.chartc.setMaxWidth(500);
 	    MainScreen.chartc.setMinHeight(400);
