@@ -94,7 +94,7 @@ public class LineScreen extends Main {
 			chartNode = (linePie == true ? lcd.display() : pcd.display());
 		} else {
 			chartNode = new BorderPane();
-		}		
+		}
 
 		return chartNode;
 	}
