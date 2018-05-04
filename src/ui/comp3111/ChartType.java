@@ -5,6 +5,8 @@ import javafx.beans.value.ObservableValue;
 import javafx.scene.control.*;
 import javafx.scene.layout.*;
 
+import java.util.Objects;
+
 /**
  * ChartType - A class that displays a group of radio buttons to choose the chart type to display.
  * The feature provides three radio buttons : line, pie, and animated pie chart. When any button
@@ -74,21 +76,26 @@ public class ChartType extends Main {
 							alert.showAndWait();
 						}
 					} else {
-						if (tg.getSelectedToggle().getUserData().toString() == radioText[0]) {
-							LineScreen.linePie = true;
-						} else {
-							LineScreen.linePie = false;
+						if (!change) {
+							if (Objects.equals(tg.getSelectedToggle().getUserData().toString(), radioText[0])) {
+								LineScreen.linePie = true;
+							} else {
+								LineScreen.linePie = false;
+							}
 						}
 						try {
 							LineScreen.refresh();
 						} catch (RuntimeException e) {
-							LineScreen.linePie = !LineScreen.linePie;
+//							LineScreen.linePie = !LineScreen.linePie;
 							if (!change) {
-								if (tg.getSelectedToggle().getUserData().toString() == radioText[0]) {
+//								if (Objects.equals(tg.getSelectedToggle().getUserData().toString(), radioText[0])) {
+								if (LineScreen.linePie) {
+									LineScreen.linePie = false;
 									change = true;
 									radios[1].setSelected(true);
 								}
 								else {
+									LineScreen.linePie = true;
 									change = true;
 									radios[0].setSelected(true);
 								}
