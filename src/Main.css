@@ -112,7 +112,7 @@
 }
 
 .table-view{
-    -fx-background-color: black;
+    -fx-background-color: transparent;
 }
 
 .table-view > .column-header-background {

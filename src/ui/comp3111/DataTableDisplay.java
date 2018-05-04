@@ -98,8 +98,8 @@ public class DataTableDisplay {
 		MainScreen.tablec = displayTable();
 		MainScreen.tablec.setMinWidth(375);
 		MainScreen.tablec.setMaxWidth(375);
-		MainScreen.tablec.setMinHeight(250);
-		MainScreen.tablec.setMaxHeight(250);
+		MainScreen.tablec.setMinHeight(200);
+		MainScreen.tablec.setMaxHeight(200);
 		MainScreen.centerc.getChildren().add(0, MainScreen.tablec);
 	}
 	

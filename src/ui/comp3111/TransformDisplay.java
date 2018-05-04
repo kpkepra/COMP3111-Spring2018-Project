@@ -117,23 +117,25 @@ public class TransformDisplay extends Main {
                         public void handle(WindowEvent we) {
                             if (save == 1) {
                                 stage = new Stage();
-                                askFileName();
+                                askFileName("first dataset");
 
                                 stage.setOnHiding(new EventHandler<WindowEvent>() {
                                     public void handle(WindowEvent we) {
                                         try {
                                             if (fileName != null) {
-                                                CSVWriter csvWriter = new CSVWriter(fileName + ".csv");
-                                                ArrayList<String> array = new DataTableTransformer().reverseTransform(newTables[0]);
-                                                csvWriter.writeArray(array, newTables[0].getNumCol());
-                                                csvWriter.close();
+                                                if (!Objects.equals(fileName, "")) {
+                                                    CSVWriter csvWriter = new CSVWriter("resources/" + fileName + ".csv");
+                                                    ArrayList<String> array = new DataTableTransformer().reverseTransform(newTables[0]);
+                                                    csvWriter.writeArray(array, newTables[0].getNumCol());
+                                                    csvWriter.close();
+                                                }
                                                 stage = new Stage();
-                                                askFileName();
+                                                askFileName("second dataset");
                                                 stage.setOnHiding(new EventHandler<WindowEvent>() {
                                                     public void handle(WindowEvent we) {
                                                         try {
-                                                            if (fileName != null) {
-                                                                CSVWriter csvWriter = new CSVWriter(fileName + ".csv");
+                                                            if (fileName != null && !Objects.equals(fileName, "")) {
+                                                                CSVWriter csvWriter = new CSVWriter("resources/" + fileName + ".csv");
                                                                 ArrayList<String> array = new DataTableTransformer().reverseTransform(newTables[1]);
                                                                 csvWriter.writeArray(array, newTables[1].getNumCol());
                                                                 csvWriter.close();
@@ -162,7 +164,7 @@ public class TransformDisplay extends Main {
                                 column2.setPercentWidth(50);
                                 chooseReplace.getColumnConstraints().addAll(column1, column2);
                                 chooseReplace.add(new Label("Which dataset to overwrite with?"), 0, 0, 2, 1);
-                                chooseReplace.setStyle("-fx-font: 16 arial;");
+                                chooseReplace.setStyle("-fx-font: 16 arial; -fx-padding: 5px;");
 
                                 Button button1 = new Button("Dataset 1");
                                 button1.setOnAction(new EventHandler<ActionEvent>() {
@@ -197,6 +199,8 @@ public class TransformDisplay extends Main {
                     root.getChildren().remove(datasetTable);
 
                     VBox newPane = new VBox();
+                    newPane.setMinHeight(datasetTable.getHeight());
+                    newPane.setMaxHeight(datasetTable.getHeight());
 
                     TableView<Integer> dataset1 = new TableView();
                     dataset1.setColumnResizePolicy(TableView.UNCONSTRAINED_RESIZE_POLICY);
@@ -275,12 +279,10 @@ public class TransformDisplay extends Main {
                             dataset2.getColumns().add(column);
                         }
                     }
-                    dataset1.setMaxHeight(100);
-//                    dataset1.prefHeightProperty().bind(newPane.heightProperty().divide(2));
-//                    dataset1.setStyle("-fx-border-width: 0px;");
-//                    dataset2.prefHeightProperty().bind(newPane.heightProperty().divide(2));
+                    dataset1.prefHeightProperty().bind(newPane.heightProperty().divide(2));
+                    dataset2.prefHeightProperty().bind(newPane.heightProperty().divide(2));
 
-                    askSaveReplace();
+                    askSaveReplace("datasets");
                 }
                 catch (Exception ex) {
                     ex.printStackTrace();
@@ -304,14 +306,14 @@ public class TransformDisplay extends Main {
         selectFilter.setHgap(10);
         selectFilter.setVgap(4);
         ColumnConstraints column1 = new ColumnConstraints();
-        column1.setPercentWidth(50);
+        column1.setPercentWidth(33);
         column1.setHalignment(HPos.CENTER);
         ColumnConstraints column2 = new ColumnConstraints();
         column2.setHalignment(HPos.CENTER);
-        column2.setPercentWidth(25);
+        column2.setPercentWidth(33);
         ColumnConstraints column3 = new ColumnConstraints();
         column3.setHalignment(HPos.CENTER);
-        column3.setPercentWidth(25);
+        column3.setPercentWidth(33);
         selectFilter.getColumnConstraints().addAll(column1, column2, column3);
 
         Pane datasetTable = new DataTableDisplay(transform.getDataTable()).displayTable();
@@ -330,10 +332,10 @@ public class TransformDisplay extends Main {
                 transform.setColumnFilter(new_val);
             }
         });
-
         selectFilter.add(new Label("Input filter parameters:"), 0, 0, 3, 1);
-
-        selectFilter.add(new Label("Select column as filter base: "), 0, 1);
+        Label lc = new Label("filter base: ");
+        selectFilter.add(lc , 0, 1);
+        lc.setStyle("-fx-padding:0px");
         selectFilter.add(columnCombo, 0, 2);
 
         String[] operators = {"<", "<=", ">", ">=", "==", "!="};
@@ -350,7 +352,7 @@ public class TransformDisplay extends Main {
             }
         });
 
-        selectFilter.add(new Label("Select operator to filter with: "), 1, 1);
+        selectFilter.add(new Label("operator"), 1, 1);
         selectFilter.add(operatorCombo, 1, 2);
 
         TextField numberField = new TextField();
@@ -364,7 +366,7 @@ public class TransformDisplay extends Main {
             }
         });
 
-        selectFilter.add(new Label("Input number to check against: "), 2, 1);
+        selectFilter.add(new Label("Threshold"), 2, 1);
         selectFilter.add(numberField, 2, 2);
 //        selectFilter.getStyleClass().add("filter-gridpane");
 
@@ -389,15 +391,17 @@ public class TransformDisplay extends Main {
                         public void handle(WindowEvent we) {
                             if (save == 1) {
                                 stage = new Stage();
-                                askFileName();
+                                askFileName("dataset");
 
                                 stage.setOnHiding(new EventHandler<WindowEvent>() {
                                     public void handle(WindowEvent we) {
                                         try {
-                                            CSVWriter csvWriter = new CSVWriter(fileName + ".csv");
-                                            ArrayList<String> array = new DataTableTransformer().reverseTransform(newTable);
-                                            csvWriter.writeArray(array, newTable.getNumCol());
-                                            csvWriter.close();
+                                            if (fileName != null  && !Objects.equals(fileName, "")) {
+                                                CSVWriter csvWriter = new CSVWriter("resources/" + fileName + ".csv");
+                                                ArrayList<String> array = new DataTableTransformer().reverseTransform(newTable);
+                                                csvWriter.writeArray(array, newTable.getNumCol());
+                                                csvWriter.close();
+                                            }
                                         } catch (Exception e) {
                                             e.printStackTrace();
                                         }
@@ -419,7 +423,7 @@ public class TransformDisplay extends Main {
                         }
                     });
 
-                    askSaveReplace();
+                    askSaveReplace("filtered dataset");
                 }
                 catch (Exception ex) {
                     ex.printStackTrace();
@@ -488,10 +492,11 @@ public class TransformDisplay extends Main {
      * A function which will display an interface to ask the user whether to save the new dataset
      * or replace old one instead.
      */
-    private void askSaveReplace() {
+    private void askSaveReplace(String file) {
         GridPane saveReplace = new GridPane();
         saveReplace.setHgap(10);
         saveReplace.setVgap(10);
+        saveReplace.setStyle("-fx-padding:15px");
         ColumnConstraints column1 = new ColumnConstraints();
         column1.setHalignment(HPos.CENTER);
         column1.setPercentWidth(50);
@@ -499,7 +504,7 @@ public class TransformDisplay extends Main {
         column2.setHalignment(HPos.CENTER);
         column2.setPercentWidth(50);
         saveReplace.getColumnConstraints().addAll(column1, column2);
-        saveReplace.add(new Label("What do you want to do with the filtered dataset?"), 0, 0, 2, 1);
+        saveReplace.add(new Label("What do you want to do with the "+ file +"?"), 0, 0, 2, 1);
 
         // Save Button
         Button saveButton = new Button("Save");
@@ -531,15 +536,16 @@ public class TransformDisplay extends Main {
     /**
      * A function which will display an interface to ask the filename to save the dataset to.
      */
-    public void askFileName() {
+    public void askFileName(String file) {
         GridPane root = new GridPane();
         root.setHgap(10);
         root.setVgap(10);
         ColumnConstraints column1 = new ColumnConstraints();
         column1.setHalignment(HPos.CENTER);
         column1.setPercentWidth(100);
+        root.setStyle("-fx-padding:15px");
         root.getColumnConstraints().addAll(column1);
-        root.add(new Label("What is the file name you would like to save as?"), 0, 0);
+        root.add(new Label("What should we save the " + file + " as?"), 0, 0);
 
         TextField nameField = new TextField();
         root.add(nameField, 0, 1);
@@ -560,9 +566,4 @@ public class TransformDisplay extends Main {
         stage.setScene(scene);
         stage.show();
     }
-    
-    public void refresh() {
-    	
-    }
-
 }

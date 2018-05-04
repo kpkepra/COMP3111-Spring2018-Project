@@ -32,6 +32,7 @@ public class CSVReader {
      *      - Create the File with this file name
      */
     public CSVReader(String fileName) {
+        System.out.println("File path: " + fileName);
         inputFile = new File(fileName);
         data = new ArrayList<>();
         fields = new ArrayList<>();

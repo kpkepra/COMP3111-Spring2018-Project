@@ -74,8 +74,8 @@ public class PieChartDisplay extends ChartDisplay {
         });
 
         GridPane selectAxis = new GridPane();
-        Label textLabel = new Label("Select text column for categories: ");
-        Label numLabel = new Label("Select numeric column for pie data: ");
+        Label textLabel = new Label("categories: ");
+        Label numLabel = new Label(" column of pie ");
         textLabel.setStyle("-fx-font: 16 arial;");
         numLabel.setStyle("-fx-font: 16 arial;");
 
