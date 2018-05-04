@@ -7,8 +7,10 @@ package ui.comp3111;
 
 import java.util.ArrayList;
 
+import core.comp3111.Chart;
 import core.comp3111.ChartException;
 import core.comp3111.DataTable;
+import core.comp3111.Line;
 import core.comp3111.Pie;
 import javafx.animation.TranslateTransition;
 import javafx.beans.value.ChangeListener;
@@ -38,20 +40,21 @@ public class AnimatedScreen extends Main {
     private static PieChart chart = new PieChart();
     private static boolean[] tg;
     private static DataTable table = new DataTable();
-    private static Pie pie;
+    private static AnimatedPie pie;
     private static ArrayList<String> nameID = new ArrayList<String>();
 
+    public static class AnimatedPie extends Pie {
+
+		public AnimatedPie(DataTable dt) throws ChartException {
+			super(dt);
+		}
+    }
     /**
      * Initializes the animated chart.
      */
-    public static void initialize() {
-    	try {
-			pie = new Pie(table);
-			chart = getChart(pie.getText(), pie.getNum());
-		} catch (ChartException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+    public static void initialize() throws ChartException {
+		pie = new AnimatedPie(table);
+		chart = getChart(pie.getText(), pie.getNum());
         setupAnimation();
     }
     
@@ -60,7 +63,9 @@ public class AnimatedScreen extends Main {
     }
     
     public static void refresh() {
-		MainScreen.centerc.getChildren().remove(MainScreen.chartc);
+		if (MainScreen.centerc.getChildren().contains(MainScreen.chartc)) { 
+			MainScreen.centerc.getChildren().remove(MainScreen.chartc);
+		}
 		MainScreen.chartc = pane();
 		MainScreen.chartc.setMinWidth(500);
 		MainScreen.chartc.setMaxWidth(500);
@@ -151,6 +156,7 @@ public class AnimatedScreen extends Main {
 
     	ComboBox textCombo = new ComboBox();
         for (String colName : pie.getTextCols()) textCombo.getItems().add(colName);
+        textCombo.setValue(pie.getText());
 
         textCombo.valueProperty().addListener(new ChangeListener<String>() {
             @Override
@@ -165,6 +171,7 @@ public class AnimatedScreen extends Main {
 
         ComboBox numCombo = new ComboBox();
         for (String colName : pie.getNumCols()) numCombo.getItems().add(colName);
+        numCombo.setValue(pie.getNum());
 
         numCombo.valueProperty().addListener(new ChangeListener<String>() {
             @Override
@@ -198,6 +205,15 @@ public class AnimatedScreen extends Main {
         pane.setBottom(selectAxis);
     	
     	return pane;
+    }
+    
+    public static void setChart(DataTable dt) {
+		table = dt;
+		refresh();
+    }
+    
+    public static Chart getChart() {
+    	return pie;
     }
 
 }
