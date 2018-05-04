@@ -121,10 +121,10 @@ public class LineScreen extends Main {
 		if (MainScreen.centerc.getChildren().contains(MainScreen.chartc)) {
 			MainScreen.centerc.getChildren().remove(MainScreen.chartc);
 		}
-		MainScreen.chartc.setMinWidth(500);
-		MainScreen.chartc.setMaxWidth(500);
-		MainScreen.chartc.setMinHeight(400);
-		MainScreen.chartc.setMaxHeight(400);
+		MainScreen.chartc.setMinWidth(400);
+		MainScreen.chartc.setMaxWidth(400);
+		MainScreen.chartc.setMinHeight(350);
+		MainScreen.chartc.setMaxHeight(350);
 		MainScreen.centerc.getChildren().add(1, MainScreen.chartc);
 	}
 	

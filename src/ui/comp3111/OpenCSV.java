@@ -67,7 +67,7 @@ public class OpenCSV {
                 });
 
         /*open a new window with 3 buttons to choose how to fill in missing data*/
-        stage.setTitle("Choose to Fill in Missing Data");
+        stage.setTitle("Choose how to deal with in possible missing numeric data");
 
         GridPane inputGridPane = new GridPane();
 
