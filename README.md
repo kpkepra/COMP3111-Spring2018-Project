@@ -2,7 +2,7 @@
 
 ## Team Leader Name: PRATAMA, Kevin
 - Team Leader ITSC email kpratama@connect.ust.hk
-- Team Leader Features 3,6
+- Team Leader Features 3,6h
 - Team Leader Best 3 commits URLs
 
 ## Member 1 Name: SUSANTO, Adrian Prawira
@@ -32,5 +32,6 @@
 - https://www.tutorialspoint.com/java/java_serialization.htm
 
 ## Notes:
-Our commits were approximately four times the amount of what it should have because two of our members accidentally had the wrong commit email,
+- Our commits were approximately four times the amount of what it should have because two of our members accidentally had the wrong commit email,
 so during fixing it, all of those members' commit were replicated by the new email that is linked to the account instead.
+- We didn't use any pull request since we were always working together, so all of us worked on the master branch instead. We have confirmed this with Prof. Kenneth and he told us that it is fine since he saw us working together several times, and to tell the TAs that according to him it is alright.
