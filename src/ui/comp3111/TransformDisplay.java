@@ -30,7 +30,7 @@ import java.util.Objects;
 public class TransformDisplay extends Main {
     private Transform transform;
 
-    private boolean save;
+    private int save;
 
     private String fileName;
 
@@ -45,6 +45,7 @@ public class TransformDisplay extends Main {
      */
     public TransformDisplay(Transform tf) {
         transform = tf;
+        save = 0;
     }
 
     /**
@@ -112,7 +113,7 @@ public class TransformDisplay extends Main {
                     stage = new Stage();
                     stage.setOnHiding(new EventHandler<WindowEvent>() {
                         public void handle(WindowEvent we) {
-                            if (save) {
+                            if (save == 1) {
                                 stage = new Stage();
                                 askFileName();
 
@@ -147,7 +148,7 @@ public class TransformDisplay extends Main {
                                     }
                                 });
                             }
-                            else {
+                            else if (save == 2) {
                                 GridPane chooseReplace = new GridPane();
                                 chooseReplace.setHgap(10);
                                 chooseReplace.setVgap(10);
@@ -266,6 +267,9 @@ public class TransformDisplay extends Main {
                         }
                     }
 
+                    dataset1.prefWidthProperty().bind(datasetTable.widthProperty().divide(2));
+                    dataset2.prefWidthProperty().bind(datasetTable.widthProperty().divide(2));
+
                     askSaveReplace();
                 }
                 catch (Exception ex) {
@@ -373,7 +377,7 @@ public class TransformDisplay extends Main {
                     stage = new Stage();
                     stage.setOnHiding(new EventHandler<WindowEvent>() {
                         public void handle(WindowEvent we) {
-                            if (save) {
+                            if (save == 1) {
                                 stage = new Stage();
                                 askFileName();
 
@@ -390,7 +394,7 @@ public class TransformDisplay extends Main {
                                     }
                                 });
                             }
-                            else {
+                            else if (save == 2) {
                                 // TODO: REPLACE DATATABLE WITH NEW DATASET
                             }
                         }
@@ -483,7 +487,7 @@ public class TransformDisplay extends Main {
         saveButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent e) {
-                save = true;
+                save = 1;
                 stage.hide();
             }
         });
@@ -493,7 +497,7 @@ public class TransformDisplay extends Main {
         replaceButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent e) {
-                save = false;
+                save = 2;
                 stage.hide();
             }
         });
