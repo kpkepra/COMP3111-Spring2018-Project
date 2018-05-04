@@ -2,38 +2,28 @@
 
 ## Team Leader Name: PRATAMA, Kevin
 - Team Leader ITSC email kpratama@connect.ust.hk
-- Team Leader Features  3,6
-- Team Leader Best 3 commits URLs (URL1, URL2, URL3)
-- Team Leader Best pull request URL
+- Team Leader Features 3,6
+- Team Leader Best 3 commits URLs
 
 ## Member 1 Name: SUSANTO, Adrian Prawira
 - Member 1 ITSC email apsusanto@connect.ust.hk
 - Member 1 Features   2,5
-- Member 1 Best 3 commits URLs (URL1, URL2, URL3)
-- Member 1 Best pull request URL
+- Member 1 Best 3 commits URLs
+    - https://github.com/KP-Kepra/COMP3111-Spring2018-Project/commit/821546aa366e3959dbc7d45e97519756adf4c722
+    Code refactor of Chart and its subclasses, where initially everything, including function and UI, were within one big class. It has since moved, so that UI is on ChartDisplay and its subclasses, while functional is under Chart and its subclasses.
+    - https://github.com/KP-Kepra/COMP3111-Spring2018-Project/commit/937845a172c5f3515ee2b2c1297eb42f36d80797 Unit Testing
+    Unit testing of Feature 2 with 100% coverage.
+    - https://github.com/KP-Kepra/COMP3111-Spring2018-Project/commit/087e702948b6962fe2d7fa94c2e4ee1dd01ea663
+    Code refactor of feature 5, transformation. Originally, all of the transformation related functions were inside DataTable. However, seeing as how it was getting more and more complex, I had the idea of creating a new class to contain all of the functions.
+    Later, some of this will also be refactored into two different sources, one for functionality and another for UI.
 
-<<<<<<< HEAD
-Member 2 Name: WU, Yun Ju
-Member 2 ITSC email ywubv@connect.ust.hk
-Member 2 Features  1,4
-Member 2 Best 3 commits URLs 
-https://github.com/KP-Kepra/COMP3111-Spring2018-Project/commit/8907bdeac9031c137b8870ae0b4eb37dbc74ba8f
-https://github.com/KP-Kepra/COMP3111-Spring2018-Project/commit/78b0edeb5040409a4dd9e7861f79f5ba778367d2
-https://github.com/KP-Kepra/COMP3111-Spring2018-Project/commit/a0f2db92c65bf4b5b3979d6e2a729c923456097a
-
-
-References:
-https://docs.oracle.com/javafx/2/ui_controls/combo-box.htm
-https://docs.oracle.com/javafx/2/ui_controls/button.htm
-https://docs.oracle.com/javafx/2/ui_controls/radio-button.htm
-https://www.tutorialspoint.com/java/java_serialization.htm
-=======
 ## Member 2 Name: WU, Yun Ju
 - Member 2 ITSC email ywubv@connect.ust.hk
 - Member 2 Features  1,4
-- Member 2 Best 3 commits URLs (URL1, URL2, URL3)
-- Member 2 Best pull request URL
->>>>>>> d562db8c26e30a3cfb0829bcf4129024f29c41f9
+- Member 2 Best 3 commits URLs
+    - https://github.com/KP-Kepra/COMP3111-Spring2018-Project/commit/8907bdeac9031c137b8870ae0b4eb37dbc74ba8f
+    - https://github.com/KP-Kepra/COMP3111-Spring2018-Project/commit/78b0edeb5040409a4dd9e7861f79f5ba778367d2
+    - https://github.com/KP-Kepra/COMP3111-Spring2018-Project/commit/a0f2db92c65bf4b5b3979d6e2a729c923456097a
 
 ## References:
 - https://docs.oracle.com/javafx/2/ui_controls/combo-box.htm
