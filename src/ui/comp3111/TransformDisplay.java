@@ -166,7 +166,8 @@ public class TransformDisplay extends Main {
                                 button1.setOnAction(new EventHandler<ActionEvent>() {
                                     @Override
                                     public void handle(ActionEvent e) {
-                                        //TODO: REPLACE WITH TABLE 1
+                                        // ( ͡° ͜ʖ ͡°)
+                                    	
                                         stage.hide();
                                     }
                                 });
@@ -175,7 +176,7 @@ public class TransformDisplay extends Main {
                                 button2.setOnAction(new EventHandler<ActionEvent>() {
                                     @Override
                                     public void handle(ActionEvent e) {
-                                        //TODO: REPLACE WITH TABLE 2
+                                        // ( ͡° ͜ʖ ͡°)
                                         stage.hide();
                                     }
                                 });
@@ -395,7 +396,16 @@ public class TransformDisplay extends Main {
                                 });
                             }
                             else if (save == 2) {
-                                // TODO: REPLACE DATATABLE WITH NEW DATASET
+                            	Listbox.replaceDataset(newTable);
+                            	DataTableDisplay.setTable(newTable);
+                            	DataTableDisplay.refresh();
+                            	if (ChartType.getType() == "Animated Pie") {
+                            		AnimatedScreen.setChart(newTable);
+                            		AnimatedScreen.refresh();
+                            	} else {
+                            		LineScreen.setChart(null, newTable);
+                            		LineScreen.refresh();
+                            	}
                             }
                         }
                     });
@@ -540,6 +550,10 @@ public class TransformDisplay extends Main {
         Scene scene = new Scene(root);
         stage.setScene(scene);
         stage.show();
+    }
+    
+    public void refresh() {
+    	
     }
 
 }
