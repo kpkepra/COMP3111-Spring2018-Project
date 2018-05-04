@@ -20,7 +20,7 @@ class MyFileExtenstionTest {
         ch_rowprob.readALL(0);
         DataTable dt  = DataTableTransformer.transform(ch);
         ArrayList<String> dt_reverse = DataTableTransformer.reverseTransform(dt);
-        DataTable dt2  = DataTableTransformer.transform(ch_rowprob);
+        assertThrows(DataTableException.class, () -> {DataTableTransformer.transform(ch_rowprob);});
         Chart chart = new Pie(dt);
         ArrayList<Chart> charts = new ArrayList<>();
         charts.add(chart);
